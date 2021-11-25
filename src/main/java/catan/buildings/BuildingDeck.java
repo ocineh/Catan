@@ -1,13 +1,17 @@
 package catan.buildings;
 
+import catan.Color;
+
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Predicate;
 
 public class BuildingDeck {
+    private final Color color;
     private final HashMap<String, Integer> buildings;
 
-    public BuildingDeck() {
+    public BuildingDeck(Color color) {
+        this.color = color;
         buildings = new HashMap<>();
         buildings.put("Colony", 2);
         buildings.put("City", 0);
@@ -38,18 +42,18 @@ public class BuildingDeck {
     public Building.Colony getColony() {
         if(buildings.get("Colony") == 0) return null;
         buildings.compute("Colony", ((c, integer) -> integer--));
-        return new Building.Colony();
+        return new Building.Colony(color);
     }
 
     public Building.City getCity() {
         if(buildings.get("City") == 0) return null;
         buildings.compute("City", ((c, integer) -> integer--));
-        return new Building.City();
+        return new Building.City(color);
     }
 
     public Building.Road getRoad() {
         if(buildings.get("Road") == 0) return null;
         buildings.compute("Road", ((c, integer) -> integer--));
-        return new Building.Road();
+        return new Building.Road(color);
     }
 }

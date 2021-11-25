@@ -1,11 +1,14 @@
 package catan.buildings;
 
 
+import catan.Color;
+
 public abstract class Building {
-    //Colony(1), City(2), Road(1);
+    private final Color color;
     private final int points;
 
-    Building(int points) {
+    Building(Color color, int points) {
+        this.color = color;
         this.points = points;
     }
 
@@ -14,24 +17,24 @@ public abstract class Building {
     }
 
     public static class Colony extends Building {
-        Colony(int points) {
-            super(points);
+        private Colony(Color color, int points) {
+            super(color, points);
         }
 
-        Colony() {
-            this(2);
+        Colony(Color color) {
+            this(color, 2);
         }
     }
 
     public static class City extends Colony {
-        City() {
-            super(2);
+        City(Color color) {
+            super(color, 2);
         }
     }
 
     public static class Road extends Building {
-        Road() {
-            super(1);
+        Road(Color color) {
+            super(color, 1);
         }
     }
 }
