@@ -1,8 +1,11 @@
 package catan.tiles;
 
-import catan.buildings.Building;
+import catan.models.Building;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.Objects;
+import java.util.Random;
 
 public abstract class Tile {
     private static final Random random = new Random();
@@ -62,10 +65,6 @@ public abstract class Tile {
 
     public Building.Road getRoad(Vertex vertex) {
         return roads[vertex.pos];
-    }
-
-    interface Resource {
-        String getName();
     }
 
     public abstract Resource produce();

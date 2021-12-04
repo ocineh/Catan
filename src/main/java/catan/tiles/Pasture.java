@@ -5,17 +5,8 @@ public class Pasture extends Tile {
         super();
     }
 
-    private static class Wool implements Resource {
-        Wool() {}
-
-        @Override
-        public String getName() {
-            return "Wool";
-        }
-    }
-
     @Override
-    public Wool produce() {
-        return new Wool();
+    public Resource produce() {
+        return Resource.Wool;
     }
 }

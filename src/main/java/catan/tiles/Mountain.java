@@ -5,17 +5,8 @@ public class Mountain extends Tile {
         super();
     }
 
-    private static class Ore implements Resource {
-        Ore() {}
-
-        @Override
-        public String getName() {
-            return "Ore";
-        }
-    }
-
     @Override
-    public Ore produce() {
-        return new Ore();
+    public Resource produce() {
+        return Resource.Ore;
     }
 }

@@ -11,7 +11,7 @@ public class Desert extends Tile {
     }
 
     @Override
-    public Tile.Resource produce() {
+    public Resource produce() {
         return null;
     }
 }

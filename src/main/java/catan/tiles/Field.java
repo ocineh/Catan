@@ -5,17 +5,8 @@ public class Field extends Tile {
         super();
     }
 
-    private static class Grain implements Resource {
-        Grain() {}
-
-        @Override
-        public String getName() {
-            return "Grain";
-        }
-    }
-
     @Override
-    public Grain produce() {
-        return new Grain();
+    public Resource produce() {
+        return Resource.Grain;
     }
 }

@@ -5,17 +5,8 @@ public class Forest extends Tile {
         super();
     }
 
-    private static class Lumber implements Resource {
-        Lumber() {}
-
-        @Override
-        public String getName() {
-            return "Lumber";
-        }
-    }
-
     @Override
-    public Lumber produce() {
-        return new Lumber();
+    public Resource produce() {
+        return Resource.Lumber;
     }
 }
