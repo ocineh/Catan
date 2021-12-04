@@ -1,5 +1,7 @@
 package catan.models;
 
+import java.util.Random;
+
 public enum Card {
     Knight,
     Invention, Monopoly, BuildRoad,
@@ -31,5 +33,12 @@ public enum Card {
 
     public boolean isKnight() {
         return this.equals(Knight);
+    }
+
+    private static final Random random = new Random();
+
+    public static Card pickRandom() {
+        int index = random.nextInt(Card.values().length);
+        return Card.values()[index];
     }
 }
