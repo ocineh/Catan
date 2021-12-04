@@ -1,4 +1,4 @@
-package catan.tiles;
+package catan.models.tiles;
 
 public class Mountain extends Tile {
     Mountain() {

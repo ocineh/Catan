@@ -1,4 +1,4 @@
-package catan.tiles;
+package catan.models.tiles;
 
 import catan.models.Building;
 

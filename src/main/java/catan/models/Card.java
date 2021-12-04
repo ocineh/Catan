@@ -1,4 +1,4 @@
-package catan.cards;
+package catan.models;
 
 public enum Card {
     Knight,
