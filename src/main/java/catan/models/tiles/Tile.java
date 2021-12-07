@@ -6,6 +6,9 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.Random;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 public abstract class Tile {
     private static final Random random = new Random();
@@ -15,6 +18,21 @@ public abstract class Tile {
 
     Tile() {
         this.number = random.nextInt(2, 13);
+    }
+
+    public static Tile[] generateBoard() {
+        Tile[] tiles = new Tile[]{
+                new Pasture(), new Pasture(), new Pasture(), new Pasture(),
+                new Forest(), new Forest(), new Forest(), new Forest(),
+                new Field(), new Field(), new Field(), new Field(),
+                new Hill(), new Hill(), new Hill(),
+                new Mountain(), new Mountain(), new Mountain(),
+                new Desert()
+        };
+        ArrayList<Tile> list = new ArrayList<>(List.of(tiles));
+        Collections.shuffle(list);
+        list.toArray(tiles);
+        return tiles;
     }
 
     public int getNumber() {
