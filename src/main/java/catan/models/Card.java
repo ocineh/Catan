@@ -6,6 +6,7 @@ public enum Card {
     Knight,
     Invention, Monopoly, BuildRoad,
     University(1), Church(1), Library(1), Parliament(1), MarketPlace(1);
+    private static final Random random = new Random();
     private final int points;
 
     Card(int points) {
@@ -14,6 +15,11 @@ public enum Card {
 
     Card() {
         this(0);
+    }
+
+    public static Card pickRandom() {
+        int index = random.nextInt(Card.values().length);
+        return Card.values()[index];
     }
 
     public int getPoints() {
@@ -33,12 +39,5 @@ public enum Card {
 
     public boolean isKnight() {
         return this.equals(Knight);
-    }
-
-    private static final Random random = new Random();
-
-    public static Card pickRandom() {
-        int index = random.nextInt(Card.values().length);
-        return Card.values()[index];
     }
 }
