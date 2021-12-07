@@ -34,28 +34,28 @@ public abstract class Tile {
         return Arrays.stream(roads).filter(Objects::nonNull).iterator();
     }
 
-    public boolean placeBuilding(Building.Colony colony, Edge edge) {
-        if(colonies[edge.pos] == null) {
-            colonies[edge.pos] = colony;
+    public boolean placeColony(Building.Colony colony, Vertex vertex) {
+        if(colonies[vertex.pos] == null) {
+            colonies[vertex.pos] = colony;
             return true;
         }
         return false;
     }
 
-    public Building.Colony getBuilding(Edge edge) {
-        return colonies[edge.pos];
+    public Building.Colony getBuilding(Vertex vertex) {
+        return colonies[vertex.pos];
     }
 
-    public boolean placeRoad(Building.Road road, Vertex vertex) {
-        if(roads[vertex.pos] == null) {
-            roads[vertex.pos] = road;
+    public boolean placeRoad(Building.Road road, Edge edge) {
+        if(roads[edge.pos] == null) {
+            roads[edge.pos] = road;
             return true;
         }
         return false;
     }
 
-    public Building.Road getRoad(Vertex vertex) {
-        return roads[vertex.pos];
+    public Building.Road getRoad(Edge edge) {
+        return roads[edge.pos];
     }
 
     public abstract Resource produce();
