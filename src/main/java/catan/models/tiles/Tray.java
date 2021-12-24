@@ -3,24 +3,27 @@ package catan.models.tiles;
 import catan.models.Building;
 
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Tray {
-    private final LinkedList<LinkedList<Tile>> board;
+    private final LinkedList<LinkedList<TrayCell>> tray;
     private final int height;
     private final int width;
 
     Tray(LinkedList<Tile> tiles, int width) {
-        board = new LinkedList<>();
-        LinkedList<Tile> tmp = new LinkedList<>();
-        int i = 0, j = 0;
+        tray = new LinkedList<>();
+        LinkedList<TrayCell> tmp = new LinkedList<>();
+        int i = 0, column = 0, row = 0;
         while(i < tiles.size()) {
-            while(j++ < width) tmp.add(tiles.get(i++));
-            board.add(tmp);
+            while(column < width) tmp.add(new TrayCell(row, column++, tiles.get(i++)));
+            tray.add(tmp);
             tmp = new LinkedList<>();
-            j = 0;
+            column = 0;
+            ++row;
         }
-        height = board.size();
-        this.width = width-1;
+        height = tray.size();
+        this.width = width - 1;
     }
 
     public int getHeight() {
@@ -31,8 +34,12 @@ public class Tray {
         return width;
     }
 
+    public List<TrayCell> getTiles() {
+        return tray.stream().flatMap(List::stream).collect(Collectors.toList());
+    }
+
     public Tile get(int row, int column) {
-        return board.get(row).get(column);
+        return tray.get(row).get(column).tile;
     }
 
     public boolean placeColony(int row, int column, Building.Colony colony, Tile.Vertex vertex) {
@@ -43,16 +50,18 @@ public class Tray {
                     else if(column > 0) get(row, column - 1).placeColony(colony, Tile.Vertex.TopRight); // a gauche
                 }
                 case TopRight -> {
-                    if(column < width-1) placeColony(row, column + 1, colony, Tile.Vertex.TopLeft); // a droite
+                    if(column < width - 1) placeColony(row, column + 1, colony, Tile.Vertex.TopLeft); // a droite
                     else if(row > 0) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomRight); // au dessut
                 }
                 case BottomLeft -> {
                     if(column > 0) placeColony(row, column - 1, colony, Tile.Vertex.BottomRight); // a gauche
-                    else if(row < height-1) get(row + 1, column).placeColony(colony, Tile.Vertex.TopLeft); // en dessout
+                    else if(row < height - 1)
+                        get(row + 1, column).placeColony(colony, Tile.Vertex.TopLeft); // en dessout
                 }
                 case BottomRight -> {
-                    if(row < height-1) placeColony(row + 1, column, colony, Tile.Vertex.TopRight); // en dessout
-                    else if(column < width-1) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomLeft); // droite
+                    if(row < height - 1) placeColony(row + 1, column, colony, Tile.Vertex.TopRight); // en dessout
+                    else if(column < width - 1)
+                        get(row - 1, column).placeColony(colony, Tile.Vertex.BottomLeft); // droite
                 }
             }
             return true;
@@ -78,5 +87,24 @@ public class Tray {
 
     public boolean isEmpty(int row, int column, Tile.Edge edge) {
         return get(row, column).getRoad(edge) == null;
+    }
+
+    public class TrayCell {
+        private final int row, column;
+        private final Tile tile;
+
+        private TrayCell(int row, int column, Tile tile) {
+            this.row = row;
+            this.column = column;
+            this.tile = tile;
+        }
+
+        public boolean placeColony(Building.Colony colony, Tile.Vertex vertex) {
+            return Tray.this.placeColony(row, column, colony, vertex);
+        }
+
+        public boolean placeRoad(Building.Road road, Tile.Edge edge) {
+            return Tray.this.placeRoad(row, column, road, edge);
+        }
     }
 }
