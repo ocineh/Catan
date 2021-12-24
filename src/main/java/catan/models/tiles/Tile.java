@@ -2,7 +2,7 @@ package catan.models.tiles;
 
 import catan.models.Building;
 
-import java.util.*;
+import java.util.Random;
 
 public abstract class Tile {
     private static final Random random = new Random();
@@ -18,14 +18,6 @@ public abstract class Tile {
         return number;
     }
 
-    public Iterator<Building.Colony> getColonies() {
-        return Arrays.stream(colonies).filter(Objects::nonNull).iterator();
-    }
-
-    public Iterator<Building.Road> getRoads() {
-        return Arrays.stream(roads).filter(Objects::nonNull).iterator();
-    }
-
     public boolean placeColony(Building.Colony colony, Vertex vertex) {
         if(colonies[vertex.pos] == null) {
             colonies[vertex.pos] = colony;
@@ -34,7 +26,7 @@ public abstract class Tile {
         return false;
     }
 
-    public Building.Colony getBuilding(Vertex vertex) {
+    public Building.Colony getColony(Vertex vertex) {
         return colonies[vertex.pos];
     }
 

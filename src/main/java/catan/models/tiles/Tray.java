@@ -73,7 +73,7 @@ public class Tray {
     }
 
     public boolean isEmpty(int row, int column, Tile.Vertex vertex) {
-        return get(row, column).getBuilding(vertex) == null;
+        return get(row, column).getColony(vertex) == null;
     }
 
     public boolean isEmpty(int row, int column, Tile.Edge edge) {
