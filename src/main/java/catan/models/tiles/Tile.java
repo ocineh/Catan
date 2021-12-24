@@ -14,14 +14,6 @@ public abstract class Tile {
         this.number = random.nextInt(2, 13);
     }
 
-    public static Tile[] generateBoard() {
-        Tile[] tiles = new Tile[]{new Pasture(), new Pasture(), new Pasture(), new Pasture(), new Forest(), new Forest(), new Forest(), new Forest(), new Field(), new Field(), new Field(), new Field(), new Hill(), new Hill(), new Hill(), new Mountain(), new Mountain(), new Mountain(), new Desert()};
-        ArrayList<Tile> list = new ArrayList<>(List.of(tiles));
-        Collections.shuffle(list);
-        list.toArray(tiles);
-        return tiles;
-    }
-
     public int getNumber() {
         return number;
     }
