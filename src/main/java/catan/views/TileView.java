@@ -8,6 +8,7 @@ import javax.swing.border.AbstractBorder;
 import java.awt.*;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
+import java.awt.geom.Rectangle2D;
 
 public class TileView extends JPanel {
     private final Tile tile;
@@ -57,13 +58,15 @@ public class TileView extends JPanel {
         }
 
         private void paintColony(Graphics2D g2d, Tile.Vertex vertex, Point point) {
-            Ellipse2D ellipse = new Ellipse2D.Float(point.x - 10, point.y - 10, 20, 20);
             Building.Colony colony = tile.getColony(vertex);
             if(colony != null) {
+                Shape shape;
+                if(colony instanceof Building.City) shape = new Rectangle2D.Float(point.x - 10, point.y - 10, 20, 20);
+                else shape = new Ellipse2D.Float(point.x - 10, point.y - 10, 20, 20);
                 g2d.setPaint(Color.BLACK);
-                g2d.draw(ellipse);
+                g2d.draw(shape);
                 g2d.setPaint(colony.getColor());
-                g2d.fill(ellipse);
+                g2d.fill(shape);
             }
         }
     }

@@ -10,6 +10,14 @@ public abstract class Building {
         this.points = points;
     }
 
+    public java.awt.Color getColor() {
+        return switch(color) {
+            case Blue -> java.awt.Color.BLUE;
+            case White -> java.awt.Color.WHITE;
+            case Red -> java.awt.Color.RED;
+        };
+    }
+
     public final int getPoints() {
         return points;
     }
