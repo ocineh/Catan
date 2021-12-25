@@ -114,5 +114,9 @@ public class Tray {
         public boolean placeRoad(Building.Road road, Tile.Edge edge) {
             return Tray.this.placeRoad(row, column, road, edge);
         }
+
+        public Tile getTile() {
+            return tile;
+        }
     }
 }
