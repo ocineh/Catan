@@ -50,7 +50,7 @@ public class Tray {
                     else if(column > 0) get(row, column - 1).placeColony(colony, Tile.Vertex.TopRight); // a gauche
                 }
                 case TopRight -> {
-                    if(column < width - 1) placeColony(row, column + 1, colony, Tile.Vertex.TopLeft); // a droite
+                    if(column < width) placeColony(row, column + 1, colony, Tile.Vertex.TopLeft); // a droite
                     else if(row > 0) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomRight); // au dessut
                 }
                 case BottomLeft -> {
@@ -60,8 +60,7 @@ public class Tray {
                 }
                 case BottomRight -> {
                     if(row < height - 1) placeColony(row + 1, column, colony, Tile.Vertex.TopRight); // en dessout
-                    else if(column < width - 1)
-                        get(row - 1, column).placeColony(colony, Tile.Vertex.BottomLeft); // droite
+                    else if(column < width) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomLeft); // droite
                 }
             }
             return true;
@@ -70,12 +69,20 @@ public class Tray {
     }
 
     public boolean placeRoad(int row, int column, Building.Road road, Tile.Edge edge) {
-        if(get(row, column).placeRoad(road, edge)){
+        if(get(row, column).placeRoad(road, edge)) {
             switch(edge) {
-                case Top -> get(row - 1, column).placeRoad(road, Tile.Edge.Bottom);
-                case Left -> get(row, column - 1).placeRoad(road, Tile.Edge.Right);
-                case Bottom -> get(row + 1, column).placeRoad(road, Tile.Edge.Top);
-                case Right -> get(row, column + 1).placeRoad(road, Tile.Edge.Left);
+                case Top -> {
+                    if(row > 0) get(row - 1, column).placeRoad(road, Tile.Edge.Bottom);
+                }
+                case Left -> {
+                    if(column > 0) get(row, column - 1).placeRoad(road, Tile.Edge.Right);
+                }
+                case Bottom -> {
+                    if(row < height - 1) get(row + 1, column).placeRoad(road, Tile.Edge.Top);
+                }
+                case Right -> {
+                    if(column < width) get(row, column + 1).placeRoad(road, Tile.Edge.Left);
+                }
             }
             return true;
         }
