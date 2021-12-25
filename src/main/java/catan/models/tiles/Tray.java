@@ -70,15 +70,16 @@ public class Tray {
     }
 
     public boolean placeRoad(int row, int column, Building.Road road, Tile.Edge edge) {
-        boolean result = get(row, column).placeRoad(road, edge);
-        switch(edge) {
-            case Top -> --row;
-            case Left -> --column;
-            case Bottom -> ++row;
-            case Right -> ++column;
+        if(get(row, column).placeRoad(road, edge)){
+            switch(edge) {
+                case Top -> get(row - 1, column).placeRoad(road, Tile.Edge.Bottom);
+                case Left -> get(row, column - 1).placeRoad(road, Tile.Edge.Right);
+                case Bottom -> get(row + 1, column).placeRoad(road, Tile.Edge.Top);
+                case Right -> get(row, column + 1).placeRoad(road, Tile.Edge.Left);
+            }
+            return true;
         }
-        get(row, column).placeRoad(road, edge);
-        return result;
+        return false;
     }
 
     public boolean isEmpty(int row, int column, Tile.Vertex vertex) {
