@@ -4,6 +4,8 @@ import catan.models.tiles.Resource;
 
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class Player {
     private final Color color;
@@ -31,6 +33,34 @@ public class Player {
         return n;
     }
 
+    public Building.Road getRoad() {
+        for(Building building : buildings)
+            if(building instanceof Building.Road road) return road;
+        return null;
+    }
+
+    public List<Building.Road> getRoads() {
+        return buildings.stream().filter(Building::isRoad).map(building -> (Building.Road) building).collect(Collectors.toList());
+    }
+
+    public Building.Colony getColony() {
+        for(Building building : buildings) if(building instanceof Building.Colony colony) return colony;
+        return null;
+    }
+
+    public List<Building.Colony> getColonies() {
+        return buildings.stream().filter(Building::isColony).map(building -> (Building.Colony) building).collect(Collectors.toList());
+    }
+
+    public Building.City getCity() {
+        for(Building building : buildings) if(building instanceof Building.City city) return city;
+        return null;
+    }
+
+    public List<Building.City> getCities() {
+        return buildings.stream().filter(Building::isCity).map(building -> (Building.City) building).collect(Collectors.toList());
+    }
+
     public void addResource(Resource resource) {
         resources.computeIfPresent(resource, (r, count) -> ++count);
     }
@@ -47,18 +77,23 @@ public class Player {
         return resources.get(Resource.Lumber) > 0 && resources.get(Resource.Brick) > 0;
     }
 
+    public boolean canBuildColony() {
+        return resources.get(Resource.Brick) > 0 && resources.get(Resource.Grain) > 0 && resources.get(Resource.Wool) > 0 && resources.get(Resource.Lumber) > 0;
+    }
+
+    public boolean canBuildCity() {
+        return resources.get(Resource.Grain) > 1 && resources.get(Resource.Ore) > 2;
+    }
+
+    public boolean canBuyCard() {
+        return resources.get(Resource.Ore) > 0 && resources.get(Resource.Grain) > 0 && resources.get(Resource.Wool) > 0;
+    }
+
     public void buildRoad() {
         if(canBuildRoad()) {
             use(Resource.Lumber, Resource.Brick);
             buildings.add(new Building.Road(color));
         }
-    }
-
-    public boolean canBuildColony() {
-        return resources.get(Resource.Brick) > 0 &&
-                resources.get(Resource.Grain) > 0 &&
-                resources.get(Resource.Wool) > 0 &&
-                resources.get(Resource.Lumber) > 0;
     }
 
     public void buildColony() {
@@ -68,20 +103,11 @@ public class Player {
         }
     }
 
-    public boolean canUpgradeColonyToCity(Building.Colony colony) {
-        return buildings.contains(colony) && resources.get(Resource.Grain) > 1 && resources.get(Resource.Ore) > 2;
-    }
-
-    public void upgradeColonyToCity(Building.Colony colony) {
-        if(canUpgradeColonyToCity(colony)) {
+    public void buildCity() {
+        if(canBuildCity()) {
             use(Resource.Grain, Resource.Grain, Resource.Ore, Resource.Ore);
-            buildings.remove(colony);
             buildings.add(new Building.City(color));
         }
-    }
-
-    public boolean canBuyCard() {
-        return resources.get(Resource.Ore) > 0 && resources.get(Resource.Grain) > 0 && resources.get(Resource.Wool) > 0;
     }
 
     public void buyCard() {

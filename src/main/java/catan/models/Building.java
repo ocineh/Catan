@@ -11,15 +11,23 @@ public abstract class Building {
     }
 
     public java.awt.Color getColor() {
-        return switch(color) {
-            case Blue -> java.awt.Color.BLUE;
-            case White -> java.awt.Color.WHITE;
-            case Red -> java.awt.Color.RED;
-        };
+        return color.toAwtColor();
     }
 
     public final int getPoints() {
         return points;
+    }
+
+    public boolean isColony() {
+        return false;
+    }
+
+    public boolean isCity() {
+        return false;
+    }
+
+    public boolean isRoad() {
+        return false;
     }
 
     public static class Colony extends Building {
@@ -30,17 +38,37 @@ public abstract class Building {
         public Colony(Color color) {
             this(color, 2);
         }
+
+        @Override
+        public boolean isColony() {
+            return true;
+        }
     }
 
     public static class City extends Colony {
         public City(Color color) {
             super(color, 2);
         }
+
+        @Override
+        public boolean isColony() {
+            return false;
+        }
+
+        @Override
+        public boolean isCity() {
+            return true;
+        }
     }
 
     public static class Road extends Building {
         public Road(Color color) {
             super(color, 1);
+        }
+
+        @Override
+        public boolean isRoad() {
+            return true;
         }
     }
 }
