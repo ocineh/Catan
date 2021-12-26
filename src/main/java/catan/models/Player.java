@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Player {
+    private final static LinkedList<Player> players = new LinkedList<>();
     private final Color color;
     private final HashMap<Card, Integer> cards;
     private final LinkedList<Building> buildings;
@@ -20,6 +21,23 @@ public class Player {
         this.resources = new HashMap<>();
         for(Card card : Card.values()) cards.put(card, 0);
         for(Resource resource : Resource.values()) resources.put(resource, 0);
+        players.add(this);
+    }
+
+    public static Player playerWithTheBiggestArmy() {
+        if(players.size() == 0) return null;
+        Player player = players.getFirst();
+        boolean tmp = false;
+        for(Player p : players) {
+            if(p.cards.get(Card.Knight) > player.cards.get(Card.Knight)) {
+                player = p;
+                tmp = false;
+            } else if(p.cards.get(Card.Knight) == player.cards.get(Card.Knight)) {
+                tmp = true;
+            }
+        }
+        if(!tmp) return player;
+        return null;
     }
 
     public Color getColor() {
