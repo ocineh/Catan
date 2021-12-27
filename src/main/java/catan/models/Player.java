@@ -79,6 +79,10 @@ public class Player {
         return buildings.stream().filter(Building::isCity).map(building -> (Building.City) building).collect(Collectors.toList());
     }
 
+    public Integer getResource(Resource resource){
+        return resources.get(resource);
+    }
+
     public void addResource(Resource resource) {
         resources.computeIfPresent(resource, (r, count) -> ++count);
     }
