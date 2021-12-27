@@ -6,6 +6,8 @@ import java.util.Random;
 
 /**
  * The type Tile represents a tile of a tray.
+ *
+ * @author Hocine
  */
 public abstract class Tile {
     private static final Random random = new Random();
@@ -98,7 +100,9 @@ public abstract class Tile {
         Top(0), Left(1), Bottom(2), Right(3);
         private final int pos;
 
-        Edge(int pos) {this.pos = pos;}
+        Edge(int pos) {
+            this.pos = pos;
+        }
 
         @Override
         public String toString() {
@@ -118,7 +122,9 @@ public abstract class Tile {
         TopLeft(0), TopRight(1), BottomLeft(2), BottomRight(3);
         private final int pos;
 
-        Vertex(int pos) {this.pos = pos;}
+        Vertex(int pos) {
+            this.pos = pos;
+        }
 
         @Override
         public String toString() {
