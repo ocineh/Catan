@@ -23,7 +23,7 @@ public class Tray {
             ++row;
         }
         height = tray.size();
-        this.width = width - 1;
+        this.width = width;
     }
 
     public int getHeight() {

@@ -44,6 +44,11 @@ public abstract class Tile {
 
     public abstract Resource produce();
 
+    @Override
+    public String toString() {
+        return "Tile: " + number;
+    }
+
     public enum Edge {
         Top(0), Left(1), Bottom(2), Right(3);
         private final int pos;

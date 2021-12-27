@@ -13,5 +13,6 @@ public class TrayView extends JPanel {
         setBorder(new EmptyBorder(5, 5, 5, 5));
         List<TileView> tileViews = tray.getTiles().stream().map(trayCell -> new TileView(trayCell.getTile())).toList();
         for(TileView cell : tileViews) add(cell);
+        setPreferredSize(new Dimension(tray.getWidth() * 100, tray.getHeight() * 100));
     }
 }
