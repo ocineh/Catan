@@ -54,6 +54,16 @@ public abstract class Tile {
         private final int pos;
 
         Edge(int pos) {this.pos = pos;}
+
+        @Override
+        public String toString() {
+            return switch(this) {
+                case Top -> "Top";
+                case Left -> "Left";
+                case Bottom -> "Bottom";
+                case Right -> "Right";
+            };
+        }
     }
 
     public enum Vertex {
@@ -61,5 +71,15 @@ public abstract class Tile {
         private final int pos;
 
         Vertex(int pos) {this.pos = pos;}
+
+        @Override
+        public String toString() {
+            return switch(this) {
+                case TopLeft -> "Top left";
+                case TopRight -> "Top right";
+                case BottomLeft -> "Bottom left";
+                case BottomRight -> "Bottom right";
+            };
+        }
     }
 }

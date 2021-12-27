@@ -23,7 +23,7 @@ public class InventoryView extends JPanel {
     public InventoryView(Player player) {
         this.player = player;
         setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Inventory"));
-        setPreferredSize(new Dimension(90, 150));
+        setMaximumSize(new Dimension(200, 150));
         setLayout(new GridBagLayout());
 
         GridBagConstraints constraints = new GridBagConstraints();
