@@ -1,9 +1,11 @@
 package catan;
 
+import catan.models.CardDeck;
 import catan.models.Color;
 import catan.models.Player;
 import catan.models.tiles.Tray;
 import catan.models.tiles.TrayBuilder;
+import catan.views.CardDeckView;
 import catan.views.PlayersView;
 import catan.views.TrayView;
 
@@ -19,6 +21,10 @@ public class Game extends JFrame {
         Player[] players = new Player[]{new Player(Color.Red), new Player(Color.Blue), new Player(Color.White)};
         PlayersView playersView = new PlayersView(players);
         add(playersView, BorderLayout.EAST);
+
+        CardDeck cardDeck = new CardDeck();
+        CardDeckView cardDeckView = new CardDeckView(cardDeck);
+        add(cardDeckView, BorderLayout.SOUTH);
 
         pack();
         setLocationRelativeTo(null);

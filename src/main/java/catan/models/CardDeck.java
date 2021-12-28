@@ -36,8 +36,16 @@ public final class CardDeck {
         return victoryPointCard.size();
     }
 
+    public int countVictoryPointCard(Card.VictoryPoint card) {
+        return (int) victoryPointCard.stream().filter(c -> c == card).count();
+    }
+
     public int countProgressCard() {
         return progressCard.size();
+    }
+
+    public int countProgressCard(Card.Progress card) {
+        return (int) progressCard.stream().filter(c -> c == card).count();
     }
 
     public int getTotalPoints() {
