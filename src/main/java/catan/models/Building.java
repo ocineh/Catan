@@ -2,16 +2,16 @@ package catan.models;
 
 
 public abstract class Building {
-    private final Color color;
+    private final Player player;
     private final int points;
 
-    Building(Color color, int points) {
-        this.color = color;
+    private Building(Player player, int points) {
+        this.player = player;
         this.points = points;
     }
 
     public java.awt.Color getColor() {
-        return color.toAwtColor();
+        return player.getColor().toAwtColor();
     }
 
     public final int getPoints() {
@@ -31,12 +31,12 @@ public abstract class Building {
     }
 
     public static class Colony extends Building {
-        private Colony(Color color, int points) {
-            super(color, points);
+        private Colony(Player player, int points) {
+            super(player, points);
         }
 
-        public Colony(Color color) {
-            this(color, 2);
+        Colony(Player player) {
+            this(player, 2);
         }
 
         @Override
@@ -46,8 +46,8 @@ public abstract class Building {
     }
 
     public static class City extends Colony {
-        public City(Color color) {
-            super(color, 2);
+        City(Player player) {
+            super(player, 2);
         }
 
         @Override
@@ -62,8 +62,8 @@ public abstract class Building {
     }
 
     public static class Road extends Building {
-        public Road(Color color) {
-            super(color, 1);
+        Road(Player player) {
+            super(player, 1);
         }
 
         @Override

@@ -114,21 +114,21 @@ public class Player {
     public void buildRoad() {
         if(canBuildRoad()) {
             use(Resource.Lumber, Resource.Brick);
-            buildings.add(new Building.Road(color));
+            buildings.add(new Building.Road(this));
         }
     }
 
     public void buildColony() {
         if(canBuildColony()) {
             use(Resource.Lumber, Resource.Brick, Resource.Grain, Resource.Wool);
-            buildings.add(new Building.Colony(color));
+            buildings.add(new Building.Colony(this));
         }
     }
 
     public void buildCity() {
         if(canBuildCity()) {
             use(Resource.Grain, Resource.Grain, Resource.Ore, Resource.Ore);
-            buildings.add(new Building.City(color));
+            buildings.add(new Building.City(this));
         }
     }
 
