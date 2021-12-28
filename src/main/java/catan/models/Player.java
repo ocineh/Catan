@@ -10,29 +10,29 @@ import java.util.stream.Collectors;
 public class Player {
     private final static LinkedList<Player> players = new LinkedList<>();
     private final Color color;
-    private final HashMap<Card, Integer> cards;
+    private final CardDeck cards;
     private final LinkedList<Building> buildings;
     private final HashMap<Resource, Integer> resources;
 
     public Player(Color color) {
         this.color = color;
         this.buildings = new LinkedList<>();
-        this.cards = new HashMap<>();
         this.resources = new HashMap<>();
-        for(Card card : Card.values()) cards.put(card, 0);
+        this.cards = new CardDeck();
         for(Resource resource : Resource.values()) resources.put(resource, 0);
         players.add(this);
     }
 
     public static Player playerWithTheBiggestArmy() {
         if(players.size() == 0) return null;
-        Player player = players.getFirst();
+        Player player = null;
         boolean tmp = false;
         for(Player p : players) {
-            if(p.cards.get(Card.Knight) > player.cards.get(Card.Knight)) {
+            if(player == null) player = p;
+            else if(p.cards.countKnightCard() > player.cards.countKnightCard()) {
                 player = p;
                 tmp = false;
-            } else if(p.cards.get(Card.Knight) == player.cards.get(Card.Knight)) {
+            } else if(p.cards.countKnightCard() == player.cards.countKnightCard()) {
                 tmp = true;
             }
         }
@@ -45,8 +45,7 @@ public class Player {
     }
 
     public int getPoints() {
-        int n = 0;
-        for(Card card : cards.keySet()) n += card.getPoints();
+        int n = cards.getTotalPoints();
         for(Building building : buildings) n += building.getPoints();
         return n;
     }
@@ -79,7 +78,7 @@ public class Player {
         return buildings.stream().filter(Building::isCity).map(building -> (Building.City) building).collect(Collectors.toList());
     }
 
-    public Integer getResource(Resource resource){
+    public Integer getResource(Resource resource) {
         return resources.get(resource);
     }
 
@@ -135,7 +134,7 @@ public class Player {
     public void buyCard() {
         if(canBuyCard()) {
             use(Resource.Grain, Resource.Ore, Resource.Wool);
-            cards.computeIfPresent(Card.pickRandom(), (c, count) -> ++count);
+            cards.addRandomCard();
         }
     }
 }
