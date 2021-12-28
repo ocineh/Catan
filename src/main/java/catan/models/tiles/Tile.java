@@ -143,4 +143,87 @@ public abstract class Tile {
             };
         }
     }
+
+    /**
+     * The type Desert represents a tile that does not produce any resources.
+     *
+     * @author Hocine
+     * @see Tile
+     */
+    public static class Desert extends Tile {
+        @Override
+        public int getNumber() {
+            return -1;
+        }
+
+        @Override
+        protected Resource produce() {
+            return null;
+        }
+    }
+
+    /**
+     * The type Field represents a tile that produces grain.
+     *
+     * @author Hocine
+     * @see Tile
+     */
+    public static class Field extends Tile {
+        @Override
+        protected Resource produce() {
+            return Resource.Grain;
+        }
+    }
+
+    /**
+     * The type Forest represents a tile that produces lumber.
+     *
+     * @author Hocine
+     * @see Tile
+     */
+    public static class Forest extends Tile {
+        @Override
+        protected Resource produce() {
+            return Resource.Lumber;
+        }
+    }
+
+    /**
+     * The type Hill represents a tile that produces brick.
+     *
+     * @author Hocine
+     * @see Tile
+     */
+    public static class Hill extends Tile {
+        @Override
+        protected Resource produce() {
+            return Resource.Brick;
+        }
+    }
+
+    /**
+     * The type Mountain represents a tile that produces ore.
+     *
+     * @author Hocine
+     * @see Tile
+     */
+    public static class Mountain extends Tile {
+        @Override
+        protected Resource produce() {
+            return Resource.Ore;
+        }
+    }
+
+    /**
+     * The type Pasture represents a tile that produces Wool.
+     *
+     * @author Hocine
+     * @see Tile
+     */
+    public static class Pasture extends Tile {
+        @Override
+        protected Resource produce() {
+            return Resource.Wool;
+        }
+    }
 }

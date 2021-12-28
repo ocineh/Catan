@@ -27,32 +27,32 @@ public class TrayBuilder {
     }
 
     public TrayBuilder addPasture(int number) {
-        while (number-- > 0) tiles.add(new Pasture());
+        while (number-- > 0) tiles.add(new Tile.Pasture());
         return this;
     }
 
     public TrayBuilder addForest(int number) {
-        while (number-- > 0) tiles.add(new Forest());
+        while (number-- > 0) tiles.add(new Tile.Forest());
         return this;
     }
 
     public TrayBuilder addField(int number) {
-        while (number-- > 0) tiles.add(new Field());
+        while (number-- > 0) tiles.add(new Tile.Field());
         return this;
     }
 
     public TrayBuilder addHill(int number) {
-        while (number-- > 0) tiles.add(new Hill());
+        while (number-- > 0) tiles.add(new Tile.Hill());
         return this;
     }
 
     public TrayBuilder addMountain(int number) {
-        while (number-- > 0) tiles.add(new Mountain());
+        while (number-- > 0) tiles.add(new Tile.Mountain());
         return this;
     }
 
     public TrayBuilder addDesert(int number) {
-        while (number-- > 0) tiles.add(new Desert());
+        while (number-- > 0) tiles.add(new Tile.Desert());
         return this;
     }
 
