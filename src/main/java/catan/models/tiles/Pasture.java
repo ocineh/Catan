@@ -12,7 +12,7 @@ public class Pasture extends Tile {
     }
 
     @Override
-    public Resource produce() {
+    protected Resource produce() {
         return Resource.Wool;
     }
 }

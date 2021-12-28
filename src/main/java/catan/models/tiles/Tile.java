@@ -86,7 +86,14 @@ public abstract class Tile {
      *
      * @return the resource produced
      */
-    public abstract Resource produce();
+    protected abstract Resource produce();
+
+    /**
+     * Each colony or city on the tile harvests a resource
+     */
+    public void harvest() {
+        for(var c : colonies) if(c != null) c.harvest(produce());
+    }
 
     @Override
     public String toString() {

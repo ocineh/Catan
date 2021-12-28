@@ -1,6 +1,8 @@
 package catan.models;
 
 
+import catan.models.tiles.Resource;
+
 public abstract class Building {
     private final Player player;
     private final int points;
@@ -28,6 +30,10 @@ public abstract class Building {
 
     public boolean isRoad() {
         return false;
+    }
+
+    public void harvest(Resource resource) {
+        player.addResource(resource);
     }
 
     public static class Colony extends Building {

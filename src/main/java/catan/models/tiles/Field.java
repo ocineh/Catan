@@ -12,7 +12,7 @@ public class Field extends Tile {
     }
 
     @Override
-    public Resource produce() {
+    protected Resource produce() {
         return Resource.Grain;
     }
 }

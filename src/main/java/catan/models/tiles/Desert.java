@@ -17,7 +17,7 @@ public class Desert extends Tile {
     }
 
     @Override
-    public Resource produce() {
+    protected Resource produce() {
         return null;
     }
 }
