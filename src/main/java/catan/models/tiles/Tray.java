@@ -2,11 +2,11 @@ package catan.models.tiles;
 
 import catan.models.Building;
 
+import java.util.Iterator;
 import java.util.LinkedList;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
-public class Tray {
+public class Tray implements Iterable<Tray.TrayCell> {
     private final LinkedList<LinkedList<TrayCell>> tray;
     private final int height;
     private final int width;
@@ -32,10 +32,6 @@ public class Tray {
 
     public int getWidth() {
         return width;
-    }
-
-    public List<TrayCell> getTiles() {
-        return tray.stream().flatMap(List::stream).collect(Collectors.toList());
     }
 
     public Tile get(int row, int column) {
@@ -95,6 +91,15 @@ public class Tray {
 
     public boolean isEmpty(int row, int column, Tile.Edge edge) {
         return get(row, column).getRoad(edge) == null;
+    }
+
+    public Stream<TrayCell> stream() {
+        return tray.stream().flatMap(LinkedList::stream);
+    }
+
+    @Override
+    public Iterator<TrayCell> iterator() {
+        return stream().iterator();
     }
 
     public class TrayCell {
