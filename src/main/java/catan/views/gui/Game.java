@@ -16,8 +16,8 @@ public class Game extends JFrame {
         add(trayView, BorderLayout.CENTER);
 
         Player[] players = new Player[]{new Player(Color.Red), new Player(Color.Blue), new Player(Color.White)};
-        PlayersView playersView = new PlayersView(players);
-        add(playersView, BorderLayout.EAST);
+        PlayerView playerView = new PlayerView(players[0]);
+        add(playerView, BorderLayout.EAST);
 
         CardDeck cardDeck = new CardDeck();
         CardDeckView cardDeckView = new CardDeckView(cardDeck);

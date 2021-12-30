@@ -8,14 +8,13 @@ import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-public class PlayersView extends JPanel {
-    private final Player[] players;
+public class PlayerView extends JPanel {
     private final InventoryView inventory;
     private final ActionView actionView;
-    private int actual = 0;
+    private Player player;
 
-    public PlayersView(Player[] players) {
-        this.players = players;
+    public PlayerView(Player player) {
+        this.player = player;
         setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Player"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -26,9 +25,8 @@ public class PlayersView extends JPanel {
         add(actionView);
     }
 
-    public void nextPlayer() {
-        if(++actual == players.length) actual = 0;
-        inventory.update();
+    public void setPlayer(Player player) {
+        this.player = player;
     }
 
     private static class ActionView extends JPanel {
@@ -123,7 +121,6 @@ public class PlayersView extends JPanel {
         }
 
         public void update() {
-            Player player = players[actual];
             resources[0][1].setText(player.getColonies().size() + "");
             resources[1][1].setText(player.getCities().size() + "");
             resources[2][1].setText(player.getRoads().size() + "");
