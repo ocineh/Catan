@@ -1,14 +1,17 @@
 package catan.views;
 
+import catan.controllers.listeners.ClickedMouseListener;
 import catan.models.tiles.Tray;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
+import java.awt.event.MouseEvent;
 import java.util.List;
 
 public class TrayView extends JPanel {
     private final Tray tray;
+    private TrayCellView selected = null;
 
     public TrayView(Tray tray) {
         this.tray = tray;
@@ -19,7 +22,11 @@ public class TrayView extends JPanel {
         setPreferredSize(new Dimension(tray.getWidth() * 100, tray.getHeight() * 100));
     }
 
-    public static class TrayCellView extends JPanel {
+    public TrayCellView getSelected() {
+        return selected;
+    }
+
+    public class TrayCellView extends JPanel {
         private final Tray.TrayCell cell;
         private final TileView tileView;
 
@@ -29,6 +36,18 @@ public class TrayView extends JPanel {
 
             setLayout(new BorderLayout());
             add(tileView, BorderLayout.CENTER);
+
+            TrayCellView view = this;
+            addMouseListener(new ClickedMouseListener() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    if(selected != null) selected.tileView.setBackground(Color.WHITE);
+                    if(selected != view) {
+                        selected = view;
+                        selected.tileView.setBackground(Color.CYAN);
+                    } else selected = null;
+                }
+            });
         }
 
         public TileView getTileView() {
