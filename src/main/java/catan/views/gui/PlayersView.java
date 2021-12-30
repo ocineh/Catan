@@ -19,7 +19,7 @@ public class PlayersView extends JPanel {
         setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Player"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        inventory = new InventoryView(players[actual]);
+        inventory = new InventoryView();
         add(inventory);
 
         actionView = new ActionView();
@@ -28,7 +28,7 @@ public class PlayersView extends JPanel {
 
     public void nextPlayer() {
         if(++actual == players.length) actual = 0;
-        inventory.setPlayer(players[actual]);
+        inventory.update();
     }
 
     private static class ActionView extends JPanel {
@@ -85,7 +85,7 @@ public class PlayersView extends JPanel {
         }
     }
 
-    public class InventoryView extends JPanel {
+    private class InventoryView extends JPanel {
         private final JLabel[][] resources = new JLabel[][]{
                 {new JLabel("Colonies"), new JLabel("0")},
                 {new JLabel("Cities"), new JLabel("0")},
@@ -96,10 +96,8 @@ public class PlayersView extends JPanel {
                 {new JLabel("Lumber"), new JLabel("0")},
                 {new JLabel("Grain"), new JLabel("0")}
         };
-        private Player player;
 
-        public InventoryView(Player player) {
-            this.player = player;
+        public InventoryView() {
             setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Inventory"));
             setMaximumSize(new Dimension(200, 150));
             setLayout(new GridBagLayout());
@@ -120,15 +118,12 @@ public class PlayersView extends JPanel {
             }
         }
 
-        public void setPlayer(Player player) {
-            this.player = player;
-        }
-
         public JLabel getValueAt(int rowIndex, int columnIndex) {
             return resources[rowIndex][columnIndex];
         }
 
         public void update() {
+            Player player = players[actual];
             resources[0][1].setText(player.getColonies().size() + "");
             resources[1][1].setText(player.getCities().size() + "");
             resources[2][1].setText(player.getRoads().size() + "");
