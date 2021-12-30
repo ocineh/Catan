@@ -1,4 +1,4 @@
-package catan.views;
+package catan.views.gui;
 
 import catan.models.Building;
 import catan.models.tiles.Tile;

@@ -1,13 +1,10 @@
-package catan;
+package catan.views.gui;
 
 import catan.models.CardDeck;
 import catan.models.Color;
 import catan.models.Player;
 import catan.models.tiles.Tray;
 import catan.models.tiles.TrayBuilder;
-import catan.views.CardDeckView;
-import catan.views.PlayersView;
-import catan.views.TrayView;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,10 +27,5 @@ public class Game extends JFrame {
         setLocationRelativeTo(null);
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-    }
-
-    public static void main(String[] args) {
-        Game game = new Game();
-        game.setVisible(true);
     }
 }

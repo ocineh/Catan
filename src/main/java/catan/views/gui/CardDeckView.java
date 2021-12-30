@@ -1,4 +1,4 @@
-package catan.views;
+package catan.views.gui;
 
 import catan.models.Card;
 import catan.models.CardDeck;

@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass.set("catan.Game");
+    mainClass.set("catan.Catan");
 }
 
 repositories {

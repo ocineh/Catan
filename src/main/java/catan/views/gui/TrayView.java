@@ -1,4 +1,4 @@
-package catan.views;
+package catan.views.gui;
 
 import catan.controllers.listeners.ClickedMouseListener;
 import catan.models.tiles.Tray;
