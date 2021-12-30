@@ -1,6 +1,10 @@
 package catan.models;
 
 public interface Card {
+    static String[] values() {
+        return new String[]{"BuildRoad", "Invention", "Knight", "Monopoly"};
+    }
+
     default int getPoints() {
         return 0;
     }
