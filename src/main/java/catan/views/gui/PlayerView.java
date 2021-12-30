@@ -75,6 +75,11 @@ public class PlayerView extends JPanel {
             road.addActionListener(e -> PlayerController.getInstance().buildRoad());
             road.setMargin(insets);
             build.add(road);
+
+            JButton randomResource = new JButton("random resource");
+            randomResource.addActionListener(e -> PlayerController.getInstance().addRandomResource());
+            randomResource.setMargin(insets);
+            build.add(randomResource);
             return build;
         }
 

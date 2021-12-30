@@ -1,7 +1,10 @@
 package catan.controllers;
 
 import catan.models.Player;
+import catan.models.tiles.Resource;
 import catan.views.gui.PlayerView;
+
+import java.util.Random;
 
 public class PlayerController {
     private static final PlayerController instance = new PlayerController();
@@ -41,6 +44,14 @@ public class PlayerController {
 
     public void buildCity() {
         model.buildCity();
+        view.update();
+    }
+
+    public void addRandomResource(){
+        Random random = new Random();
+        int index = random.nextInt(Resource.values().length);
+        Resource resource = Resource.values()[index];
+        model.addResource(resource);
         view.update();
     }
 }
