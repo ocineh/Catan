@@ -11,4 +11,6 @@ A video game based on the board game The Settlers of Catan
 
 ## Running
 
-For launching gui `gradlew run`
+For launching gui `gradlew run --args"gui"`
+
+For launching tui `gradlew run --args"tui"`
