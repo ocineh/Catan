@@ -2,17 +2,20 @@ package catan.controllers;
 
 import catan.models.Player;
 import catan.models.tiles.Resource;
+import catan.views.gui.CardDeckView;
 import catan.views.gui.PlayerView;
 
 import java.util.Random;
 
 public class PlayerController {
     private static final PlayerController instance = new PlayerController();
+    private final CardDeckView cardDeckView;
     private final PlayerView view;
     private Player model;
 
     private PlayerController() {
         view = new PlayerView();
+        cardDeckView = new CardDeckView();
     }
 
     public static PlayerController getInstance() {
@@ -23,6 +26,10 @@ public class PlayerController {
         return view;
     }
 
+    public CardDeckView getCardDeckView() {
+        return cardDeckView;
+    }
+
     public Player getModel() {
         return model;
     }
@@ -30,6 +37,7 @@ public class PlayerController {
     public void setModel(Player model) {
         this.model = model;
         view.setPlayer(model);
+        cardDeckView.update(model.getCards());
     }
 
     public void buildRoad() {
@@ -47,7 +55,13 @@ public class PlayerController {
         view.update();
     }
 
-    public void addRandomResource(){
+    public void buyCard() {
+        model.buyCard();
+        view.update();
+        cardDeckView.update(model.getCards());
+    }
+
+    public void addRandomResource() {
         Random random = new Random();
         int index = random.nextInt(Resource.values().length);
         Resource resource = Resource.values()[index];

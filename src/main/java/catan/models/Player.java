@@ -44,6 +44,10 @@ public class Player {
         return color;
     }
 
+    public CardDeck getCards() {
+        return cards;
+    }
+
     public int getPoints() {
         int n = cards.getTotalPoints();
         for(Building building : buildings) n += building.getPoints();

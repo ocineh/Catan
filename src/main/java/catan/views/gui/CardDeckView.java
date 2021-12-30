@@ -1,5 +1,6 @@
 package catan.views.gui;
 
+import catan.controllers.PlayerController;
 import catan.models.Card;
 import catan.models.CardDeck;
 
@@ -39,9 +40,22 @@ public class CardDeckView extends JPanel {
         JComboBox<String> comboBox = new JComboBox<>(Card.values());
         action.add(comboBox);
         JButton use = new JButton("use");
+        use.addActionListener(e -> {
+            String cardName = (String) comboBox.getSelectedItem();
+            if(cardName != null){
+                switch(cardName) {
+                    case "BuildRoad" -> {}
+                    case "Invention" -> {}
+                    case "Knight" -> {}
+                    case "Monopoly" -> {}
+                    default -> {}
+                }
+            }
+        });
         action.add(use);
 
         JButton buy = new JButton("buy");
+        buy.addActionListener(e -> PlayerController.getInstance().buyCard());
         action.add(buy);
 
         add(action);
