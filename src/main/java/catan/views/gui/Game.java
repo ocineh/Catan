@@ -1,5 +1,6 @@
 package catan.views.gui;
 
+import catan.controllers.PlayerController;
 import catan.controllers.TrayController;
 import catan.models.CardDeck;
 import catan.models.Color;
@@ -14,8 +15,9 @@ public class Game extends JFrame {
         add(trayController.getView(), BorderLayout.CENTER);
 
         Player[] players = new Player[]{new Player(Color.Red), new Player(Color.Blue), new Player(Color.White)};
-        PlayerView playerView = new PlayerView(players[0]);
-        add(playerView, BorderLayout.EAST);
+        PlayerController playerController = PlayerController.getInstance();
+        playerController.setModel(players[0]);
+        add(playerController.getView(), BorderLayout.EAST);
 
         CardDeck cardDeck = new CardDeck();
         CardDeckView cardDeckView = new CardDeckView(cardDeck);

@@ -1,5 +1,6 @@
 package catan.views.gui;
 
+import catan.controllers.PlayerController;
 import catan.controllers.TrayController;
 import catan.models.Player;
 import catan.models.tiles.Resource;
@@ -16,8 +17,7 @@ public class PlayerView extends JPanel {
     private final ActionView actionView;
     private Player player;
 
-    public PlayerView(Player player) {
-        this.player = player;
+    public PlayerView() {
         setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Player"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
@@ -34,6 +34,10 @@ public class PlayerView extends JPanel {
 
     public void setPlayer(Player player) {
         this.player = player;
+    }
+
+    public void update() {
+        inventory.update();
     }
 
     private class ActionView extends JPanel {
@@ -58,14 +62,17 @@ public class PlayerView extends JPanel {
 
             Insets insets = new Insets(0, 2, 0, 2);
             JButton colony = new JButton("Colony");
+            colony.addActionListener(e -> PlayerController.getInstance().buildColony());
             colony.setMargin(insets);
             build.add(colony);
 
             JButton city = new JButton("City");
+            city.addActionListener(e -> PlayerController.getInstance().buildCity());
             city.setMargin(insets);
             build.add(city);
 
             JButton road = new JButton("Road");
+            road.addActionListener(e -> PlayerController.getInstance().buildRoad());
             road.setMargin(insets);
             build.add(road);
             return build;
