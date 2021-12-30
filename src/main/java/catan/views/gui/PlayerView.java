@@ -1,5 +1,6 @@
 package catan.views.gui;
 
+import catan.controllers.TrayController;
 import catan.models.Player;
 import catan.models.tiles.Resource;
 import catan.models.tiles.Tile;
@@ -7,6 +8,8 @@ import catan.models.tiles.Tile;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
+import java.awt.event.ActionListener;
+import java.util.function.Function;
 
 public class PlayerView extends JPanel {
     private final InventoryView inventory;
@@ -25,11 +28,15 @@ public class PlayerView extends JPanel {
         add(actionView);
     }
 
+    public Player getPlayer() {
+        return player;
+    }
+
     public void setPlayer(Player player) {
         this.player = player;
     }
 
-    private static class ActionView extends JPanel {
+    private class ActionView extends JPanel {
         private static final Font font = new Font("Default", Font.PLAIN, 10);
         private final JPanel build;
         private final JPanel placement;
@@ -68,17 +75,38 @@ public class PlayerView extends JPanel {
             JPanel putting = new JPanel();
             putting.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Placement"));
             putting.setLayout(new BoxLayout(putting, BoxLayout.Y_AXIS));
-            putting.add(getBuildingPlacementPanel("Colony", Tile.Vertex.values()));
-            putting.add(getBuildingPlacementPanel("City", Tile.Vertex.values()));
-            putting.add(getBuildingPlacementPanel("Road", Tile.Edge.values()));
+
+            putting.add(getBuildingPlacementPanel("Colony", Tile.Vertex.values(), comboBox -> e -> {
+                if(getPlayer() != null) {
+                    Tile.Vertex vertex = (Tile.Vertex) comboBox.getSelectedItem();
+                    TrayController.getInstance().placeColony(getPlayer(), vertex);
+                }
+            }));
+
+            putting.add(getBuildingPlacementPanel("City", Tile.Vertex.values(), comboBox -> e -> {
+                if(getPlayer() != null) {
+                    Tile.Vertex vertex = (Tile.Vertex) comboBox.getSelectedItem();
+                    TrayController.getInstance().placeColony(getPlayer(), vertex);
+                }
+            }));
+
+            putting.add(getBuildingPlacementPanel("Road", Tile.Edge.values(), comboBox -> e -> {
+                if(getPlayer() != null) {
+                    Tile.Edge edge = (Tile.Edge) comboBox.getSelectedItem();
+                    TrayController.getInstance().placeRoad(getPlayer(), edge);
+                }
+            }));
             return putting;
         }
 
-        private <T> JPanel getBuildingPlacementPanel(String title, T[] tmp) {
+        private <T> JPanel getBuildingPlacementPanel(String title, T[] tmp, Function<JComboBox<T>, ActionListener> function) {
             JPanel panel = new JPanel();
             panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), title));
-            panel.add(new JComboBox<>(tmp));
-            panel.add(new JButton("Put"));
+            JComboBox<T> comboBox = new JComboBox<>(tmp);
+            panel.add(comboBox);
+            JButton button = new JButton("Put");
+            button.addActionListener(function.apply(comboBox));
+            panel.add(button);
             return panel;
         }
     }

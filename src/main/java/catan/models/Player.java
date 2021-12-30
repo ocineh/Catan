@@ -51,8 +51,8 @@ public class Player {
     }
 
     public Building.Road getRoad() {
-        for(Building building : buildings)
-            if(building instanceof Building.Road road) return road;
+        for(int i = 0; i < buildings.size(); i++)
+            if(buildings.get(i).isRoad()) return (Building.Road) buildings.remove(i);
         return null;
     }
 
@@ -61,7 +61,8 @@ public class Player {
     }
 
     public Building.Colony getColony() {
-        for(Building building : buildings) if(building instanceof Building.Colony colony) return colony;
+        for(int i = 0; i < buildings.size(); i++)
+            if(buildings.get(i).isColony()) return (Building.Colony) buildings.remove(i);
         return null;
     }
 
@@ -70,7 +71,8 @@ public class Player {
     }
 
     public Building.City getCity() {
-        for(Building building : buildings) if(building instanceof Building.City city) return city;
+        for(int i = 0; i < buildings.size(); i++)
+            if(buildings.get(i).isCity()) return (Building.City) buildings.remove(i);
         return null;
     }
 

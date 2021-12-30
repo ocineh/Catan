@@ -1,19 +1,17 @@
 package catan.views.gui;
 
+import catan.controllers.TrayController;
 import catan.models.CardDeck;
 import catan.models.Color;
 import catan.models.Player;
-import catan.models.tiles.Tray;
-import catan.models.tiles.TrayBuilder;
 
 import javax.swing.*;
 import java.awt.*;
 
 public class Game extends JFrame {
     public Game() {
-        Tray tray = TrayBuilder.buildDefault();
-        TrayView trayView = new TrayView(tray);
-        add(trayView, BorderLayout.CENTER);
+        TrayController trayController = TrayController.getInstance();
+        add(trayController.getView(), BorderLayout.CENTER);
 
         Player[] players = new Player[]{new Player(Color.Red), new Player(Color.Blue), new Player(Color.White)};
         PlayerView playerView = new PlayerView(players[0]);
