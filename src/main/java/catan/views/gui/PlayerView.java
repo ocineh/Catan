@@ -2,7 +2,7 @@ package catan.views.gui;
 
 import catan.controllers.PlayerController;
 import catan.controllers.TrayController;
-import catan.models.Player;
+import catan.models.players.Player;
 import catan.models.tiles.Resource;
 import catan.models.tiles.Tile;
 

@@ -1,7 +1,7 @@
 package catan.controllers;
 
-import catan.models.Building;
-import catan.models.Player;
+import catan.models.tiles.Building;
+import catan.models.players.Player;
 import catan.models.tiles.Tile;
 import catan.models.tiles.Tray;
 import catan.models.tiles.TrayBuilder;

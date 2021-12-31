@@ -1,6 +1,6 @@
 package catan.controllers;
 
-import catan.models.Player;
+import catan.models.players.Player;
 import catan.models.tiles.Resource;
 import catan.views.gui.CardDeckView;
 import catan.views.gui.PlayerView;

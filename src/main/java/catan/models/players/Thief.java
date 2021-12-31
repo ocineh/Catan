@@ -1,4 +1,4 @@
-package catan.models;
+package catan.models.players;
 
 import catan.models.tiles.Tile;
 

@@ -1,7 +1,10 @@
-package catan.models.cards;
+package catan.models.players;
 
 import catan.models.AbstractModel;
-import catan.models.Player;
+import catan.models.cards.Card;
+import catan.models.cards.Knight;
+import catan.models.cards.Progress;
+import catan.models.cards.VictoryPoint;
 
 import java.util.LinkedList;
 import java.util.List;

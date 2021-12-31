@@ -1,7 +1,7 @@
-package catan.models;
+package catan.models.tiles;
 
 
-import catan.models.tiles.Resource;
+import catan.models.players.Player;
 
 public abstract class Building {
     private final Player player;

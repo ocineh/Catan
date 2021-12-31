@@ -1,6 +1,6 @@
 package catan.models.cards;
 
-import catan.models.Player;
+import catan.models.players.Player;
 import catan.models.tiles.Resource;
 
 public enum Progress implements Card, UsableCard {

@@ -1,11 +1,11 @@
 package catan.models.cards;
 
-import catan.models.Player;
+import catan.models.players.Player;
 
 public class Knight implements Card, UsableCard {
     private boolean used = false;
 
-    Knight() {
+    public Knight() {
     }
 
     @Override

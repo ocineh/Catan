@@ -1,8 +1,7 @@
 package catan.models.tiles;
 
 import catan.models.AbstractModel;
-import catan.models.Building;
-import catan.models.Thief;
+import catan.models.players.Thief;
 
 import java.awt.*;
 import java.util.Random;

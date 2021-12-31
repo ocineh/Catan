@@ -1,4 +1,4 @@
-package catan.models;
+package catan.models.players;
 
 public enum Color {
     Blue, White, Red;

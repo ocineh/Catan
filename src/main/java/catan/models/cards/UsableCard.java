@@ -1,6 +1,6 @@
 package catan.models.cards;
 
-import catan.models.Player;
+import catan.models.players.Player;
 
 public interface UsableCard {
     void use(Player player);

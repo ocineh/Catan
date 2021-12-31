@@ -2,8 +2,8 @@ package catan.views.gui;
 
 import catan.controllers.PlayerController;
 import catan.controllers.TrayController;
-import catan.models.Color;
-import catan.models.Player;
+import catan.models.players.Color;
+import catan.models.players.Player;
 
 import javax.swing.*;
 import java.awt.*;

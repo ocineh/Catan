@@ -1,6 +1,6 @@
 package catan.models.tiles;
 
-import catan.models.Thief;
+import catan.models.players.Thief;
 
 import java.util.Collections;
 import java.util.LinkedList;

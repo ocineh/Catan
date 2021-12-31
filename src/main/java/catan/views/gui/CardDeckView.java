@@ -2,7 +2,7 @@ package catan.views.gui;
 
 import catan.controllers.PlayerController;
 import catan.models.cards.Card;
-import catan.models.cards.CardDeck;
+import catan.models.players.CardDeck;
 import catan.models.cards.Progress;
 import catan.models.cards.VictoryPoint;
 

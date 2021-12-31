@@ -1,6 +1,6 @@
 package catan.views.gui;
 
-import catan.models.Building;
+import catan.models.tiles.Building;
 import catan.models.tiles.Tile;
 
 import javax.swing.*;
