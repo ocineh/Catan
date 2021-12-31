@@ -16,9 +16,14 @@ public class TileView extends JPanel {
     public TileView(Tile tile) {
         tile.addChangeListener(this::repaint);
         this.tile = tile;
+        setBackground(tile.getColor());
         add(new JLabel(tile.toString(), SwingConstants.CENTER), CENTER_ALIGNMENT);
         setBorder(new TileBorder());
         if(tile.getThief() != null) add(ThiefView.getInstance());
+    }
+
+    public Tile getTile() {
+        return tile;
     }
 
     private class TileBorder extends AbstractBorder {

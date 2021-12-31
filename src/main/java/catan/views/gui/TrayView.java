@@ -41,7 +41,7 @@ public class TrayView extends JPanel {
             addMouseListener(new ClickedMouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if(selected != null) selected.tileView.setBackground(Color.WHITE);
+                    if(selected != null) selected.tileView.setBackground(selected.tileView.getTile().getColor());
                     if(selected != view) {
                         selected = view;
                         selected.tileView.setBackground(Color.CYAN);

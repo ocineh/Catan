@@ -4,6 +4,7 @@ import catan.models.AbstractModel;
 import catan.models.Building;
 import catan.models.Thief;
 
+import java.awt.*;
 import java.util.Random;
 
 /**
@@ -16,12 +17,14 @@ public abstract class Tile extends AbstractModel {
     private final Building.Colony[] colonies = new Building.Colony[4];
     private final Building.Road[] roads = new Building.Road[4];
     private final int number;
+    private final Color color;
     private Thief thief;
 
     /**
      * Instantiates a new Tile with a random number.
      */
-    Tile() {
+    Tile(Color color) {
+        this.color = color;
         this.number = random.nextInt(2, 13);
     }
 
@@ -52,6 +55,15 @@ public abstract class Tile extends AbstractModel {
         if(thief.getTile() != null) thief.getTile().setThief(null);
         thief.setTile(this);
         this.thief = thief;
+    }
+
+    /**
+     * Gets the color of the tile
+     *
+     * @return a color
+     */
+    public Color getColor() {
+        return color;
     }
 
     /**
@@ -179,6 +191,12 @@ public abstract class Tile extends AbstractModel {
      * @see Tile
      */
     public static class Desert extends Tile {
+        private static final Color color = Color.YELLOW;
+
+        Desert() {
+            super(color);
+        }
+
         @Override
         public int getNumber() {
             return -1;
@@ -187,6 +205,11 @@ public abstract class Tile extends AbstractModel {
         @Override
         protected Resource produce() {
             return null;
+        }
+
+        @Override
+        public String toString() {
+            return "Desert";
         }
     }
 
@@ -197,9 +220,20 @@ public abstract class Tile extends AbstractModel {
      * @see Tile
      */
     public static class Field extends Tile {
+        private static final Color color = new Color(244, 255, 4);
+
+        Field() {
+            super(color);
+        }
+
         @Override
         protected Resource produce() {
             return Resource.Grain;
+        }
+
+        @Override
+        public String toString() {
+            return "Field";
         }
     }
 
@@ -210,9 +244,20 @@ public abstract class Tile extends AbstractModel {
      * @see Tile
      */
     public static class Forest extends Tile {
+        private static final Color color = new Color(0, 150, 0);
+
+        Forest() {
+            super(color);
+        }
+
         @Override
         protected Resource produce() {
             return Resource.Lumber;
+        }
+
+        @Override
+        public String toString() {
+            return "Forest";
         }
     }
 
@@ -223,9 +268,20 @@ public abstract class Tile extends AbstractModel {
      * @see Tile
      */
     public static class Hill extends Tile {
+        private static final Color color = new Color(255, 106, 0);
+
+        Hill() {
+            super(color);
+        }
+
         @Override
         protected Resource produce() {
             return Resource.Brick;
+        }
+
+        @Override
+        public String toString() {
+            return "Hill";
         }
     }
 
@@ -236,9 +292,20 @@ public abstract class Tile extends AbstractModel {
      * @see Tile
      */
     public static class Mountain extends Tile {
+        private static final Color color = Color.DARK_GRAY;
+
+        Mountain() {
+            super(color);
+        }
+
         @Override
         protected Resource produce() {
             return Resource.Ore;
+        }
+
+        @Override
+        public String toString() {
+            return "Mountain";
         }
     }
 
@@ -249,9 +316,20 @@ public abstract class Tile extends AbstractModel {
      * @see Tile
      */
     public static class Pasture extends Tile {
+        private static final Color color = new Color(0, 255, 0);
+
+        Pasture() {
+            super(color);
+        }
+
         @Override
         protected Resource produce() {
             return Resource.Wool;
+        }
+
+        @Override
+        public String toString() {
+            return "Pasture";
         }
     }
 }
