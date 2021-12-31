@@ -1,12 +1,13 @@
 package catan.models.tiles;
 
+import catan.models.AbstractModel;
 import catan.models.players.Building;
 
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.Stream;
 
-public class Tray implements Iterable<Tray.TrayCell> {
+public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
     private final LinkedList<LinkedList<TrayCell>> tray;
     private final int height;
     private final int width;

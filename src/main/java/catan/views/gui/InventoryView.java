@@ -2,12 +2,13 @@ package catan.views.gui;
 
 import catan.models.players.Inventory;
 import catan.models.tiles.Resource;
+import catan.views.View;
 
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 
-class InventoryView extends JPanel {
+class InventoryView extends JPanel implements View<Inventory> {
     private final JLabel[][] resources = new JLabel[][]{
             {new JLabel("Colonies"), new JLabel("0")},
             {new JLabel("Cities"), new JLabel("0")},

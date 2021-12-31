@@ -2,6 +2,7 @@ package catan.views.gui;
 
 import catan.controllers.listeners.ClickedMouseListener;
 import catan.models.tiles.Tray;
+import catan.views.View;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -9,21 +10,26 @@ import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
-public class TrayView extends JPanel {
-    private final Tray tray;
+public class TrayView extends JPanel implements View<Tray> {
+    private Tray model;
     private TrayCellView selected = null;
 
-    public TrayView(Tray tray) {
-        this.tray = tray;
-        setLayout(new GridLayout(tray.getHeight(), tray.getWidth()));
+    public TrayView(Tray model) {
+        this.model = model;
+        setLayout(new GridLayout(model.getHeight(), model.getWidth()));
         setBorder(new EmptyBorder(5, 5, 5, 5));
-        List<TrayCellView> tileViews = tray.stream().map(TrayCellView::new).toList();
+        List<TrayCellView> tileViews = model.stream().map(TrayCellView::new).toList();
         for(TrayCellView cell : tileViews) add(cell);
-        setPreferredSize(new Dimension(tray.getWidth() * 100, tray.getHeight() * 100));
+        setPreferredSize(new Dimension(model.getWidth() * 100, model.getHeight() * 100));
     }
 
     public TrayCellView getSelected() {
         return selected;
+    }
+
+    @Override
+    public void setModel(Tray model) {
+        this.model = model;
     }
 
     public class TrayCellView extends JPanel {
@@ -41,7 +47,7 @@ public class TrayView extends JPanel {
             addMouseListener(new ClickedMouseListener() {
                 @Override
                 public void mouseClicked(MouseEvent e) {
-                    if(selected != null) selected.tileView.setBackground(selected.tileView.getTile().getColor());
+                    if(selected != null) selected.tileView.setBackground(selected.tileView.getModel().getColor());
                     if(selected != view) {
                         selected = view;
                         selected.tileView.setBackground(Color.CYAN);

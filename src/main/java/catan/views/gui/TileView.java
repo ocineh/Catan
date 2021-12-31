@@ -2,6 +2,7 @@ package catan.views.gui;
 
 import catan.models.players.Building;
 import catan.models.tiles.Tile;
+import catan.views.View;
 
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
@@ -10,20 +11,25 @@ import java.awt.geom.Ellipse2D;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
-public class TileView extends JPanel {
-    private final Tile tile;
+public class TileView extends JPanel implements View<Tile> {
+    private Tile model;
 
-    public TileView(Tile tile) {
-        tile.addChangeListener(this::repaint);
-        this.tile = tile;
-        setBackground(tile.getColor());
-        add(new JLabel(tile.toString(), SwingConstants.CENTER), CENTER_ALIGNMENT);
+    public TileView(Tile model) {
+        model.addChangeListener(this::repaint);
+        this.model = model;
+        setBackground(model.getColor());
+        add(new JLabel(model.toString(), SwingConstants.CENTER), CENTER_ALIGNMENT);
         setBorder(new TileBorder());
-        if(tile.getThief() != null) add(ThiefView.getInstance());
+        if(model.getThief() != null) add(ThiefView.getInstance());
     }
 
-    public Tile getTile() {
-        return tile;
+    public Tile getModel() {
+        return model;
+    }
+
+    @Override
+    public void setModel(Tile model) {
+        this.model = model;
     }
 
     private class TileBorder extends AbstractBorder {
@@ -51,7 +57,7 @@ public class TileView extends JPanel {
 
         private void paintRoad(Graphics2D g2d, Tile.Edge edge, Point p1, Point p2) {
             Line2D line = new Line2D.Float(p1, p2);
-            Building.Road road = tile.getRoad(edge);
+            Building.Road road = model.getRoad(edge);
             g2d.setPaint(road != null ? road.getColor() : Color.BLACK);
             g2d.draw(line);
         }
@@ -65,7 +71,7 @@ public class TileView extends JPanel {
         }
 
         private void paintColony(Graphics2D g2d, Tile.Vertex vertex, Point point) {
-            Building.Colony colony = tile.getColony(vertex);
+            Building.Colony colony = model.getColony(vertex);
             if(colony != null) {
                 Shape shape;
                 if(colony instanceof Building.City) shape = new Rectangle2D.Float(point.x - 10, point.y - 10, 20, 20);

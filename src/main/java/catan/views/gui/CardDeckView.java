@@ -2,9 +2,10 @@ package catan.views.gui;
 
 import catan.controllers.PlayerController;
 import catan.models.cards.Card;
-import catan.models.players.CardDeck;
 import catan.models.cards.Progress;
 import catan.models.cards.VictoryPoint;
+import catan.models.players.CardDeck;
+import catan.views.View;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -14,7 +15,7 @@ import java.awt.*;
 import java.util.LinkedList;
 import java.util.function.ToIntFunction;
 
-public class CardDeckView extends JPanel {
+public class CardDeckView extends JPanel implements View<CardDeck> {
     private final LinkedList<CardsView> cardsViews;
     private CardDeck model;
 
