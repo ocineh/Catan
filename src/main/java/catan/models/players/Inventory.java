@@ -12,8 +12,12 @@ public class Inventory extends AbstractModel {
     private final LinkedList<Building> buildings;
     private final HashMap<Resource, Integer> resources;
 
-    public Inventory() {
+    Inventory(Player player) {
         this.buildings = new LinkedList<>();
+        buildings.add(new Building.Colony(player));
+        buildings.add(new Building.Colony(player));
+        buildings.add(new Building.Road(player));
+        buildings.add(new Building.Road(player));
         this.resources = new HashMap<>();
         for(Resource resource : Resource.values()) resources.put(resource, 0);
     }

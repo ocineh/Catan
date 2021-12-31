@@ -14,7 +14,7 @@ public class Player extends AbstractModel {
     public Player(Color color) {
         this.color = color;
         this.cards = new CardDeck(this);
-        this.inventory = new Inventory();
+        this.inventory = new Inventory(this);
         players.add(this);
     }
 
