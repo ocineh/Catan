@@ -1,8 +1,10 @@
 package catan.views.gui;
 
 import catan.controllers.PlayerController;
-import catan.models.Card;
-import catan.models.CardDeck;
+import catan.models.cards.Card;
+import catan.models.cards.CardDeck;
+import catan.models.cards.Progress;
+import catan.models.cards.VictoryPoint;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -26,9 +28,9 @@ public class CardDeckView extends JPanel {
         cardsViews = new LinkedList<>();
         cardsViews.add(new CardsView("Knight", CardDeck::countKnightCard));
 
-        for(var c : Card.Progress.values())
+        for(var c : Progress.values())
             cardsViews.add(new CardsView(c.toString(), (d) -> d.countProgressCard(c)));
-        for(var c : Card.VictoryPoint.values())
+        for(var c : VictoryPoint.values())
             cardsViews.add(new CardsView(c.toString(), (d) -> d.countVictoryPointCard(c)));
         cardsViews.forEach(cards::add);
         cards.setMinimumSize(new Dimension(200, 200));

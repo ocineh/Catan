@@ -1,5 +1,6 @@
 package catan.models;
 
+import catan.models.cards.CardDeck;
 import catan.models.tiles.Resource;
 
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public class Player extends AbstractModel {
         this.color = color;
         this.buildings = new LinkedList<>();
         this.resources = new HashMap<>();
-        this.cards = new CardDeck();
+        this.cards = new CardDeck(this);
         for(Resource resource : Resource.values()) resources.put(resource, 0);
         players.add(this);
     }
