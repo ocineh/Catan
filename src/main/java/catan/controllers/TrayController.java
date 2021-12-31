@@ -1,6 +1,6 @@
 package catan.controllers;
 
-import catan.models.tiles.Building;
+import catan.models.players.Building;
 import catan.models.players.Player;
 import catan.models.tiles.Tile;
 import catan.models.tiles.Tray;
@@ -35,7 +35,7 @@ public class TrayController {
         if(cellView != null) {
             Tray.TrayCell cell = cellView.getCell();
             if(cell.isEmpty(vertex)) {
-                Building.Colony colony = player.getColony();
+                Building.Colony colony = player.getInventory().getColony();
                 if(colony != null) cell.placeColony(colony, vertex);
             }
         }
@@ -46,7 +46,7 @@ public class TrayController {
         if(cellView != null) {
             Tray.TrayCell cell = cellView.getCell();
             if(cell.isEmpty(vertex)) {
-                Building.City city = player.getCity();
+                Building.City city = player.getInventory().getCity();
                 if(city != null) cell.placeColony(city, vertex);
             }
         }
@@ -57,7 +57,7 @@ public class TrayController {
         if(cellView != null) {
             Tray.TrayCell cell = cellView.getCell();
             if(cell.isEmpty(edge)) {
-                Building.Road road = player.getRoad();
+                Building.Road road = player.getInventory().getRoad();
                 if(road != null) cell.placeRoad(road, edge);
             }
         }

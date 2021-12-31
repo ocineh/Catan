@@ -60,6 +60,6 @@ public class PlayerController {
         Random random = new Random();
         int index = random.nextInt(Resource.values().length);
         Resource resource = Resource.values()[index];
-        model.addResource(resource);
+        model.getInventory().addResource(resource);
     }
 }

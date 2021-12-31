@@ -1,6 +1,7 @@
 package catan.models.tiles;
 
 import catan.models.AbstractModel;
+import catan.models.players.Building;
 import catan.models.players.Thief;
 
 import java.awt.*;

@@ -32,8 +32,8 @@ public enum Progress implements Card, UsableCard {
     }
 
     private void addRoad(Player player) {
-        player.addResource(Resource.Lumber);
-        player.addResource(Resource.Brick);
+        player.getInventory().addResource(Resource.Lumber);
+        player.getInventory().addResource(Resource.Brick);
         player.buildRoad();
     }
 

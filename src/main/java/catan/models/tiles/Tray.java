@@ -1,5 +1,7 @@
 package catan.models.tiles;
 
+import catan.models.players.Building;
+
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.stream.Stream;

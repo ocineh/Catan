@@ -1,7 +1,7 @@
-package catan.models.tiles;
+package catan.models.players;
 
 
-import catan.models.players.Player;
+import catan.models.tiles.Resource;
 
 public abstract class Building {
     private final Player player;
@@ -33,7 +33,7 @@ public abstract class Building {
     }
 
     public void harvest(Resource resource) {
-        player.addResource(resource);
+        player.getInventory().addResource(resource);
     }
 
     public static class Colony extends Building {
