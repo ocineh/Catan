@@ -1,5 +1,6 @@
 package catan.models.tiles;
 
+import catan.models.AbstractModel;
 import catan.models.Building;
 
 import java.util.Random;
@@ -9,7 +10,7 @@ import java.util.Random;
  *
  * @author Hocine
  */
-public abstract class Tile {
+public abstract class Tile extends AbstractModel {
     private static final Random random = new Random();
     private final Building.Colony[] colonies = new Building.Colony[4];
     private final Building.Road[] roads = new Building.Road[4];
@@ -41,6 +42,7 @@ public abstract class Tile {
     public boolean placeColony(Building.Colony colony, Vertex vertex) {
         if(colonies[vertex.pos] == null) {
             colonies[vertex.pos] = colony;
+            changed();
             return true;
         }
         return false;
@@ -66,6 +68,7 @@ public abstract class Tile {
     public boolean placeRoad(Building.Road road, Edge edge) {
         if(roads[edge.pos] == null) {
             roads[edge.pos] = road;
+            changed();
             return true;
         }
         return false;
@@ -93,6 +96,7 @@ public abstract class Tile {
      */
     public void harvest() {
         for(var c : colonies) if(c != null) c.harvest(produce());
+        changed();
     }
 
     @Override

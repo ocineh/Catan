@@ -4,7 +4,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
-public final class CardDeck {
+public final class CardDeck extends AbstractModel {
     private final static Random random = new Random();
     private final LinkedList<Card.VictoryPoint> victoryPointCard;
     private final LinkedList<Card.Knight> knightCard;
@@ -64,5 +64,6 @@ public final class CardDeck {
             case 7 -> victoryPointCard.add(Card.VictoryPoint.MarketPlace);
             case 8 -> knightCard.add(new Card.Knight());
         }
+        changed();
     }
 }
