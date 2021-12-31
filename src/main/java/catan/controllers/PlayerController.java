@@ -7,11 +7,9 @@ import catan.views.gui.PlayerView;
 
 import java.util.Random;
 
-public class PlayerController {
+public class PlayerController extends AbstractController<Player, PlayerView> {
     private static final PlayerController instance = new PlayerController();
     private final CardDeckView cardDeckView;
-    private final PlayerView view;
-    private Player model;
 
     private PlayerController() {
         view = new PlayerView();
@@ -22,22 +20,8 @@ public class PlayerController {
         return instance;
     }
 
-    public PlayerView getView() {
-        return view;
-    }
-
     public CardDeckView getCardDeckView() {
         return cardDeckView;
-    }
-
-    public Player getModel() {
-        return model;
-    }
-
-    public void setModel(Player model) {
-        this.model = model;
-        view.setPlayer(model);
-        cardDeckView.setModel(model.getCards());
     }
 
     public void buildRoad() {

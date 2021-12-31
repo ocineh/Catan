@@ -7,11 +7,8 @@ import catan.models.tiles.Tray;
 import catan.models.tiles.TrayBuilder;
 import catan.views.gui.TrayView;
 
-public class TrayController {
+public class TrayController extends AbstractController<Tray, TrayView> {
     private static final TrayController instance = new TrayController();
-
-    private final Tray model;
-    private final TrayView view;
 
     private TrayController() {
         model = TrayBuilder.buildDefault();
@@ -20,10 +17,6 @@ public class TrayController {
 
     public static TrayController getInstance() {
         return instance;
-    }
-
-    public TrayView getView() {
-        return view;
     }
 
     public TrayView.TrayCellView getSelected() {
