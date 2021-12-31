@@ -30,25 +30,15 @@ public class TrayController {
         return view.getSelected();
     }
 
-    public void update() {
-        view.repaint();
-    }
-
     public void placeColony(Player player, Tile.Vertex vertex) {
         Building.Colony colony = player.getColony();
         TrayView.TrayCellView cellView = getSelected();
-        if(colony != null && cellView != null) {
-            cellView.getCell().placeColony(colony, vertex);
-            update();
-        }
+        if(colony != null && cellView != null) cellView.getCell().placeColony(colony, vertex);
     }
 
     public void placeRoad(Player player, Tile.Edge edge) {
         Building.Road road = player.getRoad();
         TrayView.TrayCellView cellView = getSelected();
-        if(road != null && cellView != null) {
-            cellView.getCell().placeRoad(road, edge);
-            update();
-        }
+        if(road != null && cellView != null) cellView.getCell().placeRoad(road, edge);
     }
 }

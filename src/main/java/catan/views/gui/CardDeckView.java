@@ -14,6 +14,7 @@ import java.util.function.ToIntFunction;
 
 public class CardDeckView extends JPanel {
     private final LinkedList<CardsView> cardsViews;
+    private CardDeck model;
 
     public CardDeckView() {
         setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
@@ -42,7 +43,7 @@ public class CardDeckView extends JPanel {
         JButton use = new JButton("use");
         use.addActionListener(e -> {
             String cardName = (String) comboBox.getSelectedItem();
-            if(cardName != null){
+            if(cardName != null) {
                 switch(cardName) {
                     case "BuildRoad" -> {}
                     case "Invention" -> {}
@@ -61,11 +62,17 @@ public class CardDeckView extends JPanel {
         add(action);
     }
 
-    public void update(CardDeck cardDeck) {
-        cardsViews.forEach(cardsView -> cardsView.update(cardDeck));
+    public void setModel(CardDeck model) {
+        this.model = model;
+        this.model.addChangeListener(this::update);
+        update();
     }
 
-    public static class CardsView extends JPanel {
+    private void update() {
+        cardsViews.forEach(CardsView::update);
+    }
+
+    public class CardsView extends JPanel {
         private final JLabel label;
         private final String cardName;
         private final ToIntFunction<CardDeck> function;
@@ -82,8 +89,9 @@ public class CardDeckView extends JPanel {
             add(label, BorderLayout.CENTER);
         }
 
-        public void update(CardDeck cardDeck) {
-            label.setText(cardName + ": " + function.applyAsInt(cardDeck));
+        private void update() {
+            int value = model != null ? function.applyAsInt(model) : -1;
+            label.setText(cardName + ": " + value);
         }
     }
 }

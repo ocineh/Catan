@@ -34,9 +34,10 @@ public class PlayerView extends JPanel {
 
     public void setPlayer(Player player) {
         this.player = player;
+        player.addChangeListener(this::update);
     }
 
-    public void update() {
+    private void update() {
         inventory.update();
     }
 
@@ -160,7 +161,7 @@ public class PlayerView extends JPanel {
             return resources[rowIndex][columnIndex];
         }
 
-        public void update() {
+        private void update() {
             resources[0][1].setText(player.getColonies().size() + "");
             resources[1][1].setText(player.getCities().size() + "");
             resources[2][1].setText(player.getRoads().size() + "");

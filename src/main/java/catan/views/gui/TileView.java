@@ -14,6 +14,7 @@ public class TileView extends JPanel {
     private final Tile tile;
 
     public TileView(Tile tile) {
+        tile.addChangeListener(this::repaint);
         this.tile = tile;
         add(new JLabel(tile.toString(), SwingConstants.CENTER), CENTER_ALIGNMENT);
         setBorder(new TileBorder());
