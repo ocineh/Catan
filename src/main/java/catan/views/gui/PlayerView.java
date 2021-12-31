@@ -99,7 +99,7 @@ public class PlayerView extends JPanel {
             putting.add(getBuildingPlacementPanel("City", Tile.Vertex.values(), comboBox -> e -> {
                 if(getPlayer() != null) {
                     Tile.Vertex vertex = (Tile.Vertex) comboBox.getSelectedItem();
-                    TrayController.getInstance().placeColony(getPlayer(), vertex);
+                    TrayController.getInstance().placeCity(getPlayer(), vertex);
                 }
             }));
 

@@ -31,14 +31,35 @@ public class TrayController {
     }
 
     public void placeColony(Player player, Tile.Vertex vertex) {
-        Building.Colony colony = player.getColony();
         TrayView.TrayCellView cellView = getSelected();
-        if(colony != null && cellView != null) cellView.getCell().placeColony(colony, vertex);
+        if(cellView != null) {
+            Tray.TrayCell cell = cellView.getCell();
+            if(cell.isEmpty(vertex)) {
+                Building.Colony colony = player.getColony();
+                if(colony != null) cell.placeColony(colony, vertex);
+            }
+        }
+    }
+
+    public void placeCity(Player player, Tile.Vertex vertex) {
+        TrayView.TrayCellView cellView = getSelected();
+        if(cellView != null) {
+            Tray.TrayCell cell = cellView.getCell();
+            if(cell.isEmpty(vertex)) {
+                Building.City city = player.getCity();
+                if(city != null) cell.placeColony(city, vertex);
+            }
+        }
     }
 
     public void placeRoad(Player player, Tile.Edge edge) {
-        Building.Road road = player.getRoad();
         TrayView.TrayCellView cellView = getSelected();
-        if(road != null && cellView != null) cellView.getCell().placeRoad(road, edge);
+        if(cellView != null) {
+            Tray.TrayCell cell = cellView.getCell();
+            if(cell.isEmpty(edge)) {
+                Building.Road road = player.getRoad();
+                if(road != null) cell.placeRoad(road, edge);
+            }
+        }
     }
 }

@@ -38,33 +38,30 @@ public class Tray implements Iterable<Tray.TrayCell> {
         return tray.get(row).get(column).tile;
     }
 
-    public boolean placeColony(int row, int column, Building.Colony colony, Tile.Vertex vertex) {
+    private void placeColony(int row, int column, Building.Colony colony, Tile.Vertex vertex) {
         if(get(row, column).placeColony(colony, vertex)) {
             switch(vertex) {
                 case TopLeft -> {
-                    if(row > 0) placeColony(row - 1, column, colony, Tile.Vertex.BottomLeft); // au dessut
-                    else if(column > 0) get(row, column - 1).placeColony(colony, Tile.Vertex.TopRight); // a gauche
+                    if(row > 0) placeColony(row - 1, column, colony, Tile.Vertex.BottomLeft);
+                    else if(column > 0) get(row, column - 1).placeColony(colony, Tile.Vertex.TopRight);
                 }
                 case TopRight -> {
-                    if(column < width) placeColony(row, column + 1, colony, Tile.Vertex.TopLeft); // a droite
-                    else if(row > 0) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomRight); // au dessut
+                    if(column < width - 1) placeColony(row, column + 1, colony, Tile.Vertex.TopLeft);
+                    else if(row > 0) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomRight);
                 }
                 case BottomLeft -> {
-                    if(column > 0) placeColony(row, column - 1, colony, Tile.Vertex.BottomRight); // a gauche
-                    else if(row < height - 1)
-                        get(row + 1, column).placeColony(colony, Tile.Vertex.TopLeft); // en dessout
+                    if(column > 0) placeColony(row, column - 1, colony, Tile.Vertex.BottomRight);
+                    else if(row < height - 1) get(row + 1, column).placeColony(colony, Tile.Vertex.TopLeft);
                 }
                 case BottomRight -> {
-                    if(row < height - 1) placeColony(row + 1, column, colony, Tile.Vertex.TopRight); // en dessout
-                    else if(column < width) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomLeft); // droite
+                    if(row < height - 1) placeColony(row + 1, column, colony, Tile.Vertex.TopRight);
+                    else if(column < width - 1) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomLeft);
                 }
             }
-            return true;
         }
-        return false;
     }
 
-    public boolean placeRoad(int row, int column, Building.Road road, Tile.Edge edge) {
+    private void placeRoad(int row, int column, Building.Road road, Tile.Edge edge) {
         if(get(row, column).placeRoad(road, edge)) {
             switch(edge) {
                 case Top -> {
@@ -77,12 +74,10 @@ public class Tray implements Iterable<Tray.TrayCell> {
                     if(row < height - 1) get(row + 1, column).placeRoad(road, Tile.Edge.Top);
                 }
                 case Right -> {
-                    if(column < width) get(row, column + 1).placeRoad(road, Tile.Edge.Left);
+                    if(column < width - 1) get(row, column + 1).placeRoad(road, Tile.Edge.Left);
                 }
             }
-            return true;
         }
-        return false;
     }
 
     public boolean isEmpty(int row, int column, Tile.Vertex vertex) {
@@ -112,12 +107,20 @@ public class Tray implements Iterable<Tray.TrayCell> {
             this.tile = tile;
         }
 
-        public boolean placeColony(Building.Colony colony, Tile.Vertex vertex) {
-            return Tray.this.placeColony(row, column, colony, vertex);
+        public boolean isEmpty(Tile.Vertex vertex) {
+            return tile.getColony(vertex) == null;
         }
 
-        public boolean placeRoad(Building.Road road, Tile.Edge edge) {
-            return Tray.this.placeRoad(row, column, road, edge);
+        public boolean isEmpty(Tile.Edge edge) {
+            return tile.getRoad(edge) == null;
+        }
+
+        public void placeColony(Building.Colony colony, Tile.Vertex vertex) {
+            Tray.this.placeColony(row, column, colony, vertex);
+        }
+
+        public void placeRoad(Building.Road road, Tile.Edge edge) {
+            Tray.this.placeRoad(row, column, road, edge);
         }
 
         public Tile getTile() {
