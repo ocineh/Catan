@@ -1,9 +1,13 @@
 package catan.models.tiles;
 
+import catan.models.Thief;
+
 import java.util.Collections;
 import java.util.LinkedList;
+import java.util.Random;
 
 public class TrayBuilder {
+    private final static Random random = new Random();
     private final LinkedList<Tile> tiles;
     private int width;
 
@@ -58,6 +62,7 @@ public class TrayBuilder {
 
     public Tray build(int width) {
         Collections.shuffle(tiles);
+        tiles.get(random.nextInt(tiles.size())).setThief(Thief.getInstance());
         return new Tray(tiles, width);
     }
 }

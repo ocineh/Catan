@@ -2,6 +2,7 @@ package catan.models.tiles;
 
 import catan.models.AbstractModel;
 import catan.models.Building;
+import catan.models.Thief;
 
 import java.util.Random;
 
@@ -15,6 +16,7 @@ public abstract class Tile extends AbstractModel {
     private final Building.Colony[] colonies = new Building.Colony[4];
     private final Building.Road[] roads = new Building.Road[4];
     private final int number;
+    private Thief thief;
 
     /**
      * Instantiates a new Tile with a random number.
@@ -30,6 +32,26 @@ public abstract class Tile extends AbstractModel {
      */
     public int getNumber() {
         return number;
+    }
+
+    /**
+     * Get the thief if present on the tile
+     *
+     * @return The thief
+     */
+    public Thief getThief() {
+        return thief;
+    }
+
+    /**
+     * The thief is removed from the tile he is on and placed on this one
+     *
+     * @param thief The thief to place on the tile
+     */
+    public void setThief(Thief thief) {
+        if(thief.getTile() != null) thief.getTile().setThief(null);
+        thief.setTile(this);
+        this.thief = thief;
     }
 
     /**
@@ -95,8 +117,10 @@ public abstract class Tile extends AbstractModel {
      * Each colony or city on the tile harvests a resource
      */
     public void harvest() {
-        for(var c : colonies) if(c != null) c.harvest(produce());
-        changed();
+        if(thief == null) {
+            for(var c : colonies) if(c != null) c.harvest(produce());
+            changed();
+        }
     }
 
     @Override
