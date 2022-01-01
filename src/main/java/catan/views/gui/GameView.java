@@ -6,7 +6,7 @@ import catan.views.View;
 import javax.swing.*;
 import java.awt.*;
 
-public class GameView extends JFrame implements View<Game> {
+public class GameView extends JPanel implements View<Game> {
     private final PlayerView playerView;
     private final TrayView trayView;
     private final CardDeckView cardDeckView;
@@ -17,12 +17,10 @@ public class GameView extends JFrame implements View<Game> {
         trayView = new TrayView();
         cardDeckView = new CardDeckView();
 
+        setLayout(new BorderLayout());
         add(playerView, BorderLayout.EAST);
         add(trayView, BorderLayout.CENTER);
         add(cardDeckView, BorderLayout.SOUTH);
-
-        setResizable(false);
-        setDefaultCloseOperation(DISPOSE_ON_CLOSE);
     }
 
     @Override

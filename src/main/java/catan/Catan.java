@@ -1,8 +1,6 @@
 package catan;
 
-import catan.controllers.GameController;
-import catan.models.Game;
-import catan.views.gui.GameView;
+import catan.views.gui.GameWindow;
 
 public class Catan {
     public static void main(String[] args) {
@@ -13,12 +11,8 @@ public class Catan {
 
         switch(args[0]) {
             case "gui" -> {
-                GameController controller = GameController.getInstance();
-                controller.setView(new GameView());
-                controller.setModel(new Game());
-                controller.getView().pack();
-                controller.getView().setLocationRelativeTo(null);
-                controller.getView().setVisible(true);
+                GameWindow window = new GameWindow();
+                window.setVisible(true);
             }
             case "tui" -> {
                 System.err.println("Not implemented.");
