@@ -14,13 +14,8 @@ public class TrayView extends JPanel implements View<Tray> {
     private Tray model;
     private TrayCellView selected = null;
 
-    public TrayView(Tray model) {
-        this.model = model;
-        setLayout(new GridLayout(model.getHeight(), model.getWidth()));
+    public TrayView() {
         setBorder(new EmptyBorder(5, 5, 5, 5));
-        List<TrayCellView> tileViews = model.stream().map(TrayCellView::new).toList();
-        for(TrayCellView cell : tileViews) add(cell);
-        setPreferredSize(new Dimension(model.getWidth() * 100, model.getHeight() * 100));
     }
 
     public TrayCellView getSelected() {
@@ -30,6 +25,10 @@ public class TrayView extends JPanel implements View<Tray> {
     @Override
     public void setModel(Tray model) {
         this.model = model;
+        setLayout(new GridLayout(model.getHeight(), model.getWidth()));
+        List<TrayCellView> tileViews = model.stream().map(TrayCellView::new).toList();
+        for(TrayCellView cell : tileViews) add(cell);
+        setPreferredSize(new Dimension(model.getWidth() * 100, model.getHeight() * 100));
     }
 
     public class TrayCellView extends JPanel {

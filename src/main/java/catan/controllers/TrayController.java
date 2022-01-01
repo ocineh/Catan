@@ -4,15 +4,12 @@ import catan.models.players.Building;
 import catan.models.players.Player;
 import catan.models.tiles.Tile;
 import catan.models.tiles.Tray;
-import catan.models.tiles.TrayBuilder;
 import catan.views.gui.TrayView;
 
 public class TrayController extends AbstractController<Tray, TrayView> {
     private static final TrayController instance = new TrayController();
 
     private TrayController() {
-        model = TrayBuilder.buildDefault();
-        view = new TrayView(model);
     }
 
     public static TrayController getInstance() {

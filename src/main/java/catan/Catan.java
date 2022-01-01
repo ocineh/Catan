@@ -1,6 +1,8 @@
 package catan;
 
-import catan.views.gui.Game;
+import catan.controllers.GameController;
+import catan.models.Game;
+import catan.views.gui.GameView;
 
 public class Catan {
     public static void main(String[] args) {
@@ -9,12 +11,16 @@ public class Catan {
             System.exit(1);
         }
 
-        switch(args[0]){
-            case "gui"->{
-                Game game = new Game();
-                game.setVisible(true);
+        switch(args[0]) {
+            case "gui" -> {
+                GameController controller = GameController.getInstance();
+                controller.setView(new GameView());
+                controller.setModel(new Game());
+                controller.getView().pack();
+                controller.getView().setLocationRelativeTo(null);
+                controller.getView().setVisible(true);
             }
-            case "tui"->{
+            case "tui" -> {
                 System.err.println("Not implemented.");
                 System.exit(0);
             }

@@ -12,7 +12,6 @@ public class PlayerController extends AbstractController<Player, PlayerView> {
     private final CardDeckView cardDeckView;
 
     private PlayerController() {
-        view = new PlayerView();
         cardDeckView = new CardDeckView();
     }
 
