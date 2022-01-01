@@ -1,6 +1,5 @@
 package catan.models;
 
-import catan.models.players.Color;
 import catan.models.players.Player;
 import catan.models.tiles.Tray;
 import catan.models.tiles.TrayBuilder;
@@ -17,9 +16,9 @@ public class Game extends AbstractModel {
 
     public Game() {
         this(new Player[]{
-                new Player(Color.Blue),
-                new Player(Color.Red),
-                new Player(Color.White)
+                new Player(Player.Color.Blue),
+                new Player(Player.Color.Red),
+                new Player(Player.Color.White)
         }, TrayBuilder.buildDefault());
     }
 
