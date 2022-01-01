@@ -1,7 +1,5 @@
 package catan.views.gui;
 
-import catan.controllers.PlayerController;
-import catan.models.cards.Card;
 import catan.models.cards.Progress;
 import catan.models.cards.VictoryPoint;
 import catan.models.players.CardDeck;
@@ -20,12 +18,9 @@ public class CardDeckView extends JPanel implements View<CardDeck> {
     private CardDeck model;
 
     public CardDeckView() {
-        setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
-        setPreferredSize(new Dimension(400, 110));
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Card deck"));
 
-        JPanel cards = new JPanel();
-        cards.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Cards"));
         cardsViews = new LinkedList<>();
         cardsViews.add(new CardsView("Knight", CardDeck::countKnightCard));
 
@@ -33,36 +28,8 @@ public class CardDeckView extends JPanel implements View<CardDeck> {
             cardsViews.add(new CardsView(c.toString(), (d) -> d.countProgressCard(c)));
         for(var c : VictoryPoint.values())
             cardsViews.add(new CardsView(c.toString(), (d) -> d.countVictoryPointCard(c)));
-        cardsViews.forEach(cards::add);
-        cards.setMinimumSize(new Dimension(200, 200));
-        add(cards);
-
-        JPanel action = new JPanel();
-        action.setMinimumSize(new Dimension(200, 200));
-        action.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Action"));
-
-        JComboBox<String> comboBox = new JComboBox<>(Card.values());
-        action.add(comboBox);
-        JButton use = new JButton("use");
-        use.addActionListener(e -> {
-            String cardName = (String) comboBox.getSelectedItem();
-            if(cardName != null) {
-                switch(cardName) {
-                    case "BuildRoad" -> {}
-                    case "Invention" -> {}
-                    case "Knight" -> {}
-                    case "Monopoly" -> {}
-                    default -> {}
-                }
-            }
-        });
-        action.add(use);
-
-        JButton buy = new JButton("buy");
-        buy.addActionListener(e -> PlayerController.getInstance().buyCard());
-        action.add(buy);
-
-        add(action);
+        cardsViews.forEach(this::add);
+        setMinimumSize(new Dimension(200, 200));
     }
 
     public void setModel(CardDeck model) {

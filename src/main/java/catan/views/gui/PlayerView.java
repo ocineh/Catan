@@ -2,6 +2,7 @@ package catan.views.gui;
 
 import catan.controllers.PlayerController;
 import catan.controllers.TrayController;
+import catan.models.cards.Card;
 import catan.models.players.Player;
 import catan.models.tiles.Tile;
 import catan.views.View;
@@ -15,17 +16,27 @@ import java.util.function.Function;
 public class PlayerView extends JPanel implements View<Player> {
     private final InventoryView inventory;
     private final ActionView actionView;
+    private final CardDeckView cardDeckView;
     private Player model;
 
     public PlayerView() {
         setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Player"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setPreferredSize(new Dimension(150, 100));
 
+        JTabbedPane tabbedPane = new JTabbedPane();
+
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
         inventory = new InventoryView();
-        add(inventory);
+        cardDeckView = new CardDeckView();
+        panel.add(inventory);
+        panel.add(cardDeckView);
+        tabbedPane.add(panel, "Inventory");
 
         actionView = new ActionView();
-        add(actionView);
+        tabbedPane.add(actionView, "Action");
+        add(tabbedPane);
     }
 
     public Player getModel() {
@@ -36,29 +47,32 @@ public class PlayerView extends JPanel implements View<Player> {
     public void setModel(Player model) {
         this.model = model;
         inventory.setModel(model.getInventory());
+        cardDeckView.setModel(model.getCards());
     }
 
     private class ActionView extends JPanel {
         private static final Font font = new Font("Default", Font.PLAIN, 10);
         private final JPanel build;
         private final JPanel placement;
+        private final JPanel cardAction;
 
         public ActionView() {
             setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
             build = getBuildPanel();
             placement = getPlacementPanel();
+            cardAction = getCardAction();
 
             add(build);
             add(placement);
+            add(cardAction);
         }
 
         private JPanel getBuildPanel() {
             JPanel build = new JPanel();
             build.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Build"));
-            build.setPreferredSize(new Dimension(200, 125));
 
-            Insets insets = new Insets(0, 2, 0, 2);
+            Insets insets = new Insets(0, 0, 0, 0);
             JButton colony = new JButton("Colony");
             colony.addActionListener(e -> PlayerController.getInstance().buildColony());
             colony.setMargin(insets);
@@ -118,6 +132,33 @@ public class PlayerView extends JPanel implements View<Player> {
             button.addActionListener(function.apply(comboBox));
             panel.add(button);
             return panel;
+        }
+
+        private JPanel getCardAction() {
+            JPanel action = new JPanel();
+            action.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Cards"));
+
+            JComboBox<String> comboBox = new JComboBox<>(Card.values());
+            action.add(comboBox);
+            JButton use = new JButton("use");
+            use.addActionListener(e -> {
+                String cardName = (String) comboBox.getSelectedItem();
+                if(cardName != null) {
+                    switch(cardName) {
+                        case "BuildRoad" -> {}
+                        case "Invention" -> {}
+                        case "Knight" -> {}
+                        case "Monopoly" -> {}
+                        default -> {}
+                    }
+                }
+            });
+            action.add(use);
+
+            JButton buy = new JButton("buy");
+            buy.addActionListener(e -> PlayerController.getInstance().buyCard());
+            action.add(buy);
+            return action;
         }
     }
 }
