@@ -26,5 +26,6 @@ public class AbstractController<M extends Model, V extends View<M>> implements C
     @Override
     public void setView(V view) {
         this.view = view;
+        view.setModel(model);
     }
 }
