@@ -52,8 +52,10 @@ public abstract class Tile extends AbstractModel {
      * @param thief The thief to place on the tile
      */
     public void setThief(Thief thief) {
-        if(thief.getTile() != null) thief.getTile().setThief(null);
-        thief.setTile(this);
+        if(thief != null){
+            if(Thief.getInstance().getTile() != null) Thief.getInstance().getTile().setThief(null);
+            Thief.getInstance().setTile(this);
+        }
         this.thief = thief;
     }
 
