@@ -3,9 +3,9 @@ package catan.views.gui;
 import catan.controllers.GameController;
 import catan.controllers.PlayerController;
 import catan.controllers.TrayController;
-import catan.models.cards.Card;
-import catan.models.cards.Progress;
-import catan.models.cards.VictoryPoint;
+import catan.models.cards.ProgressCard;
+import catan.models.cards.VictoryPointCard;
+import catan.models.exceptions.CardAlreadyUsed;
 import catan.models.exceptions.NoCardAvailableException;
 import catan.models.exceptions.NoTileSelectedException;
 import catan.models.players.CardDeck;
@@ -124,9 +124,9 @@ public class PlayerView extends JPanel implements View<Player> {
             cardsViews = new LinkedList<>();
             cardsViews.add(new CardsView("Knight", CardDeck::countKnightCard));
 
-            for(var c : Progress.values())
+            for(var c : ProgressCard.values())
                 cardsViews.add(new CardsView(c.toString(), (d) -> d.countProgressCard(c)));
-            for(var c : VictoryPoint.values())
+            for(var c : VictoryPointCard.values())
                 cardsViews.add(new CardsView(c.toString(), (d) -> d.countVictoryPointCard(c)));
             cardsViews.forEach(this::add);
             setMinimumSize(new Dimension(200, 200));
@@ -252,7 +252,7 @@ public class PlayerView extends JPanel implements View<Player> {
             JPanel action = new JPanel();
             action.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Cards"));
 
-            JComboBox<String> comboBox = new JComboBox<>(Card.values());
+            JComboBox<String> comboBox = new JComboBox<>(new String[]{"Build road", "Invention", "Monopoly", "Knight"});
             action.add(comboBox);
             JButton use = new JButton("use");
             use.addActionListener(e -> {
@@ -260,7 +260,7 @@ public class PlayerView extends JPanel implements View<Player> {
                 if(cardName != null) {
                     try {
                         switch(cardName) {
-                            case "BuildRoad": break;
+                            case "Build road": break;
                             case "Invention": break;
                             case "Monopoly": break;
                             case "Knight":
@@ -268,7 +268,7 @@ public class PlayerView extends JPanel implements View<Player> {
                                 break;
                             default: break;
                         }
-                    } catch(NoTileSelectedException | NoCardAvailableException exception) {
+                    } catch(NoTileSelectedException | NoCardAvailableException | CardAlreadyUsed exception) {
                         showErrorPopup(exception.getMessage());
                     }
                 }

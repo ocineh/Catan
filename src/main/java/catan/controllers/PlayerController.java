@@ -1,5 +1,6 @@
 package catan.controllers;
 
+import catan.models.exceptions.CardAlreadyUsed;
 import catan.models.exceptions.NoCardAvailableException;
 import catan.models.exceptions.NoTileSelectedException;
 import catan.models.players.Player;
@@ -33,7 +34,7 @@ public class PlayerController extends AbstractController<Player, PlayerView> {
         model.buyCard();
     }
 
-    public void useKnightCard() throws NoTileSelectedException, NoCardAvailableException {
+    public void useKnightCard() throws NoTileSelectedException, NoCardAvailableException, CardAlreadyUsed {
         Tray.TrayCell cell = TrayController.getInstance().getSelected();
         if(cell == null) throw new NoTileSelectedException();
         model.getCards().useKnightCard();

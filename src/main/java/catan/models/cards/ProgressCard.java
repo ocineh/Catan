@@ -1,19 +1,14 @@
 package catan.models.cards;
 
+import catan.models.exceptions.CardAlreadyUsed;
 import catan.models.players.Player;
 import catan.models.tiles.Resource;
 
-public enum Progress implements Card, UsableCard {
+public enum ProgressCard {
     Invention, Monopoly, BuildRoad;
     private boolean used = false;
 
-    @Override
-    public boolean isProgress() {
-        return true;
-    }
-
-    @Override
-    public void use(Player player) {
+    public void use(Player player) throws CardAlreadyUsed {
         if(!used) {
             used = true;
             switch(this) {
@@ -26,7 +21,7 @@ public enum Progress implements Card, UsableCard {
                     addRoad(player);
                     break;
             }
-        }
+        } else throw new CardAlreadyUsed();
     }
 
     private void addRoad(Player player) {
@@ -35,7 +30,6 @@ public enum Progress implements Card, UsableCard {
         player.buildRoad();
     }
 
-    @Override
     public boolean isUsed() {
         return used;
     }
