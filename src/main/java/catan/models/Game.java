@@ -2,28 +2,24 @@ package catan.models;
 
 import catan.models.players.Player;
 import catan.models.tiles.Tray;
-import catan.models.tiles.TrayBuilder;
+
+import java.util.Random;
 
 public class Game extends AbstractModel {
+    private static final Random random = new Random();
     private final Player[] players;
     private final Tray tray;
     private int actual = 0;
+    private Dice dice;
 
     public Game(Player[] players, Tray tray) {
         this.players = players;
         this.tray = tray;
     }
 
-    public Game() {
-        this(new Player[]{
-                new Player(Player.Color.Blue),
-                new Player(Player.Color.Red),
-                new Player(Player.Color.White)
-        }, TrayBuilder.buildDefault());
-    }
-
     public void nextRound() {
         if(++actual == players.length) actual = 0;
+        dice = null;
         changed();
     }
 
@@ -33,5 +29,33 @@ public class Game extends AbstractModel {
 
     public Tray getTray() {
         return tray;
+    }
+
+    public Dice getDice() {
+        if(dice == null) {
+            dice = new Dice();
+            tray.harvest(dice.sum());
+            changed();
+        }
+        return dice;
+    }
+
+    public class Dice {
+        private final int a, b;
+
+        private Dice() {
+            a = 1 + random.nextInt(6);
+            b = 1 + random.nextInt(6);
+            dice = this;
+        }
+
+        public int sum() {
+            return a + b;
+        }
+
+        @Override
+        public String toString() {
+            return "The result of the dice is " + a + " and " + b + " so the total is " + sum();
+        }
     }
 }

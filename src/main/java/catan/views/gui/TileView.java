@@ -19,6 +19,7 @@ public class TileView extends JPanel implements View<Tile> {
         this.model = model;
         setBackground(model.getColor());
         add(new JLabel(model.toString(), SwingConstants.CENTER), CENTER_ALIGNMENT);
+        if(model.getNumber() != -1) add(new JLabel(model.getNumber() + "", SwingConstants.CENTER));
         setBorder(new TileBorder());
         if(model.getThief() != null) add(ThiefView.getInstance());
     }

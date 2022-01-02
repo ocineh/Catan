@@ -29,4 +29,8 @@ public class GameController extends AbstractController<Game, GameView> {
         playerController.setView(view.getPlayerView());
         trayController.setView(view.getTrayView());
     }
+
+    public Game.Dice getDice() {
+        return model.getDice();
+    }
 }

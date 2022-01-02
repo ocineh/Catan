@@ -1,5 +1,6 @@
 package catan.views.gui;
 
+import catan.controllers.GameController;
 import catan.controllers.PlayerController;
 import catan.controllers.TrayController;
 import catan.models.cards.Card;
@@ -170,10 +171,20 @@ public class PlayerView extends JPanel implements View<Player> {
             add(build);
             add(placement);
             add(cardAction);
+
+            JButton button = new JButton("Throw dice");
+            button.addActionListener(e -> {
+                JLabel label = new JLabel(GameController.getInstance().getDice().toString());
+                JOptionPane.showMessageDialog(GameWindow.getInstance(), label, "", JOptionPane.QUESTION_MESSAGE);
+            });
+            button.setBorder(new EmptyBorder(5, 10, 5, 10));
+            button.setMinimumSize(new Dimension(250, 25));
+            add(button);
         }
 
         private JPanel getBuildPanel() {
             JPanel build = new JPanel();
+            build.setMaximumSize(new Dimension(300, 100));
             build.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Build"));
 
             Insets insets = new Insets(0, 0, 0, 0);
@@ -191,11 +202,6 @@ public class PlayerView extends JPanel implements View<Player> {
             road.addActionListener(e -> PlayerController.getInstance().buildRoad());
             road.setMargin(insets);
             build.add(road);
-
-            JButton randomResource = new JButton("random resource");
-            randomResource.addActionListener(e -> PlayerController.getInstance().addRandomResource());
-            randomResource.setMargin(insets);
-            build.add(randomResource);
             return build;
         }
 
@@ -249,11 +255,11 @@ public class PlayerView extends JPanel implements View<Player> {
                 String cardName = (String) comboBox.getSelectedItem();
                 if(cardName != null) {
                     switch(cardName) {
-                        case "BuildRoad" : break;
-                        case "Invention" : break;
-                        case "Knight" : break;
-                        case "Monopoly" : break;
-                        default : break;
+                        case "BuildRoad": break;
+                        case "Invention": break;
+                        case "Knight": break;
+                        case "Monopoly": break;
+                        default: break;
                     }
                 }
             });

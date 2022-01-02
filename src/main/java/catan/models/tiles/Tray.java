@@ -94,6 +94,10 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
         return stream().iterator();
     }
 
+    public void harvest(int number) {
+        for(var cell : this) if(cell.getTile().getNumber() == number) cell.getTile().harvest();
+    }
+
     public class TrayCell {
         private final int row, column;
         private final Tile tile;
