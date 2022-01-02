@@ -3,15 +3,24 @@ package catan.views.gui;
 import catan.controllers.PlayerController;
 import catan.controllers.TrayController;
 import catan.models.cards.Card;
+import catan.models.cards.Progress;
+import catan.models.cards.VictoryPoint;
+import catan.models.players.CardDeck;
+import catan.models.players.Inventory;
 import catan.models.players.Player;
+import catan.models.tiles.Resource;
 import catan.models.tiles.Tile;
 import catan.views.View;
 
 import javax.swing.*;
+import javax.swing.border.Border;
+import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.util.LinkedList;
 import java.util.function.Function;
+import java.util.function.ToIntFunction;
 
 public class PlayerView extends JPanel implements View<Player> {
     private final InventoryView inventory;
@@ -46,8 +55,104 @@ public class PlayerView extends JPanel implements View<Player> {
     @Override
     public void setModel(Player model) {
         this.model = model;
-        inventory.setModel(model.getInventory());
-        cardDeckView.setModel(model.getCards());
+        model.getInventory().addChangeListener(inventory::update);
+        model.getCards().addChangeListener(cardDeckView::update);
+    }
+
+    public class InventoryView extends JPanel {
+        private final JLabel[][] resources = new JLabel[][]{
+                {new JLabel("Colonies"), new JLabel("0")},
+                {new JLabel("Cities"), new JLabel("0")},
+                {new JLabel("Roads"), new JLabel("0")},
+                {new JLabel("Brick"), new JLabel("0")},
+                {new JLabel("Ore"), new JLabel("0")},
+                {new JLabel("Wool"), new JLabel("0")},
+                {new JLabel("Lumber"), new JLabel("0")},
+                {new JLabel("Grain"), new JLabel("0")}
+        };
+
+        public InventoryView() {
+            setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Inventory"));
+            setMaximumSize(new Dimension(200, 150));
+            setLayout(new GridBagLayout());
+
+            GridBagConstraints constraints = new GridBagConstraints();
+            constraints.gridx = 1;
+            for(int row = 0; row < 8; ++row) {
+                constraints.gridy = row;
+                add(getValueAt(row, 1), constraints);
+            }
+
+            constraints.gridx = 0;
+            constraints.fill = GridBagConstraints.HORIZONTAL;
+            constraints.weightx = 1.0;
+            for(int row = 0; row < 8; ++row) {
+                constraints.gridy = row;
+                add(getValueAt(row, 0), constraints);
+            }
+        }
+
+        public JLabel getValueAt(int rowIndex, int columnIndex) {
+            return resources[rowIndex][columnIndex];
+        }
+
+        private void update() {
+            Inventory inventory = model.getInventory();
+            resources[0][1].setText(inventory.getColonies().size() + "");
+            resources[1][1].setText(inventory.getCities().size() + "");
+            resources[2][1].setText(inventory.getRoads().size() + "");
+            resources[3][1].setText(inventory.getResource(Resource.Brick) + "");
+            resources[4][1].setText(inventory.getResource(Resource.Ore) + "");
+            resources[5][1].setText(inventory.getResource(Resource.Wool) + "");
+            resources[6][1].setText(inventory.getResource(Resource.Lumber) + "");
+            resources[7][1].setText(inventory.getResource(Resource.Grain) + "");
+        }
+    }
+
+    public class CardDeckView extends JPanel {
+        private final LinkedList<CardsView> cardsViews;
+
+        public CardDeckView() {
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+            setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Card deck"));
+
+            cardsViews = new LinkedList<>();
+            cardsViews.add(new CardsView("Knight", CardDeck::countKnightCard));
+
+            for(var c : Progress.values())
+                cardsViews.add(new CardsView(c.toString(), (d) -> d.countProgressCard(c)));
+            for(var c : VictoryPoint.values())
+                cardsViews.add(new CardsView(c.toString(), (d) -> d.countVictoryPointCard(c)));
+            cardsViews.forEach(this::add);
+            setMinimumSize(new Dimension(200, 200));
+        }
+
+        private void update() {
+            cardsViews.forEach(CardsView::update);
+        }
+
+        public class CardsView extends JPanel {
+            private final JLabel label;
+            private final String cardName;
+            private final ToIntFunction<CardDeck> function;
+
+            public CardsView(String cardName, ToIntFunction<CardDeck> function) {
+                this.cardName = cardName;
+                this.function = function;
+                setLayout(new BorderLayout());
+                Border border = new LineBorder(Color.BLACK, 2, true);
+                setBorder(border);
+
+                label = new JLabel(cardName + ": 0");
+                label.setBorder(new EmptyBorder(1, 1, 1, 1));
+                add(label, BorderLayout.CENTER);
+            }
+
+            private void update() {
+                int value = model != null ? function.applyAsInt(model.getCards()) : -1;
+                label.setText(cardName + ": " + value);
+            }
+        }
     }
 
     private class ActionView extends JPanel {

@@ -2,25 +2,18 @@ package catan.controllers;
 
 import catan.models.players.Player;
 import catan.models.tiles.Resource;
-import catan.views.gui.CardDeckView;
 import catan.views.gui.PlayerView;
 
 import java.util.Random;
 
 public class PlayerController extends AbstractController<Player, PlayerView> {
     private static final PlayerController instance = new PlayerController();
-    private final CardDeckView cardDeckView;
 
     private PlayerController() {
-        cardDeckView = new CardDeckView();
     }
 
     public static PlayerController getInstance() {
         return instance;
-    }
-
-    public CardDeckView getCardDeckView() {
-        return cardDeckView;
     }
 
     public void buildRoad() {
