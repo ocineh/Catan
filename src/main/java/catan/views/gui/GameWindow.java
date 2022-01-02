@@ -1,22 +1,22 @@
 package catan.views.gui;
 
-import catan.controllers.GameController;
-import catan.models.Game;
-
 import javax.swing.*;
 import java.awt.*;
 
 public class GameWindow extends JFrame {
-    public GameWindow() throws HeadlessException {
-        GameController controller = GameController.getInstance();
-        controller.setView(new GameView());
-        controller.setModel(new Game());
+    private static final GameWindow instance = new GameWindow();
 
-        add(controller.getView(), BorderLayout.CENTER);
+    private GameWindow() throws HeadlessException {
+        MenuView menuView = new MenuView();
+        add(menuView, BorderLayout.CENTER);
 
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
         pack();
         setLocationRelativeTo(null);
+    }
+
+    public static GameWindow getInstance() {
+        return instance;
     }
 }

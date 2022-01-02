@@ -11,7 +11,7 @@ public class Catan {
 
         switch(args[0]) {
             case "gui":
-                GameWindow window = new GameWindow();
+                GameWindow window = GameWindow.getInstance();
                 window.setVisible(true);
                 break;
             case "tui":
