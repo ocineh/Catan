@@ -18,6 +18,10 @@ public class Player extends AbstractModel {
         players.add(this);
     }
 
+    public static LinkedList<Player> getPlayers() {
+        return players;
+    }
+
     public static Player playerWithTheBiggestArmy() {
         if(players.size() == 0) return null;
         Player player = null;

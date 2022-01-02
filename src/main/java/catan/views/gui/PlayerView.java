@@ -64,6 +64,18 @@ public class PlayerView extends JPanel implements View<Player> {
         model.getCards().addChangeListener(cardDeckView::update);
     }
 
+    public Resource askResourcePopup() {
+        return (Resource) JOptionPane.showInputDialog(
+                GameWindow.getInstance(),
+                "Choose a resource type",
+                "Brick",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                Resource.values(),
+                Resource.values()[0]
+        );
+    }
+
     public class InventoryView extends JPanel {
         private final JLabel[][] resources = new JLabel[][]{
                 {new JLabel("Colonies"), new JLabel("0")},
@@ -260,11 +272,13 @@ public class PlayerView extends JPanel implements View<Player> {
                 if(cardName != null) {
                     try {
                         switch(cardName) {
-                            case "Build road": break;
-                            case "Invention": break;
-                            case "Monopoly": break;
-                            case "Knight":
-                                PlayerController.getInstance().useKnightCard();
+                            case "Build road": PlayerController.getInstance().useProgressCard(ProgressCard.BuildRoad);
+                                break;
+                            case "Invention": PlayerController.getInstance().useProgressCard(ProgressCard.Invention);
+                                break;
+                            case "Monopoly": PlayerController.getInstance().useProgressCard(ProgressCard.Monopoly);
+                                break;
+                            case "Knight": PlayerController.getInstance().useKnightCard();
                                 break;
                             default: break;
                         }

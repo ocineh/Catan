@@ -95,4 +95,12 @@ public final class CardDeck extends AbstractModel {
             }
         } else throw new NoCardAvailableException();
     }
+
+    public void useProgressCard(ProgressCard card) throws NoCardAvailableException {
+        if(progressCard.size() > 0) {
+            if(!progressCard.removeFirstOccurrence(card))
+                throw new NoCardAvailableException();
+            else changed();
+        } else throw new NoCardAvailableException();
+    }
 }

@@ -77,6 +77,12 @@ public class Inventory extends AbstractModel {
         return resources.get(resource);
     }
 
+    public Integer removeAll(Resource resource) {
+        Integer res = resources.get(resource);
+        resources.computeIfPresent(resource, (key, value) -> value = 0);
+        return res;
+    }
+
     public void addResource(Resource resource) {
         resources.computeIfPresent(resource, (r, count) -> ++count);
         changed();
