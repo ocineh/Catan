@@ -7,7 +7,6 @@ import catan.views.View;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
-import java.awt.event.MouseEvent;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -19,14 +18,15 @@ public class TrayView extends JPanel implements View<Tray> {
         setBorder(new EmptyBorder(5, 5, 5, 5));
     }
 
-    public TrayCellView getSelected() {
-        return selected;
+    public Tray.TrayCell getSelected() {
+        return selected != null ? selected.cell : null;
     }
 
     @Override
     public void setModel(Tray model) {
         this.model = model;
         setLayout(new GridLayout(model.getHeight(), model.getWidth()));
+        for(var c : getComponents()) remove(c);
         List<TrayCellView> tileViews = model.stream().map(TrayCellView::new).collect(Collectors.toList());
         for(TrayCellView cell : tileViews) add(cell);
         setPreferredSize(new Dimension(model.getWidth() * 100, model.getHeight() * 100));
@@ -43,16 +43,12 @@ public class TrayView extends JPanel implements View<Tray> {
             setLayout(new BorderLayout());
             add(tileView, BorderLayout.CENTER);
 
-            TrayCellView view = this;
-            addMouseListener(new ClickedMouseListener() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    if(selected != null) selected.tileView.setBackground(selected.tileView.getModel().getColor());
-                    if(selected != view) {
-                        selected = view;
-                        selected.tileView.setBackground(Color.CYAN);
-                    } else selected = null;
-                }
+            addMouseListener((ClickedMouseListener) e -> {
+                if(selected != null) selected.tileView.setBackground(selected.tileView.getModel().getColor());
+                if(selected != this) {
+                    selected = this;
+                    selected.tileView.setBackground(Color.CYAN);
+                } else selected = null;
             });
         }
 

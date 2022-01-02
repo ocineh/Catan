@@ -16,40 +16,31 @@ public class TrayController extends AbstractController<Tray, TrayView> {
         return instance;
     }
 
-    public TrayView.TrayCellView getSelected() {
+    public Tray.TrayCell getSelected() {
         return view.getSelected();
     }
 
     public void placeColony(Player player, Tile.Vertex vertex) {
-        TrayView.TrayCellView cellView = getSelected();
-        if(cellView != null) {
-            Tray.TrayCell cell = cellView.getCell();
-            if(cell.isEmpty(vertex)) {
-                Building.Colony colony = player.getInventory().getColony();
-                if(colony != null) cell.placeColony(colony, vertex);
-            }
+        Tray.TrayCell cell = getSelected();
+        if(cell != null && cell.isEmpty(vertex)) {
+            Building.Colony colony = player.getInventory().getColony();
+            if(colony != null) cell.placeColony(colony, vertex);
         }
     }
 
     public void placeCity(Player player, Tile.Vertex vertex) {
-        TrayView.TrayCellView cellView = getSelected();
-        if(cellView != null) {
-            Tray.TrayCell cell = cellView.getCell();
-            if(cell.isEmpty(vertex)) {
-                Building.City city = player.getInventory().getCity();
-                if(city != null) cell.placeColony(city, vertex);
-            }
+        Tray.TrayCell cell = getSelected();
+        if(cell != null && cell.isEmpty(vertex)) {
+            Building.City city = player.getInventory().getCity();
+            if(city != null) cell.placeColony(city, vertex);
         }
     }
 
     public void placeRoad(Player player, Tile.Edge edge) {
-        TrayView.TrayCellView cellView = getSelected();
-        if(cellView != null) {
-            Tray.TrayCell cell = cellView.getCell();
-            if(cell.isEmpty(edge)) {
-                Building.Road road = player.getInventory().getRoad();
-                if(road != null) cell.placeRoad(road, edge);
-            }
+        Tray.TrayCell cell = getSelected();
+        if(cell != null && cell.isEmpty(edge)) {
+            Building.Road road = player.getInventory().getRoad();
+            if(road != null) cell.placeRoad(road, edge);
         }
     }
 }
