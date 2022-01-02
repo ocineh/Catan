@@ -1,8 +1,9 @@
 package catan.models.players;
 
+import catan.models.AbstractModel;
 import catan.models.tiles.Tile;
 
-public class Thief {
+public class Thief extends AbstractModel {
     private static final Thief instance = new Thief();
     private Tile tile;
 
@@ -18,6 +19,13 @@ public class Thief {
     }
 
     public void setTile(Tile tile) {
+        if(this.tile != null){
+            this.tile.setThief(null);
+            this.tile.changed();
+        }
         this.tile = tile;
+        tile.setThief(this);
+        tile.changed();
+        changed();
     }
 }

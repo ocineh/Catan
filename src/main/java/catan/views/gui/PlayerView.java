@@ -6,6 +6,8 @@ import catan.controllers.TrayController;
 import catan.models.cards.Card;
 import catan.models.cards.Progress;
 import catan.models.cards.VictoryPoint;
+import catan.models.exceptions.NoCardAvailableException;
+import catan.models.exceptions.NoTileSelectedException;
 import catan.models.players.CardDeck;
 import catan.models.players.Inventory;
 import catan.models.players.Player;
@@ -56,6 +58,8 @@ public class PlayerView extends JPanel implements View<Player> {
     @Override
     public void setModel(Player model) {
         this.model = model;
+        inventory.update();
+        cardDeckView.update();
         model.getInventory().addChangeListener(inventory::update);
         model.getCards().addChangeListener(cardDeckView::update);
     }
@@ -254,12 +258,18 @@ public class PlayerView extends JPanel implements View<Player> {
             use.addActionListener(e -> {
                 String cardName = (String) comboBox.getSelectedItem();
                 if(cardName != null) {
-                    switch(cardName) {
-                        case "BuildRoad": break;
-                        case "Invention": break;
-                        case "Knight": break;
-                        case "Monopoly": break;
-                        default: break;
+                    try {
+                        switch(cardName) {
+                            case "BuildRoad": break;
+                            case "Invention": break;
+                            case "Monopoly": break;
+                            case "Knight":
+                                PlayerController.getInstance().useKnightCard();
+                                break;
+                            default: break;
+                        }
+                    } catch(NoTileSelectedException | NoCardAvailableException exception) {
+                        showErrorPopup(exception.getMessage());
                     }
                 }
             });
@@ -269,6 +279,10 @@ public class PlayerView extends JPanel implements View<Player> {
             buy.addActionListener(e -> PlayerController.getInstance().buyCard());
             action.add(buy);
             return action;
+        }
+
+        private void showErrorPopup(String message) {
+            JOptionPane.showMessageDialog(GameWindow.getInstance(), message, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }

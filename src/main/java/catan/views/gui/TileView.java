@@ -12,16 +12,17 @@ import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 
 public class TileView extends JPanel implements View<Tile> {
+    private final ThiefView thiefView = new ThiefView();
     private Tile model;
 
     public TileView(Tile model) {
-        model.addChangeListener(this::repaint);
+        model.addChangeListener(this::update);
         this.model = model;
         setBackground(model.getColor());
         add(new JLabel(model.toString(), SwingConstants.CENTER), CENTER_ALIGNMENT);
         if(model.getNumber() != -1) add(new JLabel(model.getNumber() + "", SwingConstants.CENTER));
         setBorder(new TileBorder());
-        if(model.getThief() != null) add(ThiefView.getInstance());
+        if(model.getThief() != null) add(thiefView);
     }
 
     public Tile getModel() {
@@ -31,6 +32,14 @@ public class TileView extends JPanel implements View<Tile> {
     @Override
     public void setModel(Tile model) {
         this.model = model;
+    }
+
+    public void update() {
+        if(thiefView != null) {
+            if(model.getThief() == null) remove(thiefView);
+            else add(thiefView);
+        }
+        repaint();
     }
 
     private class TileBorder extends AbstractBorder {

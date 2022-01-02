@@ -15,10 +15,7 @@ public class Knight implements Card, UsableCard {
 
     @Override
     public void use(Player player) {
-        if(!used) {
-            used = true;
-            // TODO: Allows the player to move the thief
-        }
+        if(!used) used = true;
     }
 
     @Override

@@ -1,6 +1,10 @@
 package catan.controllers;
 
+import catan.models.exceptions.NoCardAvailableException;
+import catan.models.exceptions.NoTileSelectedException;
 import catan.models.players.Player;
+import catan.models.players.Thief;
+import catan.models.tiles.Tray;
 import catan.views.gui.PlayerView;
 
 public class PlayerController extends AbstractController<Player, PlayerView> {
@@ -27,5 +31,12 @@ public class PlayerController extends AbstractController<Player, PlayerView> {
 
     public void buyCard() {
         model.buyCard();
+    }
+
+    public void useKnightCard() throws NoTileSelectedException, NoCardAvailableException {
+        Tray.TrayCell cell = TrayController.getInstance().getSelected();
+        if(cell == null) throw new NoTileSelectedException();
+        model.getCards().useKnightCard();
+        Thief.getInstance().setTile(cell.getTile());
     }
 }
