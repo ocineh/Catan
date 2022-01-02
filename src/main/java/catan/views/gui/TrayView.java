@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class TrayView extends JPanel implements View<Tray> {
     private Tray model;
@@ -26,7 +27,7 @@ public class TrayView extends JPanel implements View<Tray> {
     public void setModel(Tray model) {
         this.model = model;
         setLayout(new GridLayout(model.getHeight(), model.getWidth()));
-        List<TrayCellView> tileViews = model.stream().map(TrayCellView::new).toList();
+        List<TrayCellView> tileViews = model.stream().map(TrayCellView::new).collect(Collectors.toList());
         for(TrayCellView cell : tileViews) add(cell);
         setPreferredSize(new Dimension(model.getWidth() * 100, model.getHeight() * 100));
     }

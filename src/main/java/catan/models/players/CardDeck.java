@@ -62,15 +62,24 @@ public final class CardDeck extends AbstractModel {
 
     public void addRandomCard() {
         switch(random.nextInt(9)) {
-            case 0 -> progressCard.add(Progress.Invention);
-            case 1 -> progressCard.add(Progress.Monopoly);
-            case 2 -> progressCard.add(Progress.BuildRoad);
-            case 3 -> victoryPointCard.add(VictoryPoint.University);
-            case 4 -> victoryPointCard.add(VictoryPoint.Church);
-            case 5 -> victoryPointCard.add(VictoryPoint.Library);
-            case 6 -> victoryPointCard.add(VictoryPoint.Parliament);
-            case 7 -> victoryPointCard.add(VictoryPoint.MarketPlace);
-            case 8 -> knightCard.add(new Knight());
+            case 0: progressCard.add(Progress.Invention);
+                break;
+            case 1: progressCard.add(Progress.Monopoly);
+                break;
+            case 2: progressCard.add(Progress.BuildRoad);
+                break;
+            case 3: victoryPointCard.add(VictoryPoint.University);
+                break;
+            case 4: victoryPointCard.add(VictoryPoint.Church);
+                break;
+            case 5: victoryPointCard.add(VictoryPoint.Library);
+                break;
+            case 6: victoryPointCard.add(VictoryPoint.Parliament);
+                break;
+            case 7: victoryPointCard.add(VictoryPoint.MarketPlace);
+                break;
+            case 8: knightCard.add(new Knight());
+                break;
         }
         changed();
     }

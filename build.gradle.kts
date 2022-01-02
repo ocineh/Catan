@@ -4,7 +4,7 @@ plugins {
 }
 
 application {
-    mainClass.set("catan.Catan");
+    mainClassName = "catan.Catan";
 }
 
 repositories {

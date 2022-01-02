@@ -51,7 +51,6 @@ public class PlayerView extends JPanel implements View<Player> {
     }
 
     private class ActionView extends JPanel {
-        private static final Font font = new Font("Default", Font.PLAIN, 10);
         private final JPanel build;
         private final JPanel placement;
         private final JPanel cardAction;
@@ -145,11 +144,11 @@ public class PlayerView extends JPanel implements View<Player> {
                 String cardName = (String) comboBox.getSelectedItem();
                 if(cardName != null) {
                     switch(cardName) {
-                        case "BuildRoad" -> {}
-                        case "Invention" -> {}
-                        case "Knight" -> {}
-                        case "Monopoly" -> {}
-                        default -> {}
+                        case "BuildRoad" : break;
+                        case "Invention" : break;
+                        case "Knight" : break;
+                        case "Monopoly" : break;
+                        default : break;
                     }
                 }
             });

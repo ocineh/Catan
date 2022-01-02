@@ -35,7 +35,8 @@ public class TileView extends JPanel implements View<Tile> {
     private class TileBorder extends AbstractBorder {
         @Override
         public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-            if(g instanceof Graphics2D g2d) {
+            if(g instanceof Graphics2D) {
+                Graphics2D g2d = (Graphics2D) g;
                 int a = x + width, b = y + height;
                 Point topLeft = new Point(x, y);
                 Point topRight = new Point(a, y);

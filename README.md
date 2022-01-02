@@ -6,7 +6,7 @@ A video game based on the board game The Settlers of Catan
 
 ### Requirement
 
-- java jdk 17
+- java jdk 10
 - gradle at least 7.2
 
 ## Running

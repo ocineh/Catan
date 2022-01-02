@@ -42,22 +42,22 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
     private void placeColony(int row, int column, Building.Colony colony, Tile.Vertex vertex) {
         if(get(row, column).placeColony(colony, vertex)) {
             switch(vertex) {
-                case TopLeft -> {
+                case TopLeft:
                     if(row > 0) placeColony(row - 1, column, colony, Tile.Vertex.BottomLeft);
                     else if(column > 0) get(row, column - 1).placeColony(colony, Tile.Vertex.TopRight);
-                }
-                case TopRight -> {
+                    break;
+                case TopRight:
                     if(column < width - 1) placeColony(row, column + 1, colony, Tile.Vertex.TopLeft);
                     else if(row > 0) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomRight);
-                }
-                case BottomLeft -> {
+                    break;
+                case BottomLeft:
                     if(column > 0) placeColony(row, column - 1, colony, Tile.Vertex.BottomRight);
                     else if(row < height - 1) get(row + 1, column).placeColony(colony, Tile.Vertex.TopLeft);
-                }
-                case BottomRight -> {
+                    break;
+                case BottomRight:
                     if(row < height - 1) placeColony(row + 1, column, colony, Tile.Vertex.TopRight);
                     else if(column < width - 1) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomLeft);
-                }
+                    break;
             }
         }
     }
@@ -65,18 +65,14 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
     private void placeRoad(int row, int column, Building.Road road, Tile.Edge edge) {
         if(get(row, column).placeRoad(road, edge)) {
             switch(edge) {
-                case Top -> {
-                    if(row > 0) get(row - 1, column).placeRoad(road, Tile.Edge.Bottom);
-                }
-                case Left -> {
-                    if(column > 0) get(row, column - 1).placeRoad(road, Tile.Edge.Right);
-                }
-                case Bottom -> {
-                    if(row < height - 1) get(row + 1, column).placeRoad(road, Tile.Edge.Top);
-                }
-                case Right -> {
-                    if(column < width - 1) get(row, column + 1).placeRoad(road, Tile.Edge.Left);
-                }
+                case Top: if(row > 0) get(row - 1, column).placeRoad(road, Tile.Edge.Bottom);
+                    break;
+                case Left: if(column > 0) get(row, column - 1).placeRoad(road, Tile.Edge.Right);
+                    break;
+                case Bottom: if(row < height - 1) get(row + 1, column).placeRoad(road, Tile.Edge.Top);
+                    break;
+                case Right: if(column < width - 1) get(row, column + 1).placeRoad(road, Tile.Edge.Left);
+                    break;
             }
         }
     }

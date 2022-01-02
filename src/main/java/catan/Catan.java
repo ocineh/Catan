@@ -10,18 +10,18 @@ public class Catan {
         }
 
         switch(args[0]) {
-            case "gui" -> {
+            case "gui":
                 GameWindow window = new GameWindow();
                 window.setVisible(true);
-            }
-            case "tui" -> {
+                break;
+            case "tui":
                 System.err.println("Not implemented.");
                 System.exit(0);
-            }
-            default -> {
+                break;
+            default:
                 System.err.println("Unknown command.");
                 System.exit(0);
-            }
+                break;
         }
     }
 }

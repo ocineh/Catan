@@ -25,7 +25,7 @@ public abstract class Tile extends AbstractModel {
      */
     Tile(Color color) {
         this.color = color;
-        this.number = random.nextInt(2, 13);
+        this.number = 2 + random.nextInt(11);
     }
 
     /**
@@ -52,7 +52,7 @@ public abstract class Tile extends AbstractModel {
      * @param thief The thief to place on the tile
      */
     public void setThief(Thief thief) {
-        if(thief != null){
+        if(thief != null) {
             if(Thief.getInstance().getTile() != null) Thief.getInstance().getTile().setThief(null);
             Thief.getInstance().setTile(this);
         }
@@ -155,12 +155,13 @@ public abstract class Tile extends AbstractModel {
 
         @Override
         public String toString() {
-            return switch(this) {
-                case Top -> "Top";
-                case Left -> "Left";
-                case Bottom -> "Bottom";
-                case Right -> "Right";
-            };
+            switch(this) {
+                case Top: return "Top";
+                case Left: return "Left";
+                case Bottom: return "Bottom";
+                case Right: return "Right";
+            }
+            return null;
         }
     }
 
@@ -177,12 +178,13 @@ public abstract class Tile extends AbstractModel {
 
         @Override
         public String toString() {
-            return switch(this) {
-                case TopLeft -> "Top left";
-                case TopRight -> "Top right";
-                case BottomLeft -> "Bottom left";
-                case BottomRight -> "Bottom right";
-            };
+            switch(this) {
+                case TopLeft: return "Top left";
+                case TopRight: return "Top right";
+                case BottomLeft: return "Bottom left";
+                case BottomRight: return "Bottom right";
+            }
+            return null;
         }
     }
 

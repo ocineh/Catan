@@ -17,16 +17,14 @@ public enum Progress implements Card, UsableCard {
         if(!used) {
             used = true;
             switch(this) {
-                case Invention -> {
-                    // TODO: Allow the player to choose two resources of their choice
-                }
-                case Monopoly -> {
-                    // TODO: Allow the player designates a type of resource and all players must give him the chosen type of resource that they have
-                }
-                case BuildRoad -> {
+                case Invention: // TODO: Allow the player to choose two resources of their choice
+                    break;
+                case Monopoly: // TODO: Allow the player designates a type of resource and all players must give him the chosen type of resource that they have
+                    break;
+                case BuildRoad:
                     addRoad(player);
                     addRoad(player);
-                }
+                    break;
             }
         }
     }

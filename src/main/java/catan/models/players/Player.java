@@ -87,11 +87,12 @@ public class Player extends AbstractModel {
         Blue, White, Red;
 
         public java.awt.Color toAwtColor() {
-            return switch(this) {
-                case Blue -> java.awt.Color.BLUE;
-                case White -> java.awt.Color.WHITE;
-                case Red -> java.awt.Color.RED;
-            };
+            switch(this) {
+                case Blue: return java.awt.Color.BLUE;
+                case White: return java.awt.Color.WHITE;
+                case Red: return java.awt.Color.RED;
+            }
+            return null;
         }
     }
 }
