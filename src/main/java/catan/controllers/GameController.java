@@ -15,6 +15,11 @@ public class GameController extends AbstractController<Game, GameView> {
         return instance;
     }
 
+    public void nextRound() {
+        model.nextRound();
+        setModel(model);
+    }
+
     @Override
     public void setModel(Game model) {
         this.model = model;
@@ -28,6 +33,10 @@ public class GameController extends AbstractController<Game, GameView> {
         if(model != null) view.setModel(model);
         playerController.setView(view.getPlayerView());
         trayController.setView(view.getTrayView());
+    }
+
+    public Game.Dice getBackThrownDice() {
+        return model.getBackThrownDice();
     }
 
     public Game.Dice getDice() {

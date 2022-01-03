@@ -31,12 +31,16 @@ public class Game extends AbstractModel {
         return tray;
     }
 
-    public Dice getDice() {
+    public Dice getBackThrownDice() {
         if(dice == null) {
             dice = new Dice();
             tray.harvest(dice.sum());
             changed();
         }
+        return dice;
+    }
+
+    public Dice getDice() {
         return dice;
     }
 

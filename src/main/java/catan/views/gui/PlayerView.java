@@ -190,7 +190,7 @@ public class PlayerView extends JPanel implements View<Player> {
 
             JButton button = new JButton("Throw dice");
             button.addActionListener(e -> {
-                JLabel label = new JLabel(GameController.getInstance().getDice().toString());
+                JLabel label = new JLabel(GameController.getInstance().getBackThrownDice().toString());
                 JOptionPane.showMessageDialog(GameWindow.getInstance(), label, "", JOptionPane.QUESTION_MESSAGE);
             });
             button.setBorder(new EmptyBorder(5, 10, 5, 10));
