@@ -9,6 +9,10 @@ public class GameWindow extends JFrame {
     private static final GameWindow instance = new GameWindow();
 
     private GameWindow() throws HeadlessException {
+        try {
+            UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
+        } catch(Exception ignored) {}
+
         MenuView menuView = new MenuView();
         add(menuView, BorderLayout.CENTER);
 
