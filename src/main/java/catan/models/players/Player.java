@@ -5,7 +5,7 @@ import catan.models.tiles.Resource;
 
 import java.util.LinkedList;
 
-public class Player extends AbstractModel {
+public abstract class Player extends AbstractModel {
     private final static LinkedList<Player> players = new LinkedList<>();
     private final Color color;
     private final CardDeck cards;
@@ -85,6 +85,10 @@ public class Player extends AbstractModel {
             cards.addRandomCard();
             changed();
         }
+    }
+
+    public boolean isBot(){
+        return false;
     }
 
     public enum Color {

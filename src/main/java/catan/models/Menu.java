@@ -1,5 +1,7 @@
 package catan.models;
 
+import catan.models.players.Bot;
+import catan.models.players.Human;
 import catan.models.players.Player;
 import catan.models.tiles.Tray;
 import catan.models.tiles.TrayBuilder;
@@ -45,7 +47,8 @@ public class Menu extends AbstractModel {
 
         public Player toPlayer() {
             switch(type) {
-                case "Human": return new Player(color);
+                case "Human": return new Human(color);
+                case "Bot": return new Bot(color);
                 default: throw new IllegalArgumentException();
             }
         }
