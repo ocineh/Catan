@@ -12,7 +12,8 @@ import java.awt.*;
 public class MenuView extends JPanel implements View<Menu> {
     private Menu model = new Menu();
 
-    public MenuView() {
+    public MenuView(Menu model) {
+        this.model = model;
         setPreferredSize(new Dimension(450, 500));
 
         JLabel label = new JLabel("The Settlers of Catan", SwingConstants.CENTER);

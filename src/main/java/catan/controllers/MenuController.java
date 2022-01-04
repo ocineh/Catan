@@ -13,8 +13,8 @@ public class MenuController extends AbstractController<Menu, MenuView> {
     private static final MenuController instance = new MenuController();
 
     private MenuController() {
-        setView(new MenuView());
         setModel(new Menu());
+        setView(new MenuView(getModel()));
     }
 
     public static MenuController getInstance() {
