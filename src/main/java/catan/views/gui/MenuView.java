@@ -68,7 +68,7 @@ public class MenuView extends JPanel implements View<Menu> {
             add(colorPanel);
 
             JComboBox<String> playerType = new JComboBox<>();
-            playerType.addItem("Humain");
+            playerType.addItem("Human");
             playerType.addActionListener(e -> model.setType((String) playerType.getSelectedItem()));
             add(playerType);
         }

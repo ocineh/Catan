@@ -33,7 +33,7 @@ public class Menu extends AbstractModel {
 
     public static class PlayerSetting {
         private final Player.Color color;
-        private String type = "Humain";
+        private String type = "Human";
 
         public PlayerSetting(Player.Color color) {
             this.color = color;
@@ -45,7 +45,7 @@ public class Menu extends AbstractModel {
 
         public Player toPlayer() {
             switch(type) {
-                case "Humain": return new Player(color);
+                case "Human": return new Player(color);
                 default: throw new IllegalArgumentException();
             }
         }
