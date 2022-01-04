@@ -4,7 +4,6 @@ import catan.models.AbstractModel;
 import catan.models.cards.KnightCard;
 import catan.models.cards.ProgressCard;
 import catan.models.cards.VictoryPointCard;
-import catan.models.exceptions.CardAlreadyUsed;
 import catan.models.exceptions.NoCardAvailableException;
 
 import java.util.LinkedList;
@@ -64,14 +63,10 @@ public final class CardDeck extends AbstractModel {
         changed();
     }
 
-    public void useKnightCard() throws NoCardAvailableException, CardAlreadyUsed {
+    public void useKnightCard() throws NoCardAvailableException {
         if(knightCard.size() > 0) {
-            KnightCard knightCard = this.knightCard.remove();
-            if(knightCard.isUsed()) useKnightCard();
-            else {
-                knightCard.use();
-                changed();
-            }
+            this.knightCard.remove();
+            changed();
         } else throw new NoCardAvailableException();
     }
 

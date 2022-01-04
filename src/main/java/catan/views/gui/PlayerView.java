@@ -4,7 +4,6 @@ import catan.controllers.GameController;
 import catan.controllers.PlayerController;
 import catan.models.cards.ProgressCard;
 import catan.models.cards.VictoryPointCard;
-import catan.models.exceptions.CardAlreadyUsed;
 import catan.models.exceptions.NoCardAvailableException;
 import catan.models.exceptions.NoTileSelectedException;
 import catan.models.players.CardDeck;
@@ -274,7 +273,7 @@ public class PlayerView extends JPanel implements View<Player> {
                                 break;
                             default: break;
                         }
-                    } catch(NoTileSelectedException | NoCardAvailableException | CardAlreadyUsed exception) {
+                    } catch(NoTileSelectedException | NoCardAvailableException exception) {
                         showErrorPopup(exception.getMessage());
                     }
                 }
