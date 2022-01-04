@@ -45,4 +45,13 @@ public class GameWindow extends JFrame {
                 Tile.Edge.values()[0]
         );
     }
+
+    public void showError(String message) {
+        JOptionPane.showMessageDialog(
+                this,
+                message,
+                "Error",
+                JOptionPane.ERROR_MESSAGE
+        );
+    }
 }

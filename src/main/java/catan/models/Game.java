@@ -1,6 +1,8 @@
 package catan.models;
 
+import catan.models.exceptions.CannotFinishRoundException;
 import catan.models.players.Player;
+import catan.models.players.Thief;
 import catan.models.tiles.Tray;
 
 import java.util.Random;
@@ -17,7 +19,8 @@ public class Game extends AbstractModel {
         this.tray = tray;
     }
 
-    public void nextRound() {
+    public void nextRound() throws CannotFinishRoundException {
+        if(Thief.getInstance().isMovable()) throw new CannotFinishRoundException("you must move the thief.");
         if(++actual == players.length) actual = 0;
         dice = null;
         changed();
@@ -35,6 +38,7 @@ public class Game extends AbstractModel {
         if(dice == null) {
             dice = new Dice();
             tray.harvest(dice.sum());
+            if(dice.sum() == 7) Thief.getInstance().setMovable(true);
             changed();
         }
         return dice;

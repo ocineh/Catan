@@ -192,6 +192,8 @@ public class PlayerView extends JPanel implements View<Player> {
             });
             panel.add(button, Component.CENTER_ALIGNMENT);
 
+            panel.add(ThiefView.getMoveThiefButton());
+
             JButton finished = new JButton("Finished");
             finished.addActionListener(e -> {
                 if(GameController.getInstance().getDice() != null) GameController.getInstance().nextRound();
