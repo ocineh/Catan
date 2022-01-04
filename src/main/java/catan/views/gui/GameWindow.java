@@ -1,5 +1,6 @@
 package catan.views.gui;
 
+import catan.controllers.MenuController;
 import catan.models.tiles.Tile;
 
 import javax.swing.*;
@@ -13,8 +14,8 @@ public class GameWindow extends JFrame {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch(Exception ignored) {}
 
-        MenuView menuView = new MenuView();
-        add(menuView, BorderLayout.CENTER);
+        MenuController controller = MenuController.getInstance();
+        add(controller.getView(), BorderLayout.CENTER);
 
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
