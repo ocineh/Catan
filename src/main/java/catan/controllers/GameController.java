@@ -18,8 +18,10 @@ public class GameController extends AbstractController<Game, GameView> {
     }
 
     public void nextRound() {
+        if(model.getActualPlayer().isBot()) model.makeBotPlay();
         try {
             model.nextRound();
+            if(model.getActualPlayer().isBot()) nextRound();
         } catch(CannotFinishRoundException e) {
             GameWindow.getInstance().showError(e.getMessage());
         }
@@ -29,6 +31,7 @@ public class GameController extends AbstractController<Game, GameView> {
     @Override
     public void setModel(Game model) {
         this.model = model;
+        if(model.getActualPlayer().isBot()) nextRound();
         playerController.setModel(model.getActualPlayer());
         trayController.setModel(model.getTray());
     }
