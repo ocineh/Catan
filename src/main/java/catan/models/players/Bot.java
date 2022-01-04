@@ -19,7 +19,6 @@ public class Bot extends Player {
     }
 
     public enum Action {
-        BuildRoad, BuildCity, BuildColony,
-        UseKnightCard, UseProgressCard
+        BuildRoad, BuildCity, BuildColony, UseKnightCard, UseProgressCard, PlaceRoad, PlaceColony, PlaceCity
     }
 }
