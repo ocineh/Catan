@@ -8,7 +8,6 @@ import catan.models.exceptions.CardAlreadyUsed;
 import catan.models.exceptions.NoCardAvailableException;
 
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
 public final class CardDeck extends AbstractModel {
@@ -25,32 +24,12 @@ public final class CardDeck extends AbstractModel {
         this.progressCard = new LinkedList<>();
     }
 
-    public List<VictoryPointCard> getVictoryPointCard() {
-        return List.copyOf(victoryPointCard);
-    }
-
-    public List<ProgressCard> getProgressCards() {
-        return List.copyOf(progressCard);
-    }
-
-    public List<KnightCard> getKnightCard() {
-        return List.copyOf(knightCard);
-    }
-
     public int countKnightCard() {
         return knightCard.size();
     }
 
-    public int countVictoryPointCard() {
-        return victoryPointCard.size();
-    }
-
     public int countVictoryPointCard(VictoryPointCard card) {
         return (int) victoryPointCard.stream().filter(c -> c == card).count();
-    }
-
-    public int countProgressCard() {
-        return progressCard.size();
     }
 
     public int countProgressCard(ProgressCard card) {
