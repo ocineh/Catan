@@ -45,6 +45,7 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
 
     private void placeColony(int row, int column, Building.Colony colony, Tile.Vertex vertex) {
         if(get(row, column).placeColony(colony, vertex)) {
+            get(row, column).changed();
             switch(vertex) {
                 case TopLeft:
                     if(row > 0) placeColony(row - 1, column, colony, Tile.Vertex.BottomLeft);
@@ -68,6 +69,7 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
 
     private void placeRoad(int row, int column, Building.Road road, Tile.Edge edge) {
         if(get(row, column).placeRoad(road, edge)) {
+            get(row, column).changed();
             switch(edge) {
                 case Top: if(row > 0) get(row - 1, column).placeRoad(road, Tile.Edge.Bottom);
                     break;
@@ -102,9 +104,13 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
         for(var cell : this) if(cell.getTile().getNumber() == number) cell.getTile().harvest();
     }
 
-    public Tile getRandomTile() {
+    public TrayCell getRandomTrayCell() {
         List<TrayCell> tiles = tray.stream().flatMap(LinkedList::stream).collect(Collectors.toList());
-        return tiles.get(random.nextInt(tiles.size())).getTile();
+        return tiles.get(random.nextInt(tiles.size()));
+    }
+
+    public Tile getRandomTile() {
+        return getRandomTrayCell().getTile();
     }
 
     public class TrayCell {
