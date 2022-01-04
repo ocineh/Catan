@@ -8,11 +8,16 @@ import catan.models.tiles.TrayBuilder;
 
 public class Menu extends AbstractModel {
     private final PlayerSetting[] playerSettings;
+    private String mode = "normal 4*5";
 
     public Menu() {
         Player.Color[] colors = Player.Color.values();
         this.playerSettings = new PlayerSetting[colors.length];
         for(int i = 0; i < colors.length; ++i) playerSettings[i] = new PlayerSetting(colors[i]);
+    }
+
+    public void setMode(String trayMode) {
+        this.mode = trayMode;
     }
 
     public PlayerSetting[] getPlayerSettings() {
@@ -25,7 +30,7 @@ public class Menu extends AbstractModel {
         return players;
     }
 
-    public Tray getTray(String mode) throws UnsupportedOperationException, IllegalArgumentException {
+    public Tray getTray() throws UnsupportedOperationException, IllegalArgumentException {
         switch(mode) {
             case "normal 4*5": return TrayBuilder.buildDefault();
             case "big 6*6": case "gigantic 8*8": throw new UnsupportedOperationException();

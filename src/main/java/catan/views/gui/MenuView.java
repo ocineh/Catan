@@ -30,13 +30,14 @@ public class MenuView extends JPanel implements View<Menu> {
         modes.addItem("normal 4*5");
         modes.addItem("big 6*6");
         modes.addItem("gigantic 8*8");
+        modes.addActionListener(e -> model.setMode((String) modes.getSelectedItem()));
         traySetting.add(modes);
         add(traySetting);
 
         JButton start = new JButton("Start");
         start.setPreferredSize(new Dimension(100, 50));
         start.addActionListener(e -> {
-            MenuController.getInstance().start((String) modes.getSelectedItem());
+            MenuController.getInstance().start();
             setVisible(false);
         });
         add(start);
