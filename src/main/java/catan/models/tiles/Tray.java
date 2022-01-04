@@ -5,12 +5,16 @@ import catan.models.players.Building;
 
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
+import java.util.Random;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
     private final LinkedList<LinkedList<TrayCell>> tray;
     private final int height;
     private final int width;
+    private final Random random = new Random();
 
     Tray(LinkedList<Tile> tiles, int width) {
         tray = new LinkedList<>();
@@ -96,6 +100,11 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
 
     public void harvest(int number) {
         for(var cell : this) if(cell.getTile().getNumber() == number) cell.getTile().harvest();
+    }
+
+    public Tile getRandomTile() {
+        List<TrayCell> tiles = tray.stream().flatMap(LinkedList::stream).collect(Collectors.toList());
+        return tiles.get(random.nextInt(tiles.size())).getTile();
     }
 
     public class TrayCell {
