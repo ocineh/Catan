@@ -149,6 +149,11 @@ public abstract class Tile extends AbstractModel {
             this.pos = pos;
         }
 
+        public static Edge random() {
+            Edge[] edges = values();
+            return edges[random.nextInt(edges.length)];
+        }
+
         @Override
         public String toString() {
             switch(this) {
@@ -170,6 +175,11 @@ public abstract class Tile extends AbstractModel {
 
         Vertex(int pos) {
             this.pos = pos;
+        }
+
+        public static Vertex random() {
+            Vertex[] vertices = values();
+            return vertices[random.nextInt(vertices.length)];
         }
 
         @Override
