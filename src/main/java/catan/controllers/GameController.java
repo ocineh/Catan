@@ -23,7 +23,7 @@ public class GameController extends AbstractController<Game, GameView> {
         } catch(CannotFinishRoundException e) {
             GameWindow.getInstance().showError(e.getMessage());
         }
-        setModel(model);
+        playerController.setModel(model.getActualPlayer());
     }
 
     @Override
