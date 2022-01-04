@@ -1,6 +1,5 @@
 package catan.models;
 
-import catan.models.exceptions.CannotFinishRoundException;
 import catan.models.players.Bot;
 import catan.models.players.Building;
 import catan.models.players.Player;
@@ -66,7 +65,7 @@ public class Game extends AbstractModel {
         changed();
     }
 
-    public void nextRound() throws CannotFinishRoundException {
+    public void nextRound() throws Exception {
         if(getActualPlayer().isBot()) {
             getBackThrownDice();
             if(Thief.getInstance().isMovable()) {
@@ -74,7 +73,7 @@ public class Game extends AbstractModel {
                 Thief.getInstance().setTile(tile);
             }
         }
-        if(Thief.getInstance().isMovable()) throw new CannotFinishRoundException("you must move the thief.");
+        if(Thief.getInstance().isMovable()) throw new Exception("You cannot finish your round because you must move the thief.");
         if(++actual == players.length) actual = 0;
         dice = null;
         changed();

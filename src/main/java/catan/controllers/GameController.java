@@ -1,7 +1,6 @@
 package catan.controllers;
 
 import catan.models.Game;
-import catan.models.exceptions.CannotFinishRoundException;
 import catan.views.gui.GameView;
 import catan.views.gui.GameWindow;
 
@@ -22,9 +21,7 @@ public class GameController extends AbstractController<Game, GameView> {
         try {
             model.nextRound();
             if(model.getActualPlayer().isBot()) nextRound();
-        } catch(CannotFinishRoundException e) {
-            GameWindow.getInstance().showError(e.getMessage());
-        }
+        } catch(Exception e) {GameWindow.getInstance().showError(e.getMessage());}
         playerController.setModel(model.getActualPlayer());
     }
 
