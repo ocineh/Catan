@@ -1,5 +1,7 @@
 package catan.views.gui;
 
+import catan.models.tiles.Tile;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,5 +20,29 @@ public class GameWindow extends JFrame {
 
     public static GameWindow getInstance() {
         return instance;
+    }
+
+    public Tile.Vertex askVertex(String message) {
+        return (Tile.Vertex) JOptionPane.showInputDialog(
+                this,
+                message,
+                "Choose a vertex",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                Tile.Vertex.values(),
+                Tile.Vertex.values()[0]
+        );
+    }
+
+    public Tile.Edge askEdge(String message) {
+        return (Tile.Edge) JOptionPane.showInputDialog(
+                this,
+                message,
+                "Choose a edge",
+                JOptionPane.PLAIN_MESSAGE,
+                null,
+                Tile.Edge.values(),
+                Tile.Edge.values()[0]
+        );
     }
 }

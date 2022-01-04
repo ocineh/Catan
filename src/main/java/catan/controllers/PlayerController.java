@@ -7,7 +7,9 @@ import catan.models.exceptions.NoTileSelectedException;
 import catan.models.players.Player;
 import catan.models.players.Thief;
 import catan.models.tiles.Resource;
+import catan.models.tiles.Tile;
 import catan.models.tiles.Tray;
+import catan.views.gui.GameWindow;
 import catan.views.gui.PlayerView;
 
 public class PlayerController extends AbstractController<Player, PlayerView> {
@@ -18,6 +20,21 @@ public class PlayerController extends AbstractController<Player, PlayerView> {
 
     public static PlayerController getInstance() {
         return instance;
+    }
+
+    public void placeRoad() {
+        Tile.Edge edge = GameWindow.getInstance().askEdge("Choose a edge to place the road");
+        TrayController.getInstance().placeRoad(model, edge);
+    }
+
+    public void placeColony() {
+        Tile.Vertex vertex = GameWindow.getInstance().askVertex("Choose a vertex to place the colony");
+        TrayController.getInstance().placeColony(model, vertex);
+    }
+
+    public void placeCity() {
+        Tile.Vertex vertex = GameWindow.getInstance().askVertex("Choose a vertex to place the city");
+        TrayController.getInstance().placeCity(model, vertex);
     }
 
     public void buildRoad() {

@@ -2,7 +2,6 @@ package catan.views.gui;
 
 import catan.controllers.GameController;
 import catan.controllers.PlayerController;
-import catan.controllers.TrayController;
 import catan.models.cards.ProgressCard;
 import catan.models.cards.VictoryPointCard;
 import catan.models.exceptions.CardAlreadyUsed;
@@ -12,7 +11,6 @@ import catan.models.players.CardDeck;
 import catan.models.players.Inventory;
 import catan.models.players.Player;
 import catan.models.tiles.Resource;
-import catan.models.tiles.Tile;
 import catan.views.View;
 
 import javax.swing.*;
@@ -20,9 +18,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 import java.awt.*;
-import java.awt.event.ActionListener;
 import java.util.LinkedList;
-import java.util.function.Function;
 import java.util.function.ToIntFunction;
 
 public class PlayerView extends JPanel implements View<Player> {
@@ -32,11 +28,13 @@ public class PlayerView extends JPanel implements View<Player> {
     private Player model;
 
     public PlayerView() {
-        setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Player"));
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setPreferredSize(new Dimension(150, 100));
+        setPreferredSize(new Dimension(200, 100));
 
         JTabbedPane tabbedPane = new JTabbedPane();
+
+        actionView = new ActionView();
+        tabbedPane.add(actionView, "Action");
 
         JPanel panel = new JPanel();
         panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
@@ -45,9 +43,6 @@ public class PlayerView extends JPanel implements View<Player> {
         panel.add(inventory);
         panel.add(cardDeckView);
         tabbedPane.add(panel, "Inventory");
-
-        actionView = new ActionView();
-        tabbedPane.add(actionView, "Action");
         add(tabbedPane);
     }
 
@@ -188,19 +183,26 @@ public class PlayerView extends JPanel implements View<Player> {
             add(placement);
             add(cardAction);
 
+            JPanel panel = new JPanel();
+            panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Round"));
             JButton button = new JButton("Throw dice");
             button.addActionListener(e -> {
                 JLabel label = new JLabel(GameController.getInstance().getBackThrownDice().toString());
                 JOptionPane.showMessageDialog(GameWindow.getInstance(), label, "", JOptionPane.QUESTION_MESSAGE);
             });
-            button.setBorder(new EmptyBorder(5, 10, 5, 10));
-            button.setMinimumSize(new Dimension(250, 25));
-            add(button);
+            panel.add(button, Component.CENTER_ALIGNMENT);
+
+            JButton finished = new JButton("Finished");
+            finished.addActionListener(e -> {
+                if(GameController.getInstance().getDice() != null) GameController.getInstance().nextRound();
+                else JOptionPane.showMessageDialog(GameWindow.getInstance(), "You did not throw the dice", "Error", JOptionPane.ERROR_MESSAGE);
+            });
+            panel.add(finished);
+            add(panel);
         }
 
         private JPanel getBuildPanel() {
             JPanel build = new JPanel();
-            build.setMaximumSize(new Dimension(300, 100));
             build.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Build"));
 
             Insets insets = new Insets(0, 0, 0, 0);
@@ -224,44 +226,24 @@ public class PlayerView extends JPanel implements View<Player> {
         private JPanel getPlacementPanel() {
             JPanel putting = new JPanel();
             putting.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Placement"));
-            putting.setLayout(new BoxLayout(putting, BoxLayout.Y_AXIS));
 
-            putting.add(getBuildingPlacementPanel("Colony", Tile.Vertex.values(), comboBox -> e -> {
-                if(getModel() != null) {
-                    Tile.Vertex vertex = (Tile.Vertex) comboBox.getSelectedItem();
-                    TrayController.getInstance().placeColony(getModel(), vertex);
-                }
-            }));
+            JButton placeRoad = new JButton("Put a road");
+            placeRoad.addActionListener(e -> PlayerController.getInstance().placeRoad());
+            putting.add(placeRoad);
 
-            putting.add(getBuildingPlacementPanel("City", Tile.Vertex.values(), comboBox -> e -> {
-                if(getModel() != null) {
-                    Tile.Vertex vertex = (Tile.Vertex) comboBox.getSelectedItem();
-                    TrayController.getInstance().placeCity(getModel(), vertex);
-                }
-            }));
+            JButton placeColony = new JButton("Put a colony");
+            placeColony.addActionListener(e -> PlayerController.getInstance().placeColony());
+            putting.add(placeColony);
 
-            putting.add(getBuildingPlacementPanel("Road", Tile.Edge.values(), comboBox -> e -> {
-                if(getModel() != null) {
-                    Tile.Edge edge = (Tile.Edge) comboBox.getSelectedItem();
-                    TrayController.getInstance().placeRoad(getModel(), edge);
-                }
-            }));
+            JButton placeCity = new JButton("Put a city");
+            placeCity.addActionListener(e -> PlayerController.getInstance().placeCity());
+            putting.add(placeCity);
             return putting;
-        }
-
-        private <T> JPanel getBuildingPlacementPanel(String title, T[] tmp, Function<JComboBox<T>, ActionListener> function) {
-            JPanel panel = new JPanel();
-            panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), title));
-            JComboBox<T> comboBox = new JComboBox<>(tmp);
-            panel.add(comboBox);
-            JButton button = new JButton("Put");
-            button.addActionListener(function.apply(comboBox));
-            panel.add(button);
-            return panel;
         }
 
         private JPanel getCardAction() {
             JPanel action = new JPanel();
+            action.setPreferredSize(new Dimension(200, 35));
             action.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Cards"));
 
             JComboBox<String> comboBox = new JComboBox<>(new String[]{"Build road", "Invention", "Monopoly", "Knight"});
