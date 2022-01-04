@@ -52,6 +52,14 @@ public class PlayerView extends JPanel implements View<Player> {
 
     @Override
     public void setModel(Player model) {
+        setBorder(BorderFactory.createTitledBorder(
+                new LineBorder(Color.BLACK, 2),
+                model.isBot() ? "Bot" : "Player",
+                0,
+                0,
+                new Font("Default", Font.BOLD, 15),
+                model.getColor().toAwtColor()
+        ));
         this.model = model;
         inventory.update();
         cardDeckView.update();
