@@ -29,13 +29,9 @@ public class Inventory extends AbstractModel {
     }
 
     public Building.Road getRoad() {
-        for(int i = 0; i < buildings.size(); i++) {
-            if(buildings.get(i).isRoad()) {
-                Building.Road road = (Building.Road) buildings.remove(i);
-                changed();
-                return road;
-            }
-        }
+        for(Building building : buildings)
+            if(building.isRoad() && building.isNotPlaced())
+                return (Building.Road) building;
         return null;
     }
 
@@ -44,13 +40,9 @@ public class Inventory extends AbstractModel {
     }
 
     public Building.Colony getColony() {
-        for(int i = 0; i < buildings.size(); i++) {
-            if(buildings.get(i).isColony()) {
-                Building.Colony colony = (Building.Colony) buildings.remove(i);
-                changed();
-                return colony;
-            }
-        }
+        for(Building building : buildings)
+            if(building.isColony() && building.isNotPlaced())
+                return (Building.Colony) building;
         return null;
     }
 
@@ -59,13 +51,9 @@ public class Inventory extends AbstractModel {
     }
 
     public Building.City getCity() {
-        for(int i = 0; i < buildings.size(); i++) {
-            if(buildings.get(i).isCity()) {
-                Building.City city = (Building.City) buildings.remove(i);
-                changed();
-                return city;
-            }
-        }
+        for(Building building : buildings)
+            if(building.isCity() && building.isNotPlaced())
+                return (Building.City) building;
         return null;
     }
 

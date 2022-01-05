@@ -2,14 +2,24 @@ package catan.models.players;
 
 
 import catan.models.tiles.Resource;
+import catan.models.tiles.Tile;
 
 public abstract class Building {
     private final Player player;
     private final int points;
+    private Tile tile;
 
     private Building(Player player, int points) {
         this.player = player;
         this.points = points;
+    }
+
+    public void setTile(Tile tile) {
+        this.tile = tile;
+    }
+
+    public boolean isNotPlaced() {
+        return tile == null;
     }
 
     public java.awt.Color getColor() {
