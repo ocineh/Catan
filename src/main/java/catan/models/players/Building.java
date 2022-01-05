@@ -52,7 +52,7 @@ public abstract class Building {
         }
 
         Colony(Player player) {
-            this(player, 2);
+            this(player, 1);
         }
 
         @Override
