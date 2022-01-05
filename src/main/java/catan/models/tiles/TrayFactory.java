@@ -6,16 +6,16 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.Random;
 
-public class TrayBuilder {
+public class TrayFactory {
     private final static Random random = new Random();
     private final LinkedList<Tile> tiles;
 
-    public TrayBuilder() {
+    private TrayFactory() {
         tiles = new LinkedList<>();
     }
 
-    public static Tray buildDefault() {
-        return new TrayBuilder()
+    public static Tray buildNormal() {
+        return new TrayFactory()
                 .addPasture(4)
                 .addForest(4)
                 .addField(4)
@@ -25,37 +25,59 @@ public class TrayBuilder {
                 .build(4);
     }
 
-    public TrayBuilder addPasture(int number) {
+    public static Tray buildBig() {
+        return new TrayFactory()
+                .addPasture(6)
+                .addForest(6)
+                .addField(6)
+                .addHill(6)
+                .addMountain(6)
+                .addDesert(6)
+                .build(6);
+    }
+
+    public static Tray buildGigantic() {
+        return new TrayFactory()
+                .addPasture(11)
+                .addForest(11)
+                .addField(11)
+                .addHill(11)
+                .addMountain(10)
+                .addDesert(10)
+                .build(8);
+    }
+
+    private TrayFactory addPasture(int number) {
         while(number-- > 0) tiles.add(new Tile.Pasture());
         return this;
     }
 
-    public TrayBuilder addForest(int number) {
+    private TrayFactory addForest(int number) {
         while(number-- > 0) tiles.add(new Tile.Forest());
         return this;
     }
 
-    public TrayBuilder addField(int number) {
+    private TrayFactory addField(int number) {
         while(number-- > 0) tiles.add(new Tile.Field());
         return this;
     }
 
-    public TrayBuilder addHill(int number) {
+    private TrayFactory addHill(int number) {
         while(number-- > 0) tiles.add(new Tile.Hill());
         return this;
     }
 
-    public TrayBuilder addMountain(int number) {
+    private TrayFactory addMountain(int number) {
         while(number-- > 0) tiles.add(new Tile.Mountain());
         return this;
     }
 
-    public TrayBuilder addDesert(int number) {
+    private TrayFactory addDesert(int number) {
         while(number-- > 0) tiles.add(new Tile.Desert());
         return this;
     }
 
-    public Tray build(int width) {
+    private Tray build(int width) {
         Collections.shuffle(tiles);
         Thief.getInstance().setTile(tiles.get(random.nextInt(tiles.size())));
         return new Tray(tiles, width);

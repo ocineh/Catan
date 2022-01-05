@@ -4,7 +4,7 @@ import catan.models.players.Bot;
 import catan.models.players.Human;
 import catan.models.players.Player;
 import catan.models.tiles.Tray;
-import catan.models.tiles.TrayBuilder;
+import catan.models.tiles.TrayFactory;
 
 public class Menu extends AbstractModel {
     private final PlayerSetting[] playerSettings;
@@ -30,10 +30,11 @@ public class Menu extends AbstractModel {
         return players;
     }
 
-    public Tray getTray() throws UnsupportedOperationException, IllegalArgumentException {
+    public Tray getTray() throws IllegalArgumentException {
         switch(mode) {
-            case "normal 4*5": return TrayBuilder.buildDefault();
-            case "big 6*6": case "gigantic 8*8": throw new UnsupportedOperationException();
+            case "normal 4*5": return TrayFactory.buildNormal();
+            case "big 6*6": return TrayFactory.buildBig();
+            case "gigantic 8*8": return TrayFactory.buildGigantic();
             default: throw new IllegalArgumentException(mode);
         }
     }
