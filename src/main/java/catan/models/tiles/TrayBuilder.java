@@ -9,7 +9,6 @@ import java.util.Random;
 public class TrayBuilder {
     private final static Random random = new Random();
     private final LinkedList<Tile> tiles;
-    private int width;
 
     public TrayBuilder() {
         tiles = new LinkedList<>();
@@ -24,10 +23,6 @@ public class TrayBuilder {
                 .addMountain(3)
                 .addDesert(2)
                 .build(4);
-    }
-
-    public void setWidth(int width) {
-        this.width = width;
     }
 
     public TrayBuilder addPasture(int number) {
