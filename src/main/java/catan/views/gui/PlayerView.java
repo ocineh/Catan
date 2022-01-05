@@ -51,31 +51,140 @@ public class PlayerView extends JPanel implements View<Player> {
 
     @Override
     public void setModel(Player model) {
-        setBorder(BorderFactory.createTitledBorder(
-                new LineBorder(Color.BLACK, 2),
-                model.isBot() ? "Bot" : "Player",
-                0,
-                0,
-                new Font("Default", Font.BOLD, 15),
-                model.getColor().toAwtColor()
-        ));
+        setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), model.isBot() ? "Bot" : "Player", 0, 0, new Font("Default", Font.BOLD, 15), model
+                .getColor().toAwtColor()));
         this.model = model;
         inventory.update();
         cardDeckView.update();
         model.getInventory().addChangeListener(inventory::update);
         model.getCards().addChangeListener(cardDeckView::update);
+
+        model.addChangeListener(() -> actionView.buildColony.setEnabled(model.getInventory().canBuildColony()));
+        model.addChangeListener(() -> actionView.buildCity.setEnabled(model.getInventory().canBuildCity()));
+        model.addChangeListener(() -> actionView.buildRoad.setEnabled(model.getInventory().canBuildRoad()));
+        model.addChangeListener(() -> actionView.placeColony.setEnabled(model.getInventory().getColony() != null));
+        model.addChangeListener(() -> actionView.placeCity.setEnabled(model.getInventory().getCity() != null));
+        model.addChangeListener(() -> actionView.placeRoad.setEnabled(model.getInventory().getRoad() != null));
+        model.changed();
     }
 
     public Resource askResourcePopup() {
-        return (Resource) JOptionPane.showInputDialog(
-                GameWindow.getInstance(),
-                "Choose a resource type",
-                "Brick",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                Resource.values(),
-                Resource.values()[0]
-        );
+        return (Resource) JOptionPane.showInputDialog(GameWindow.getInstance(), "Choose a resource type", "Brick", JOptionPane.PLAIN_MESSAGE, null, Resource.values(), Resource.values()[0]);
+    }
+
+    private static class ActionView extends JPanel {
+        private final JButton buildColony = new JButton("Colony");
+        private final JButton buildCity = new JButton("City");
+        private final JButton buildRoad = new JButton("Road");
+        private final JButton placeRoad = new JButton("Put a road");
+        private final JButton placeColony = new JButton("Put a colony");
+        private final JButton placeCity = new JButton("Put a city");
+
+        public ActionView() {
+            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+            JPanel build = getBuildPanel();
+            JPanel placement = getPlacementPanel();
+            JPanel cardAction = getCardAction();
+
+            add(build);
+            add(placement);
+            add(cardAction);
+
+            JPanel panel = new JPanel();
+            panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Round"));
+            JButton button = new JButton("Throw dice");
+            button.addActionListener(e -> {
+                JLabel label = new JLabel(GameController.getInstance().getBackThrownDice().toString());
+                JOptionPane.showMessageDialog(GameWindow.getInstance(), label, "", JOptionPane.QUESTION_MESSAGE);
+            });
+            panel.add(button, Component.CENTER_ALIGNMENT);
+
+            panel.add(ThiefView.getMoveThiefButton());
+
+            JButton finished = new JButton("Finished");
+            finished.addActionListener(e -> {
+                if(GameController.getInstance().getDice() != null) GameController.getInstance().nextRound();
+                else
+                    JOptionPane.showMessageDialog(GameWindow.getInstance(), "You did not throw the dice", "Error", JOptionPane.ERROR_MESSAGE);
+            });
+            panel.add(finished);
+            add(panel);
+        }
+
+        private JPanel getBuildPanel() {
+            JPanel build = new JPanel();
+            build.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Build"));
+
+            Insets insets = new Insets(0, 0, 0, 0);
+            buildColony.addActionListener(e -> PlayerController.getInstance().buildColony());
+            buildColony.setMargin(insets);
+            build.add(buildColony);
+
+            buildCity.addActionListener(e -> PlayerController.getInstance().buildCity());
+            buildCity.setMargin(insets);
+            build.add(buildCity);
+
+            buildRoad.addActionListener(e -> PlayerController.getInstance().buildRoad());
+            buildRoad.setMargin(insets);
+            build.add(buildRoad);
+            return build;
+        }
+
+        private JPanel getPlacementPanel() {
+            JPanel putting = new JPanel();
+            putting.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Placement"));
+
+            placeRoad.addActionListener(e -> PlayerController.getInstance().placeRoad());
+            putting.add(placeRoad);
+
+            placeColony.addActionListener(e -> PlayerController.getInstance().placeColony());
+            putting.add(placeColony);
+
+            placeCity.addActionListener(e -> PlayerController.getInstance().placeCity());
+            putting.add(placeCity);
+            return putting;
+        }
+
+        private JPanel getCardAction() {
+            JPanel action = new JPanel();
+            action.setPreferredSize(new Dimension(200, 35));
+            action.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Cards"));
+
+            JComboBox<String> comboBox = new JComboBox<>(new String[]{"Build road", "Invention", "Monopoly", "Knight"});
+            action.add(comboBox);
+            JButton use = new JButton("use");
+            use.addActionListener(e -> {
+                String cardName = (String) comboBox.getSelectedItem();
+                if(cardName != null) {
+                    try {
+                        switch(cardName) {
+                            case "Build road": PlayerController.getInstance().useProgressCard(ProgressCard.BuildRoad);
+                                break;
+                            case "Invention": PlayerController.getInstance().useProgressCard(ProgressCard.Invention);
+                                break;
+                            case "Monopoly": PlayerController.getInstance().useProgressCard(ProgressCard.Monopoly);
+                                break;
+                            case "Knight": PlayerController.getInstance().useKnightCard();
+                                break;
+                            default: break;
+                        }
+                    } catch(NoTileSelectedException | NoCardAvailableException exception) {
+                        showErrorPopup(exception.getMessage());
+                    }
+                }
+            });
+            action.add(use);
+
+            JButton buy = new JButton("buy");
+            buy.addActionListener(e -> PlayerController.getInstance().buyCard());
+            action.add(buy);
+            return action;
+        }
+
+        private void showErrorPopup(String message) {
+            JOptionPane.showMessageDialog(GameWindow.getInstance(), message, "Error", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     public class InventoryView extends JPanel {
@@ -171,123 +280,6 @@ public class PlayerView extends JPanel implements View<Player> {
                 int value = model != null ? function.applyAsInt(model.getCards()) : -1;
                 label.setText(cardName + ": " + value);
             }
-        }
-    }
-
-    private class ActionView extends JPanel {
-        private final JPanel build;
-        private final JPanel placement;
-        private final JPanel cardAction;
-
-        public ActionView() {
-            setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-            build = getBuildPanel();
-            placement = getPlacementPanel();
-            cardAction = getCardAction();
-
-            add(build);
-            add(placement);
-            add(cardAction);
-
-            JPanel panel = new JPanel();
-            panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Round"));
-            JButton button = new JButton("Throw dice");
-            button.addActionListener(e -> {
-                JLabel label = new JLabel(GameController.getInstance().getBackThrownDice().toString());
-                JOptionPane.showMessageDialog(GameWindow.getInstance(), label, "", JOptionPane.QUESTION_MESSAGE);
-            });
-            panel.add(button, Component.CENTER_ALIGNMENT);
-
-            panel.add(ThiefView.getMoveThiefButton());
-
-            JButton finished = new JButton("Finished");
-            finished.addActionListener(e -> {
-                if(GameController.getInstance().getDice() != null) GameController.getInstance().nextRound();
-                else JOptionPane.showMessageDialog(GameWindow.getInstance(), "You did not throw the dice", "Error", JOptionPane.ERROR_MESSAGE);
-            });
-            panel.add(finished);
-            add(panel);
-        }
-
-        private JPanel getBuildPanel() {
-            JPanel build = new JPanel();
-            build.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Build"));
-
-            Insets insets = new Insets(0, 0, 0, 0);
-            JButton colony = new JButton("Colony");
-            colony.addActionListener(e -> PlayerController.getInstance().buildColony());
-            colony.setMargin(insets);
-            build.add(colony);
-
-            JButton city = new JButton("City");
-            city.addActionListener(e -> PlayerController.getInstance().buildCity());
-            city.setMargin(insets);
-            build.add(city);
-
-            JButton road = new JButton("Road");
-            road.addActionListener(e -> PlayerController.getInstance().buildRoad());
-            road.setMargin(insets);
-            build.add(road);
-            return build;
-        }
-
-        private JPanel getPlacementPanel() {
-            JPanel putting = new JPanel();
-            putting.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Placement"));
-
-            JButton placeRoad = new JButton("Put a road");
-            placeRoad.addActionListener(e -> PlayerController.getInstance().placeRoad());
-            putting.add(placeRoad);
-
-            JButton placeColony = new JButton("Put a colony");
-            placeColony.addActionListener(e -> PlayerController.getInstance().placeColony());
-            putting.add(placeColony);
-
-            JButton placeCity = new JButton("Put a city");
-            placeCity.addActionListener(e -> PlayerController.getInstance().placeCity());
-            putting.add(placeCity);
-            return putting;
-        }
-
-        private JPanel getCardAction() {
-            JPanel action = new JPanel();
-            action.setPreferredSize(new Dimension(200, 35));
-            action.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Cards"));
-
-            JComboBox<String> comboBox = new JComboBox<>(new String[]{"Build road", "Invention", "Monopoly", "Knight"});
-            action.add(comboBox);
-            JButton use = new JButton("use");
-            use.addActionListener(e -> {
-                String cardName = (String) comboBox.getSelectedItem();
-                if(cardName != null) {
-                    try {
-                        switch(cardName) {
-                            case "Build road": PlayerController.getInstance().useProgressCard(ProgressCard.BuildRoad);
-                                break;
-                            case "Invention": PlayerController.getInstance().useProgressCard(ProgressCard.Invention);
-                                break;
-                            case "Monopoly": PlayerController.getInstance().useProgressCard(ProgressCard.Monopoly);
-                                break;
-                            case "Knight": PlayerController.getInstance().useKnightCard();
-                                break;
-                            default: break;
-                        }
-                    } catch(NoTileSelectedException | NoCardAvailableException exception) {
-                        showErrorPopup(exception.getMessage());
-                    }
-                }
-            });
-            action.add(use);
-
-            JButton buy = new JButton("buy");
-            buy.addActionListener(e -> PlayerController.getInstance().buyCard());
-            action.add(buy);
-            return action;
-        }
-
-        private void showErrorPopup(String message) {
-            JOptionPane.showMessageDialog(GameWindow.getInstance(), message, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
