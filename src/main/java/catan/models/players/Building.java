@@ -72,6 +72,12 @@ public abstract class Building {
         }
 
         @Override
+        public void harvest(Resource resource) {
+            super.harvest(resource);
+            super.harvest(resource);
+        }
+
+        @Override
         public boolean isCity() {
             return true;
         }
