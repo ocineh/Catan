@@ -15,12 +15,25 @@ public class Game extends AbstractModel {
     private final Tray tray;
     private final int score;
     private int actual = 0;
+    private Player winner;
     private Dice dice;
 
     public Game(Player[] players, Tray tray, int score) {
         this.players = players;
         this.tray = tray;
         this.score = score;
+    }
+
+    public Player getTheWinner() {
+        if(winner == null) {
+            for(Player player: players) {
+                if(player.getPoints() >= score) {
+                    changed();
+                    return winner = player;
+                }
+            }
+        }
+        return winner;
     }
 
     public void placeColony(Tray.TrayCell cell, Tile.Vertex vertex) {
@@ -68,6 +81,7 @@ public class Game extends AbstractModel {
     }
 
     public void nextRound() throws Exception {
+        if(getTheWinner() != null) throw new Exception("The game was won by the player " + winner.getColor());
         if(getActualPlayer().isBot()) {
             getBackThrownDice();
             if(Thief.getInstance().isMovable()) {
