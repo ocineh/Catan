@@ -13,12 +13,14 @@ public class Game extends AbstractModel {
     private static final Random random = new Random();
     private final Player[] players;
     private final Tray tray;
+    private final int score;
     private int actual = 0;
     private Dice dice;
 
-    public Game(Player[] players, Tray tray) {
+    public Game(Player[] players, Tray tray, int score) {
         this.players = players;
         this.tray = tray;
+        this.score = score;
     }
 
     public void placeColony(Tray.TrayCell cell, Tile.Vertex vertex) {

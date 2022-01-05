@@ -22,7 +22,7 @@ public class MenuController extends AbstractController<Menu, MenuView> {
     }
 
     public void start() {
-        Game game = new Game(model.getPlayers(), model.getTray());
+        Game game = new Game(model.getPlayers(), model.getTray(), model.getScore());
         GameView gameView = new GameView();
         GameController.getInstance().setView(gameView);
         GameController.getInstance().setModel(game);

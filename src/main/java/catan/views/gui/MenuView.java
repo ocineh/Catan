@@ -10,7 +10,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class MenuView extends JPanel implements View<Menu> {
-    private Menu model;
+    private final Menu model;
 
     public MenuView(Menu model) {
         this.model = model;
@@ -21,8 +21,42 @@ public class MenuView extends JPanel implements View<Menu> {
         label.setFont(new Font("default", Font.BOLD, 20));
         add(label);
 
-        add(getPlayersSettingsPanel());
+        addPlayersSettingsPanel();
+        addTraySettingPanel();
+        addGameSettingPanel();
+        addStartButton();
+    }
 
+    private void addGameSettingPanel() {
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Game"));
+        JLabel label = new JLabel("Victory points");
+        panel.add(label);
+
+        JSpinner slider = new JSpinner(new SpinnerNumberModel(10, 10, 100, 1));
+        slider.addChangeListener(e -> model.setScore((int) slider.getValue()));
+        panel.add(slider);
+        add(panel);
+    }
+
+    private void addStartButton() {
+        JButton start = new JButton("Start");
+        start.setPreferredSize(new Dimension(100, 50));
+        start.addActionListener(e -> {
+            MenuController.getInstance().start();
+            setVisible(false);
+        });
+        add(start);
+    }
+
+    private void addPlayersSettingsPanel() {
+        JPanel panel = new JPanel();
+        panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Players"));
+        for(var p : model.getPlayerSettings()) panel.add(new PlayerSettingView(p));
+        add(panel);
+    }
+
+    private void addTraySettingPanel() {
         JPanel traySetting = new JPanel();
         traySetting.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Tray size"));
 
@@ -33,26 +67,10 @@ public class MenuView extends JPanel implements View<Menu> {
         modes.addActionListener(e -> model.setMode((String) modes.getSelectedItem()));
         traySetting.add(modes);
         add(traySetting);
-
-        JButton start = new JButton("Start");
-        start.setPreferredSize(new Dimension(100, 50));
-        start.addActionListener(e -> {
-            MenuController.getInstance().start();
-            setVisible(false);
-        });
-        add(start);
-    }
-
-    private JPanel getPlayersSettingsPanel() {
-        JPanel panel = new JPanel();
-        panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Players"));
-        for(var p: model.getPlayerSettings()) panel.add(new PlayerSettingView(p));
-        return panel;
     }
 
     @Override
     public void setModel(Menu model) {
-        this.model = model;
     }
 
     private static class PlayerSettingView extends JPanel {

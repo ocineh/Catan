@@ -9,6 +9,7 @@ import catan.models.tiles.TrayFactory;
 public class Menu extends AbstractModel {
     private final PlayerSetting[] playerSettings;
     private String mode = "normal 4*5";
+    private int score = 10;
 
     public Menu() {
         Player.Color[] colors = Player.Color.values();
@@ -18,6 +19,14 @@ public class Menu extends AbstractModel {
 
     public void setMode(String trayMode) {
         this.mode = trayMode;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
     }
 
     public PlayerSetting[] getPlayerSettings() {
