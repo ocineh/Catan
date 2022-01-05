@@ -1,9 +1,9 @@
 package catan.controllers;
 
-import catan.models.Game;
 import catan.models.Menu;
 import catan.views.gui.GameView;
 import catan.views.gui.GameWindow;
+import catan.views.gui.InformationView;
 import catan.views.gui.MenuView;
 
 public class MenuController extends AbstractController<Menu, MenuView> {
@@ -19,10 +19,9 @@ public class MenuController extends AbstractController<Menu, MenuView> {
     }
 
     public void start() {
-        Game game = new Game(model.getPlayers(), model.getTray(), model.getScore());
         GameView gameView = new GameView();
         GameController.getInstance().setView(gameView);
-        GameController.getInstance().setModel(game);
+        GameController.getInstance().setModel(model.toGame());
         GameWindow.getInstance().switchToGame();
     }
 }

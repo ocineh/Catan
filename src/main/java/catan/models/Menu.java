@@ -21,10 +21,6 @@ public class Menu extends AbstractModel {
         this.mode = trayMode;
     }
 
-    public int getScore() {
-        return score;
-    }
-
     public void setScore(int score) {
         this.score = score;
     }
@@ -46,6 +42,10 @@ public class Menu extends AbstractModel {
             case "gigantic 8*8": return TrayFactory.buildGigantic();
             default: throw new IllegalArgumentException(mode);
         }
+    }
+
+    public Game toGame() {
+        return new Game(getPlayers(), getTray(), score);
     }
 
     public static class PlayerSetting {

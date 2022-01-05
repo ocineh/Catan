@@ -18,7 +18,7 @@ public class Game extends AbstractModel {
     private Player winner;
     private Dice dice;
 
-    public Game(Player[] players, Tray tray, int score) {
+    Game(Player[] players, Tray tray, int score) {
         this.players = players;
         this.tray = tray;
         this.score = score;
