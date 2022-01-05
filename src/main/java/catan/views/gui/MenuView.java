@@ -10,7 +10,7 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 
 public class MenuView extends JPanel implements View<Menu> {
-    private Menu model = new Menu();
+    private Menu model;
 
     public MenuView(Menu model) {
         this.model = model;
@@ -56,10 +56,7 @@ public class MenuView extends JPanel implements View<Menu> {
     }
 
     private static class PlayerSettingView extends JPanel {
-        private final Menu.PlayerSetting model;
-
         public PlayerSettingView(Menu.PlayerSetting model) {
-            this.model = model;
             setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Player"));
 
             JPanel colorPanel = new JPanel();
