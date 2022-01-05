@@ -92,13 +92,16 @@ public abstract class Player extends AbstractModel {
     }
 
     public enum Color {
-        Blue, White, Red;
+        Blue, White, Red, Yellow, Orange, Magenta;
 
         public java.awt.Color toAwtColor() {
             switch(this) {
                 case Blue: return java.awt.Color.BLUE;
                 case White: return java.awt.Color.WHITE;
                 case Red: return java.awt.Color.RED;
+                case Yellow: return java.awt.Color.YELLOW;
+                case Orange: return java.awt.Color.ORANGE;
+                case Magenta: return java.awt.Color.MAGENTA;
             }
             return null;
         }
