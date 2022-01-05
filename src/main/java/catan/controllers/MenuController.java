@@ -18,9 +18,11 @@ public class MenuController extends AbstractController<Menu, MenuView> {
     }
 
     public void start() {
-        GameView gameView = new GameView();
-        GameController.getInstance().setView(gameView);
-        GameController.getInstance().setModel(model.toGame());
-        GameWindow.getInstance().switchToGame();
+        if(model.countPlayers() > 2) {
+            GameView gameView = new GameView();
+            GameController.getInstance().setView(gameView);
+            GameController.getInstance().setModel(model.toGame());
+            GameWindow.getInstance().switchToGame();
+        } else GameWindow.getInstance().showError("You must have at least three players.");
     }
 }

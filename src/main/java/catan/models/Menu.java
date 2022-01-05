@@ -6,6 +6,8 @@ import catan.models.players.Player;
 import catan.models.tiles.Tray;
 import catan.models.tiles.TrayFactory;
 
+import java.util.ArrayList;
+
 public class Menu extends AbstractModel {
     private final PlayerSetting[] playerSettings;
     private String mode = "normal 4*5";
@@ -29,10 +31,19 @@ public class Menu extends AbstractModel {
         return playerSettings;
     }
 
+    public int countPlayers() {
+        int n = 0;
+        for(var p: playerSettings) if(!p.type.equals("None")) ++n;
+        return n;
+    }
+
     public Player[] getPlayers() {
-        Player[] players = new Player[playerSettings.length];
-        for(int i = 0; i < players.length; ++i) players[i] = playerSettings[i].toPlayer();
-        return players;
+        ArrayList<Player> players = new ArrayList<>();
+        for(PlayerSetting playerSetting: playerSettings) {
+            Player player = playerSetting.toPlayer();
+            if(player != null) players.add(player);
+        }
+        return players.toArray(new Player[0]);
     }
 
     public Tray getTray() throws IllegalArgumentException {
@@ -50,7 +61,7 @@ public class Menu extends AbstractModel {
 
     public static class PlayerSetting {
         private final Player.Color color;
-        private String type = "Human";
+        private String type = "None";
 
         public PlayerSetting(Player.Color color) {
             this.color = color;
@@ -64,6 +75,7 @@ public class Menu extends AbstractModel {
             switch(type) {
                 case "Human": return new Human(color);
                 case "Bot": return new Bot(color);
+                case "None": return null;
                 default: throw new IllegalArgumentException();
             }
         }

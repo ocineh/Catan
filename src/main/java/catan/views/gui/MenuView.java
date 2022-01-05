@@ -14,7 +14,7 @@ public class MenuView extends JPanel implements View<Menu> {
 
     public MenuView(Menu model) {
         this.model = model;
-        setPreferredSize(new Dimension(450, 500));
+        setPreferredSize(new Dimension(500, 500));
 
         JLabel label = new JLabel("The Settlers of Catan", SwingConstants.CENTER);
         label.setPreferredSize(new Dimension(500, 50));
@@ -42,15 +42,13 @@ public class MenuView extends JPanel implements View<Menu> {
     private void addStartButton() {
         JButton start = new JButton("Start");
         start.setPreferredSize(new Dimension(100, 50));
-        start.addActionListener(e -> {
-            MenuController.getInstance().start();
-            setVisible(false);
-        });
+        start.addActionListener(e -> MenuController.getInstance().start());
         add(start);
     }
 
     private void addPlayersSettingsPanel() {
         JPanel panel = new JPanel();
+        panel.setPreferredSize(new Dimension(450, 180));
         panel.setBorder(BorderFactory.createTitledBorder(new LineBorder(Color.BLACK, 2), "Players"));
         for(var p : model.getPlayerSettings()) panel.add(new PlayerSettingView(p));
         add(panel);
@@ -84,6 +82,7 @@ public class MenuView extends JPanel implements View<Menu> {
             add(colorPanel);
 
             JComboBox<String> playerType = new JComboBox<>();
+            playerType.addItem("None");
             playerType.addItem("Human");
             playerType.addItem("Bot");
             playerType.addActionListener(e -> model.setType((String) playerType.getSelectedItem()));
