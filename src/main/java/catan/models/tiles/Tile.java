@@ -201,7 +201,7 @@ public abstract class Tile extends AbstractModel {
      * @see Tile
      */
     public static class Desert extends Tile {
-        private static final Color color = Color.YELLOW;
+        private static final Color color = Color.GRAY;
 
         Desert() {
             super(color);
