@@ -1,5 +1,6 @@
 package catan.views.gui;
 
+import catan.controllers.GameController;
 import catan.controllers.MenuController;
 import catan.models.tiles.Tile;
 
@@ -14,8 +15,7 @@ public class GameWindow extends JFrame {
             UIManager.setLookAndFeel(UIManager.getCrossPlatformLookAndFeelClassName());
         } catch(Exception ignored) {}
 
-        MenuController controller = MenuController.getInstance();
-        add(controller.getView(), BorderLayout.CENTER);
+        switchToMenu();
 
         setResizable(false);
         setDefaultCloseOperation(DISPOSE_ON_CLOSE);
@@ -27,36 +27,31 @@ public class GameWindow extends JFrame {
         return instance;
     }
 
+    public void switchToGame() {
+        getContentPane().removeAll();
+        setLayout(new BorderLayout());
+        GameController controller = GameController.getInstance();
+        add(controller.getView(), BorderLayout.CENTER);
+        add(new InformationView(), BorderLayout.SOUTH);
+        pack();
+    }
+
+    public void switchToMenu() {
+        getContentPane().removeAll();
+        setLayout(new BorderLayout());
+        add(MenuController.getInstance().getView(), BorderLayout.CENTER);
+        pack();
+    }
+
     public Tile.Vertex askVertex(String message) {
-        return (Tile.Vertex) JOptionPane.showInputDialog(
-                this,
-                message,
-                "Choose a vertex",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                Tile.Vertex.values(),
-                Tile.Vertex.values()[0]
-        );
+        return (Tile.Vertex) JOptionPane.showInputDialog(this, message, "Choose a vertex", JOptionPane.PLAIN_MESSAGE, null, Tile.Vertex.values(), Tile.Vertex.values()[0]);
     }
 
     public Tile.Edge askEdge(String message) {
-        return (Tile.Edge) JOptionPane.showInputDialog(
-                this,
-                message,
-                "Choose a edge",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                Tile.Edge.values(),
-                Tile.Edge.values()[0]
-        );
+        return (Tile.Edge) JOptionPane.showInputDialog(this, message, "Choose a edge", JOptionPane.PLAIN_MESSAGE, null, Tile.Edge.values(), Tile.Edge.values()[0]);
     }
 
     public void showError(String message) {
-        JOptionPane.showMessageDialog(
-                this,
-                message,
-                "Error",
-                JOptionPane.ERROR_MESSAGE
-        );
+        JOptionPane.showMessageDialog(this, message, "Error", JOptionPane.ERROR_MESSAGE);
     }
 }
