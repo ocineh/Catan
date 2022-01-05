@@ -14,10 +14,8 @@ public final class CardDeck extends AbstractModel {
     private final LinkedList<VictoryPointCard> victoryPointCard;
     private final LinkedList<KnightCard> knightCard;
     private final LinkedList<ProgressCard> progressCard;
-    private final Player player;
 
-    CardDeck(Player player) {
-        this.player = player;
+    CardDeck() {
         this.victoryPointCard = new LinkedList<>();
         this.knightCard = new LinkedList<>();
         this.progressCard = new LinkedList<>();
