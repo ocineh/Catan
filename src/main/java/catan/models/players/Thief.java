@@ -24,10 +24,6 @@ public class Thief extends AbstractModel {
         changed();
     }
 
-    public Tile getTile() {
-        return tile;
-    }
-
     public void setTile(Tile tile) {
         if(this.tile != null) {
             this.tile.setThief(null);

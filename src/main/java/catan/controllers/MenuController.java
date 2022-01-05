@@ -3,7 +3,6 @@ package catan.controllers;
 import catan.models.Menu;
 import catan.views.gui.GameView;
 import catan.views.gui.GameWindow;
-import catan.views.gui.InformationView;
 import catan.views.gui.MenuView;
 
 public class MenuController extends AbstractController<Menu, MenuView> {

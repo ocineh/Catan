@@ -51,13 +51,5 @@ public class TrayView extends JPanel implements View<Tray> {
                 } else selected = null;
             });
         }
-
-        public TileView getTileView() {
-            return tileView;
-        }
-
-        public Tray.TrayCell getCell() {
-            return cell;
-        }
     }
 }

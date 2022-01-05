@@ -16,10 +16,6 @@ public class ThiefController extends AbstractController<Thief, ThiefView> {
         return instance;
     }
 
-    public boolean isMovable() {
-        return model.isMovable();
-    }
-
     public void move() {
         Tray.TrayCell cell = TrayController.getInstance().getSelected();
         if(cell != null) model.setTile(cell.getTile());

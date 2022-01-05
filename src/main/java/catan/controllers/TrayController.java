@@ -43,8 +43,4 @@ public class TrayController extends AbstractController<Tray, TrayView> {
             if(road != null) cell.placeRoad(road, edge);
         }
     }
-
-    public Tile getRandomTile() {
-        return model.getRandomTile();
-    }
 }

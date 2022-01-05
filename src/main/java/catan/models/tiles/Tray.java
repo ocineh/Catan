@@ -85,14 +85,6 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
         }
     }
 
-    public boolean isEmpty(int row, int column, Tile.Vertex vertex) {
-        return get(row, column).getColony(vertex) == null;
-    }
-
-    public boolean isEmpty(int row, int column, Tile.Edge edge) {
-        return get(row, column).getRoad(edge) == null;
-    }
-
     public Stream<TrayCell> stream() {
         return tray.stream().flatMap(LinkedList::stream);
     }
