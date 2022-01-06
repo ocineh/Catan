@@ -2,24 +2,23 @@ package catan.models.players;
 
 
 import catan.models.tiles.Resource;
-import catan.models.tiles.Tile;
 
 public abstract class Building {
-    private final Player player;
+    protected final Player player;
     private final int points;
-    private Tile tile;
+    private boolean placed = false;
 
     private Building(Player player, int points) {
         this.player = player;
         this.points = points;
     }
 
-    public void setTile(Tile tile) {
-        this.tile = tile;
+    public void setPlaced() {
+        this.placed = true;
     }
 
     public boolean isNotPlaced() {
-        return tile == null;
+        return !placed;
     }
 
     public java.awt.Color getColor() {
@@ -42,9 +41,7 @@ public abstract class Building {
         return false;
     }
 
-    public void harvest(Resource resource) {
-        player.getInventory().addResource(resource);
-    }
+    public abstract void harvest(Resource resource);
 
     public static class Colony extends Building {
         private Colony(Player player, int points) {
@@ -53,6 +50,11 @@ public abstract class Building {
 
         Colony(Player player) {
             this(player, 1);
+        }
+
+        @Override
+        public void harvest(Resource resource) {
+            player.getInventory().addResource(resource);
         }
 
         @Override
@@ -91,6 +93,10 @@ public abstract class Building {
         @Override
         public boolean isRoad() {
             return true;
+        }
+
+        @Override
+        public void harvest(Resource resource) {
         }
     }
 }
