@@ -39,7 +39,7 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
         return width;
     }
 
-    public Tile get(int row, int column) {
+    private Tile get(int row, int column) {
         return tray.get(row).get(column).tile;
     }
 
@@ -62,7 +62,7 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
                     break;
                 case BottomRight:
                     if(row < height - 1) placeColony(row + 1, column, colony, Tile.Vertex.TopRight);
-                    else if(column < width - 1) get(row - 1, column).placeColony(colony, Tile.Vertex.BottomLeft);
+                    else if(column < width - 1) get(row, column + 1).placeColony(colony, Tile.Vertex.BottomLeft);
                     break;
             }
         }
@@ -95,7 +95,7 @@ public class Tray extends AbstractModel implements Iterable<Tray.TrayCell> {
     }
 
     public void harvest(int number) {
-        for(var cell : this) if(cell.getTile().getNumber() == number) cell.getTile().harvest();
+        for(var cell: this) if(cell.getTile().getNumber() == number) cell.getTile().harvest();
     }
 
     public TrayCell getRandomTrayCell() {
