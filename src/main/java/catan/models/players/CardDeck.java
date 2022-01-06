@@ -37,7 +37,7 @@ public final class CardDeck extends AbstractModel {
         return victoryPointCard.stream().mapToInt(VictoryPointCard::getPoints).sum();
     }
 
-    public void addRandomCard() {
+    void addRandomCard() {
         switch(random.nextInt(9)) {
             case 0: progressCard.add(ProgressCard.Invention);
                 break;
