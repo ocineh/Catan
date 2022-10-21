@@ -42,7 +42,7 @@ public abstract class Tile extends AbstractModel {
      *
      * @return The thief
      */
-    public Thief getThief() {
+    public final Thief getThief() {
         return thief;
     }
 
@@ -51,7 +51,7 @@ public abstract class Tile extends AbstractModel {
      *
      * @param thief The thief to place on the tile
      */
-    public void setThief(Thief thief) {
+    public final void setThief(Thief thief) {
         this.thief = thief;
     }
 
@@ -60,7 +60,7 @@ public abstract class Tile extends AbstractModel {
      *
      * @return a color
      */
-    public Color getColor() {
+    public final Color getColor() {
         return color;
     }
 
@@ -71,7 +71,7 @@ public abstract class Tile extends AbstractModel {
      * @param vertex the vertex on which to place the colony
      * @return if the colony has been placed
      */
-    public boolean placeColony(Building.Colony colony, Vertex vertex) {
+    public final boolean placeColony(Building.Colony colony, Vertex vertex) {
         if(colonies[vertex.pos] == null) {
             colonies[vertex.pos] = colony;
             changed();
@@ -86,7 +86,7 @@ public abstract class Tile extends AbstractModel {
      * @param vertex a vertex of the tile
      * @return the colony on the vertex
      */
-    public Building.Colony getColony(Vertex vertex) {
+    public final Building.Colony getColony(Vertex vertex) {
         return colonies[vertex.pos];
     }
 
@@ -97,7 +97,7 @@ public abstract class Tile extends AbstractModel {
      * @param edge an edge of the tile
      * @return if the road has been placed
      */
-    public boolean placeRoad(Building.Road road, Edge edge) {
+    public final boolean placeRoad(Building.Road road, Edge edge) {
         if(roads[edge.pos] == null) {
             roads[edge.pos] = road;
             changed();
@@ -112,7 +112,7 @@ public abstract class Tile extends AbstractModel {
      * @param edge the edge
      * @return the road
      */
-    public Building.Road getRoad(Edge edge) {
+    public final Building.Road getRoad(Edge edge) {
         return roads[edge.pos];
     }
 
@@ -126,9 +126,11 @@ public abstract class Tile extends AbstractModel {
     /**
      * Each colony or city on the tile harvests a resource
      */
-    public void harvest() {
-        if(thief == null) {
-            for(var c : colonies) if(c != null) c.harvest(produce());
+    public final void harvest() {
+        if(thief == null && produce() != null) {
+            for(var c: colonies)
+                if(c != null)
+                    c.harvest(produce());
             changed();
         }
     }
@@ -191,155 +193,6 @@ public abstract class Tile extends AbstractModel {
                 case BottomRight: return "Bottom right";
             }
             return null;
-        }
-    }
-
-    /**
-     * The type Desert represents a tile that does not produce any resources.
-     *
-     * @author Hocine
-     * @see Tile
-     */
-    public static class Desert extends Tile {
-        private static final Color color = Color.GRAY;
-
-        Desert() {
-            super(color);
-        }
-
-        @Override
-        public int getNumber() {
-            return -1;
-        }
-
-        @Override
-        protected Resource produce() {
-            return null;
-        }
-
-        @Override
-        public String toString() {
-            return "Desert";
-        }
-    }
-
-    /**
-     * The type Field represents a tile that produces grain.
-     *
-     * @author Hocine
-     * @see Tile
-     */
-    public static class Field extends Tile {
-        private static final Color color = new Color(244, 255, 4);
-
-        Field() {
-            super(color);
-        }
-
-        @Override
-        protected Resource produce() {
-            return Resource.Grain;
-        }
-
-        @Override
-        public String toString() {
-            return "Field";
-        }
-    }
-
-    /**
-     * The type Forest represents a tile that produces lumber.
-     *
-     * @author Hocine
-     * @see Tile
-     */
-    public static class Forest extends Tile {
-        private static final Color color = new Color(0, 150, 0);
-
-        Forest() {
-            super(color);
-        }
-
-        @Override
-        protected Resource produce() {
-            return Resource.Lumber;
-        }
-
-        @Override
-        public String toString() {
-            return "Forest";
-        }
-    }
-
-    /**
-     * The type Hill represents a tile that produces brick.
-     *
-     * @author Hocine
-     * @see Tile
-     */
-    public static class Hill extends Tile {
-        private static final Color color = new Color(255, 106, 0);
-
-        Hill() {
-            super(color);
-        }
-
-        @Override
-        protected Resource produce() {
-            return Resource.Brick;
-        }
-
-        @Override
-        public String toString() {
-            return "Hill";
-        }
-    }
-
-    /**
-     * The type Mountain represents a tile that produces ore.
-     *
-     * @author Hocine
-     * @see Tile
-     */
-    public static class Mountain extends Tile {
-        private static final Color color = Color.DARK_GRAY;
-
-        Mountain() {
-            super(color);
-        }
-
-        @Override
-        protected Resource produce() {
-            return Resource.Ore;
-        }
-
-        @Override
-        public String toString() {
-            return "Mountain";
-        }
-    }
-
-    /**
-     * The type Pasture represents a tile that produces Wool.
-     *
-     * @author Hocine
-     * @see Tile
-     */
-    public static class Pasture extends Tile {
-        private static final Color color = new Color(0, 255, 0);
-
-        Pasture() {
-            super(color);
-        }
-
-        @Override
-        protected Resource produce() {
-            return Resource.Wool;
-        }
-
-        @Override
-        public String toString() {
-            return "Pasture";
         }
     }
 }

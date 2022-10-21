@@ -48,32 +48,32 @@ public class TrayFactory {
     }
 
     private TrayFactory addPasture(int number) {
-        while(number-- > 0) tiles.add(new Tile.Pasture());
+        while(number-- > 0) tiles.add(TileFactory.createPasture());
         return this;
     }
 
     private TrayFactory addForest(int number) {
-        while(number-- > 0) tiles.add(new Tile.Forest());
+        while(number-- > 0) tiles.add(TileFactory.createForest());
         return this;
     }
 
     private TrayFactory addField(int number) {
-        while(number-- > 0) tiles.add(new Tile.Field());
+        while(number-- > 0) tiles.add(TileFactory.createField());
         return this;
     }
 
     private TrayFactory addHill(int number) {
-        while(number-- > 0) tiles.add(new Tile.Hill());
+        while(number-- > 0) tiles.add(TileFactory.createHill());
         return this;
     }
 
     private TrayFactory addMountain(int number) {
-        while(number-- > 0) tiles.add(new Tile.Mountain());
+        while(number-- > 0) tiles.add(TileFactory.createMountain());
         return this;
     }
 
     private TrayFactory addDesert(int number) {
-        while(number-- > 0) tiles.add(new Tile.Desert());
+        while(number-- > 0) tiles.add(TileFactory.createDesert());
         return this;
     }
 
