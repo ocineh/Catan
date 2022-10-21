@@ -1,6 +1,7 @@
 package catan.models.tiles;
 
 import java.awt.*;
+import java.util.Optional;
 
 public class TileFactory {
     private TileFactory() {}
@@ -13,7 +14,9 @@ public class TileFactory {
             public int getNumber() {return number;}
 
             @Override
-            protected Resource produce() {return resource;}
+            protected Optional<Resource> produce() {
+                return Optional.ofNullable(resource);
+            }
 
             @Override
             public String toString() {

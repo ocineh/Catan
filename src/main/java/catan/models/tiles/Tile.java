@@ -5,6 +5,7 @@ import catan.models.players.Building;
 import catan.models.players.Thief;
 
 import java.awt.*;
+import java.util.Optional;
 import java.util.Random;
 
 /**
@@ -121,7 +122,7 @@ public abstract class Tile extends AbstractModel {
      *
      * @return the resource produced
      */
-    protected abstract Resource produce();
+    protected abstract Optional<Resource> produce();
 
     /**
      * Each colony or city on the tile harvests a resource
@@ -130,7 +131,7 @@ public abstract class Tile extends AbstractModel {
         if(thief == null && produce() != null) {
             for(var c: colonies)
                 if(c != null)
-                    c.harvest(produce());
+                    produce().ifPresent(c::harvest);
             changed();
         }
     }
